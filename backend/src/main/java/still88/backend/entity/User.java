@@ -1,5 +1,6 @@
 package still88.backend.entity;
 
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
