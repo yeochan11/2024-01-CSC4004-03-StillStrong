@@ -1,21 +1,29 @@
 package still88.backend.entity;
 
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "User")
-public class User {
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "user")
+@Entity
+public class User{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Integer userId;
+
+    @Column(nullable = false, length=10)
     private String userNickname;
+
+    @Column(nullable = false)
     private Integer userAge;
+
+    @Column(nullable = false)
     private Boolean userGender;
+
+    @Column(nullable = false)
     private String userImage;
 }
