@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Like {
 
-
     @Id
     @ManyToOne
     @JoinColumn(name="userId", nullable = false)
@@ -23,7 +22,7 @@ public class Like {
 
     @Id
     @ManyToOne
-    @Column(name="recipeId", nullable = false)
+    @JoinColumn(name="recipeId", nullable = false)
     private Recipe recipeId;
 
 
