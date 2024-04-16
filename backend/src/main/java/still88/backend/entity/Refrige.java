@@ -12,10 +12,18 @@ import java.util.List;
 @Table(name = "refrige")
 @Entity
 public class Refrige {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    @Column(name = "index", nullable = false)
-    private int index;
+    @Column(name = "id", nullable = false)
+    private int id;
+
+    /**
+     * ManyToOne 아무거나 넣어둔거라 수정 필요
+     */
+    @ManyToOne
+    @JoinColumn(name = "refrigeid", nullable = false)
+    private RefrigeList refrigeList;
 
     /**
      * ManyToOne 아무거나 넣어둔거라 수정 필요
@@ -23,14 +31,6 @@ public class Refrige {
     @ManyToOne
     @JoinColumn(name = "ingredientId", nullable = false)
     private Ingredient ingredientId;
-
-    /**
-     * ManyToOne 아무거나 넣어둔거라 수정 필요
-     */
-    @ManyToOne
-    @JoinColumn(name = "refrigeId", nullable = false)
-    private RefrigeList refrigeList;
-
 
     @Column(nullable = false)
     private LocalDate createdDate;
