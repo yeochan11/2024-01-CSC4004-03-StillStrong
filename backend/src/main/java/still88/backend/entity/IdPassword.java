@@ -10,20 +10,24 @@ import java.lang.annotation.Target;
 
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Table(name="idPassword")
+@Table(name = "idPassword")
 @Entity
 public class IdPassword {
-
     @Id
     @OneToOne
     @JoinColumn(name="userId", nullable = false)
     private User user;
 
-    @Column(name="id", nullable = false)
-    private String id;
+    @Column(nullable = false)
+    private String secretEmail;
 
-    @Column(name="password", nullable = false)
-    private String password;
+    @Column(nullable = false)
+    private String secretPassword;
+
+    // 생성자 + Builder로 일관성 유지
+    @Builder
+    public IdPassword(String secretEmail, String secretPassword) {
+        this.secretEmail = secretEmail;
+        this.secretPassword = secretPassword;
+    }
 }
