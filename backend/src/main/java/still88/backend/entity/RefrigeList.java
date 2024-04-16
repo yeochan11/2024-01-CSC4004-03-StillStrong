@@ -5,8 +5,6 @@ import lombok.*;
 
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Table(name = "refrigeList")
 @Entity
 public class RefrigeList {
@@ -20,5 +18,8 @@ public class RefrigeList {
     private String refrigeName;
 
     // 생성자 + Builder로 일관성 유지
-
+    @Builder
+    public RefrigeList(String refrigeName) {
+        this.refrigeName = refrigeName;
+    }
 }
