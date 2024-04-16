@@ -4,26 +4,33 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
-@Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "user")
 @Entity
 public class User{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     @Column(nullable = false)
-    private Integer userId;
+    private int userId;
 
     @Column(nullable = false, length=10)
     private String userNickname;
 
     @Column(nullable = false)
-    private Integer userAge;
+    private int userAge;
 
     @Column(nullable = false)
     private Boolean userGender;
 
     @Column(nullable = false)
-    private String userImage;
+    private int userImage;
+
+    // 생성자 + Builder로 일관성 유지
+    @Builder
+    public User(String userNickname, int userAge, Boolean userGender, int userImage) {
+        this.userNickname = userNickname;
+        this.userAge = userAge;
+        this.userGender = userGender;
+        this.userImage = userImage;
+    }
 }
