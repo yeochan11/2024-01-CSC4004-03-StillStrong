@@ -11,15 +11,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @IdClass(LikePK.class)
-@Table(name = "likes")
+@Table(name = "like")
 @Entity
 public class Like {
 
-    @Id
-    @Column(name="userId", nullable = false)
-    private int userId;
 
     @Id
+    @ManyToOne
+    @JoinColumn(name="userId", nullable = false)
+    private User userId;
+
+    @Id
+    @ManyToOne
     @Column(name="recipeId", nullable = false)
-    private int recipeId;
+    private Recipe recipeId;
+
+
 }
