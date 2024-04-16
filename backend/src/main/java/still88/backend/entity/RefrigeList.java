@@ -5,17 +5,17 @@ import lombok.*;
 
 @Getter
 @NoArgsConstructor
+@IdClass(RefrigeListPK.class)
 @Table(name = "refrigeList")
 @Entity
 public class RefrigeList {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int refrigeListId;
 
+    @Id
     @ManyToOne
     @JoinColumn(name = "refrigeId", nullable = false)
     private Refrige refrige;
 
+    @Id
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false)
     private User user;
