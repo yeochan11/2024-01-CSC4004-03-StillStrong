@@ -32,4 +32,10 @@ public class ShareRefrige {
 
     @Column(name="status", nullable = false)
     private boolean status;
+
+    // 생성자 + Builder로 일관성 유지
+    @Builder
+    public ShareRefrige(boolean status) {
+        this.status = status;
+    }
 }
