@@ -6,12 +6,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @IdClass(LikePK.class)
-@Table(name = "like")
+@Table(name = "likes")
 @Entity
 public class Like {
+
     @Id
     @Column(name="userId", nullable = false)
     private int userId;
