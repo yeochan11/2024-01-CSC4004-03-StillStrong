@@ -21,7 +21,7 @@ public class ShareRefrige {
      */
     @ManyToOne
     @JoinColumn(name="refrigeId", nullable = false)
-    private Refrige refrigeId;
+    private RefrigeList refrigeId;
 
     /**
      * ManyToOne 아무거나 넣어둔거라 수정 필요

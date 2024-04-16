@@ -14,8 +14,23 @@ import java.util.List;
 public class Refrige {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    @Column(nullable = false)
-    private int refrigeId;
+    @Column(name = "index", nullable = false)
+    private int index;
+
+    /**
+     * ManyToOne 아무거나 넣어둔거라 수정 필요
+     */
+    @ManyToOne
+    @JoinColumn(name = "ingredientId", nullable = false)
+    private Ingredient ingredientId;
+
+    /**
+     * ManyToOne 아무거나 넣어둔거라 수정 필요
+     */
+    @ManyToOne
+    @JoinColumn(name = "refrigeId", nullable = false)
+    private RefrigeList refrigeList;
+
 
     @Column(nullable = false)
     private LocalDate createdDate;
@@ -28,10 +43,6 @@ public class Refrige {
 
     @Column
     private String ingredientMemo;
-
-    @ManyToOne
-    @JoinColumn(name = "ingredentId")
-    private Ingredient ingredient;
 
     // 생성자 + Builder로 일관성 유지
     @Builder

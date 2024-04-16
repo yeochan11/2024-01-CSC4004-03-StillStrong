@@ -5,23 +5,16 @@ import lombok.*;
 
 @Getter
 @NoArgsConstructor
-@IdClass(RefrigeListPK.class)
+@AllArgsConstructor
+@Builder
 @Table(name = "refrigeList")
 @Entity
 public class RefrigeList {
 
     @Id
-    @ManyToOne
-    @JoinColumn(name = "refrigeId", nullable = false)
-    private Refrige refrige;
-
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
-    private User user;
-
-    @Column(nullable = false)
-    private boolean status;
+    @Column(name = "refrigeId", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int refrigeId;
 
     @Column(nullable = false)
     private String refrigeName;
