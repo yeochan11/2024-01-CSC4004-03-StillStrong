@@ -85,6 +85,10 @@ flutter:
           weight: 800
         - asset: assets/fonts/Inter-Black.ttf
           weight: 900
+    - family: Pretendard
+      fonts:
+        - asset: assets/fonts/Pretendard-Bold.ttf
+          weight: 700
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
