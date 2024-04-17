@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Builder
 @Getter
 @NoArgsConstructor
@@ -15,21 +18,13 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Like {
 
-    /**
-     * ManyToOne 아무거나 넣어둔거라 수정 필요
-     */
     @Id
-    @ManyToOne
-    @JoinColumn(name="userId", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", nullable = false)
     private User userId;
 
-    /**
-     * ManyToOne 아무거나 넣어둔거라 수정 필요
-     */
     @Id
-    @ManyToOne
-    @JoinColumn(name="recipeId", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recipeId", nullable = false)
     private Recipe recipeId;
-
-
 }

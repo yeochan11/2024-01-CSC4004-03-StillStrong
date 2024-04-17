@@ -3,6 +3,7 @@ package still88.backend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -14,6 +15,10 @@ public class User{
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     @Column(nullable = false)
     private int userId;
+
+    // 연관 관계 매핑
+    @OneToMany(mappedBy = "user")
+    private List<ShareRefrige> shareRefriges = new ArrayList<>();
 
     @Column(nullable = false, length=10)
     private String userNickname;

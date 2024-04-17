@@ -24,6 +24,10 @@ public class RefrigeList {
     @OneToMany(mappedBy = "refrigeList")
     private List<Refrige> refriges = new ArrayList<>();
 
+    // 연관 관계 매핑
+    @OneToMany(mappedBy = "refrigeList")
+    private List<ShareRefrige> shareRefriges = new ArrayList<>();
+
     // 생성자 + Builder로 일관성 유지
     @Builder
     public RefrigeList(String refrigeName) {

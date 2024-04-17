@@ -16,19 +16,15 @@ public class ShareRefrige {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int shareId;
 
-    /**
-     * ManyToOne 아무거나 넣어둔거라 수정 필요
-     */
-    @ManyToOne
-    @JoinColumn(name="refrigeId", nullable = false)
-    private RefrigeList refrigeId;
+    // 연관 관계 매핑
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "refrigeId", nullable = false)
+    private RefrigeList refrigeList;
 
-    /**
-     * ManyToOne 아무거나 넣어둔거라 수정 필요
-     */
-    @ManyToOne
+    // 연관 관계 매핑
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userId", nullable = false)
-    private User userId;
+    private User user;
 
     @Column(name="status", nullable = false)
     private boolean status;
