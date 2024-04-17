@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
 class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(Duration(seconds: 10), () {
       Navigator.pushReplacementNamed(context,'/signup');
     });
     return Scaffold(
@@ -34,6 +34,8 @@ class WelcomePage extends StatelessWidget {
                 children: <Widget>[
                   Image.asset('assets/images/welcomelogo.png'),
                   SizedBox(height: 20),
+                  Text("냉장고를 털고 싶을 땐?", style: TextStyle(fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.w900, color: Colors.white)),
+                  SizedBox(height: 3),
                   Image.asset('assets/images/yorijori.png'),
                 ],
               ),
