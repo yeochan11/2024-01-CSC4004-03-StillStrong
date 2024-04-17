@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -25,6 +27,10 @@ public class Ingredient {
 
     @Column(nullable = false)
     private String ingredientCategory;
+
+    // 연관 관계 매핑
+    @OneToMany(mappedBy = "ingredient")
+    private List<Refrige> refriges = new ArrayList<>();
 
     // 생성자 + Builder로 일관성 유지
     @Builder

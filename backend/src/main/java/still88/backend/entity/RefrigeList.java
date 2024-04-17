@@ -3,6 +3,9 @@ package still88.backend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @NoArgsConstructor
 @Table(name = "refrigeList")
@@ -16,6 +19,10 @@ public class RefrigeList {
 
     @Column(nullable = false)
     private String refrigeName;
+
+    // 연관 관계 매핑
+    @OneToMany(mappedBy = "refrigeList")
+    private List<Refrige> refriges = new ArrayList<>();
 
     // 생성자 + Builder로 일관성 유지
     @Builder

@@ -18,19 +18,15 @@ public class Refrige {
     @Column(name = "id", nullable = false)
     private int id;
 
-    /**
-     * ManyToOne 아무거나 넣어둔거라 수정 필요
-     */
-    @ManyToOne
+    // 연관 관계 매핑
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "refrigeid", nullable = false)
     private RefrigeList refrigeList;
 
-    /**
-     * ManyToOne 아무거나 넣어둔거라 수정 필요
-     */
-    @ManyToOne
+    // 연관 관계 매핑
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ingredientId", nullable = false)
-    private Ingredient ingredientId;
+    private Ingredient ingredient;
 
     @Column(nullable = false)
     private LocalDate createdDate;
