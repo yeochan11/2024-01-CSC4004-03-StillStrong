@@ -23,9 +23,6 @@ public class Ingredient {
     private String ingredientName;
 
     @Column(nullable = false)
-    private LocalDate ingredientDeadline;
-
-    @Column(nullable = false)
     private String ingredientCategory;
 
     // 연관 관계 매핑
@@ -34,9 +31,8 @@ public class Ingredient {
 
     // 생성자 + Builder로 일관성 유지
     @Builder
-    public Ingredient(String ingredientName, LocalDate ingredientDeadline, String ingredientCategory) {
+    public Ingredient(String ingredientName, String ingredientCategory) {
         this.ingredientName = ingredientName;
-        this.ingredientDeadline = ingredientDeadline;
         this.ingredientCategory = ingredientCategory;
     }
 }
