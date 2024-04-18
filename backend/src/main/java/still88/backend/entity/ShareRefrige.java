@@ -25,13 +25,4 @@ public class ShareRefrige {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userId", nullable = false)
     private User user;
-
-    @Column(name="status", nullable = false)
-    private boolean status;
-
-    // 생성자 + Builder로 일관성 유지
-    @Builder
-    public ShareRefrige(boolean status) {
-        this.status = status;
-    }
 }
