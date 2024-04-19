@@ -28,6 +28,11 @@ public class Refrige {
     @JoinColumn(name = "ingredientId", nullable = false)
     private Ingredient ingredient;
 
+    // 연관 관계 매핑
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", nullable = false)
+    private User user;
+
     @Column(nullable = false)
     private LocalDate createdDate;
 
@@ -37,15 +42,20 @@ public class Refrige {
     @Column(nullable = false)
     private String ingredientPlace;
 
+    @Column(nullable = false)
+    private LocalDate ingredientDeadline;
+
     @Column
     private String ingredientMemo;
 
     // 생성자 + Builder로 일관성 유지
     @Builder
-    public Refrige(LocalDate createdDate, int ingredientNum, String ingredientPlace, String ingredientMemo, Ingredient ingredient) {
+
+    public Refrige(LocalDate createdDate, int ingredientNum, String ingredientPlace, LocalDate ingredientDeadline, String ingredientMemo) {
         this.createdDate = createdDate;
         this.ingredientNum = ingredientNum;
         this.ingredientPlace = ingredientPlace;
+        this.ingredientDeadline = ingredientDeadline;
         this.ingredientMemo = ingredientMemo;
     }
 }
