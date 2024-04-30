@@ -12,16 +12,23 @@ import java.util.List;
 
 @Service
 public class IngredientServiceImpl implements IngredientService {
+    private final IngredientRepository ingredientRepository;
+    private final RefrigeListRepository refrigeListRepository;
+    private final ShareRefrigeRepository shareRefrigeRepository;
+    private final UserRepository userRepository;
+    private final RefrigeRepository refrigeRepository;
+
     @Autowired
-    private IngredientRepository ingredientRepository;
-    @Autowired
-    RefrigeListRepository refrigeListRepository;
-    @Autowired
-    ShareRefrigeRepository shareRefrigeRepository;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    RefrigeRepository refrigeRepository;
+    public IngredientServiceImpl(IngredientRepository ingredientRepository,
+                                 RefrigeListRepository refrigeListRepository,
+                                 ShareRefrigeRepository shareRefrigeRepository,
+                                 UserRepository userRepository, RefrigeRepository refrigeRepository) {
+        this.ingredientRepository = ingredientRepository;
+        this.refrigeListRepository = refrigeListRepository;
+        this.shareRefrigeRepository = shareRefrigeRepository;
+        this.userRepository = userRepository;
+        this.refrigeRepository = refrigeRepository;
+    }
 
     @Override
     public void registerIngredient(int refrigeId, RegisterIngredientDTO request, @CookieValue String userId) {
