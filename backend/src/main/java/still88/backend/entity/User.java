@@ -24,6 +24,10 @@ public class User{
     @OneToMany(mappedBy = "user")
     private List<Refrige> refriges = new ArrayList<>();
 
+    // 연관 관계 매핑
+    @OneToMany(mappedBy = "user")
+    private List<RefrigeList> refrigeLists = new ArrayList<>();
+
     @Column(nullable = false, length=10)
     private String userNickname;
 

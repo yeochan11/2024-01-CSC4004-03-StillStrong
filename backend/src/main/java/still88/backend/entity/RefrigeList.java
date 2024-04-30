@@ -28,6 +28,11 @@ public class RefrigeList {
     @OneToMany(mappedBy = "refrigeList")
     private List<ShareRefrige> shareRefriges = new ArrayList<>();
 
+    // 연관 관계 매핑
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="userId", nullable = false)
+    private User user;
+
     // 생성자 + Builder로 일관성 유지
     @Builder
     public RefrigeList(String refrigeName) {

@@ -1,6 +1,5 @@
-package still88.backend.dto.Ingredient;
+package still88.backend.dto.ingredient;
 
-import jakarta.persistence.Column;
 import lombok.Data;
 
 import java.time.LocalDate;
