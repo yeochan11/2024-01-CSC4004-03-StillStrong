@@ -6,8 +6,11 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import still88.backend.domain.user.UserRepository;
 import still88.backend.dto.refrige.CreateRefrigeRequestDto;
 import still88.backend.dto.refrige.CreateRefrigeResponseDto;
+import still88.backend.entity.RefrigeList;
+import still88.backend.entity.User;
 
 @Controller
 @RequiredArgsConstructor
@@ -19,8 +22,9 @@ public class RefrigeController {
     // 냉장고 생성하기
     @PostMapping("/create")
     public ResponseEntity<?> createRefrige(@CookieValue String userId, @RequestBody CreateRefrigeRequestDto createRefrigeRequestDto) {
-        int refrigeId = refrigeService.createRefrige(userId, createRefrigeRequestDto);
-        CreateRefrigeResponseDto responseDto = new CreateRefrigeResponseDto(refrigeId);
-        return ResponseEntity.ok(responseDto);
+        return ResponseEntity.ok(refrigeService.createRefrige(userId, createRefrigeRequestDto));
     }
+
+
+
 }

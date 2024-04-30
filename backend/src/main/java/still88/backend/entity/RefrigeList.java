@@ -33,9 +33,9 @@ public class RefrigeList {
     @JoinColumn(name="userId", nullable = false)
     private User user;
 
-    // 생성자 + Builder로 일관성 유지
     @Builder
-    public RefrigeList(String refrigeName) {
+    public RefrigeList(String refrigeName, User user) {
         this.refrigeName = refrigeName;
+        this.user = user;
     }
 }

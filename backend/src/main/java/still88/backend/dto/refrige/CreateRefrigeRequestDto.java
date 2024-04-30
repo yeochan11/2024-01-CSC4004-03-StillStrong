@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateRefrigeRequestDto {
-
+    private int userId;
     private String refrigeName;
 }
