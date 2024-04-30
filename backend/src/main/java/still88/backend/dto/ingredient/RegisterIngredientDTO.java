@@ -14,4 +14,5 @@ public class RegisterIngredientDTO {
     private int ingredientNum;
     private LocalDate createdDate;
     private String ingredientMemo;
+    private String ingredientPlace;
 }

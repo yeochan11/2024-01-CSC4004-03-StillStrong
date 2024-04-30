@@ -23,9 +23,10 @@ public class IngredientController {
      */
     @PostMapping("/register/{refrigeId}")
     public ResponseEntity<?> registerIngredient(@PathVariable("refrigeId") int refrigeId,
-                                                @RequestParam RegisterIngredientDTO request){
+                                                @RequestParam RegisterIngredientDTO request,
+                                                @CookieValue String userId){
         try{
-            ingredientService.registerIngredient(refrigeId, request);
+            ingredientService.registerIngredient(refrigeId, request, userId);
             return ResponseEntity.ok("재료 등록 완료");
         }catch(Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

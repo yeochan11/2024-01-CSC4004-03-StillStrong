@@ -3,13 +3,9 @@ package still88.backend.domain.ingredient.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CookieValue;
-import still88.backend.domain.ingredient.repository.IngredientRepository;
-import still88.backend.domain.ingredient.repository.RefrigeListRepository;
-import still88.backend.domain.ingredient.repository.ShareRefrigeRepository;
+import still88.backend.domain.ingredient.repository.*;
 import still88.backend.dto.ingredient.RegisterIngredientDTO;
-import still88.backend.entity.Ingredient;
-import still88.backend.entity.RefrigeList;
-import still88.backend.entity.ShareRefrige;
+import still88.backend.entity.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,15 +18,35 @@ public class IngredientServiceImpl implements IngredientService {
     RefrigeListRepository refrigeListRepository;
     @Autowired
     ShareRefrigeRepository shareRefrigeRepository;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    RefrigeRepository refrigeRepository;
 
     @Override
-    public void registerIngredient(int refrigeId, RegisterIngredientDTO request) {
+    public void registerIngredient(int refrigeId, RegisterIngredientDTO request, @CookieValue String userId) {
         try {
+            RefrigeList refirigeList = refrigeListRepository.findByRefrigeId(refrigeId);
             Ingredient ingredient = ingredientRepository.findIngredientByIngredientName(request.getIngredientName());
-            int ingredientNum = request.getIngredientNum();
+            User user = userRepository.findUserByUserId(Integer.parseInt(userId));
             LocalDate createdDate = request.getCreatedDate();
-            String ingredientMemo = request.getIngredientMemo();
+            int ingredientNum = request.getIngredientNum();
+            String ingredientPlace = request.getIngredientPlace();
             LocalDate ingredientDeadline = request.getCreatedDate().plusDays(14);
+            String ingredientMemo = request.getIngredientMemo();
+
+            Refrige refrige = Refrige.builder()
+                    .refrigeList(refirigeList)
+                    .ingredient(ingredient)
+                    .user(user)
+                    .createdDate(createdDate)
+                    .ingredientNum(ingredientNum)
+                    .ingredientPlace(ingredientPlace)
+                    .ingredientDeadline(ingredientDeadline)
+                    .ingredientMemo(ingredientMemo)
+                    .build();
+            refrigeRepository.save(refrige);
+
         }catch (Exception e){
 
         }
