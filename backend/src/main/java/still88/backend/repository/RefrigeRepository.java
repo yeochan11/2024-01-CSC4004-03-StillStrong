@@ -16,6 +16,6 @@ public interface RefrigeRepository extends JpaRepository<Refrige, Long> {
 
     Refrige findRefrigeByRefrigeListAndIngredient(RefrigeList refrigeList, Ingredient ingredient);
 
-    @Query("SELECT r.ingredient.id FROM Refrige r WHERE r.refrigeList.refrigeId = :refrigeId")
+    @Query("SELECT r.ingredient.ingredientId FROM Refrige r WHERE r.refrigeList.refrigeId = :refrigeId")
     List<Integer> findIngredientIdsByRefrigeId(int refrigeId);
 }
