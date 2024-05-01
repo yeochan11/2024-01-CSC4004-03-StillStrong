@@ -43,7 +43,6 @@ public class IngredientController {
         }
     }
 
-    // userId 추가
     @GetMapping("/{refrigeId}/{ingredientId}")
     public ResponseEntity<?> showIngredientDetail(@PathVariable("refrigeId") int refrigeId,
                                                   @PathVariable("ingredientId") int ingredientId,
@@ -55,7 +54,6 @@ public class IngredientController {
         }
     }
 
-    // userId 추가
     @PatchMapping("/{refrigeId}/{ingredientId}/edit")
     public ResponseEntity<?> editIngredient(@PathVariable("refrigeId") int refrigeId,
                                             @PathVariable("ingredientId") int ingredientId,
