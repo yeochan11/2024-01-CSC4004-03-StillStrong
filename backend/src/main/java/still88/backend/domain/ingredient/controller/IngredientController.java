@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import still88.backend.domain.ingredient.service.IngredientService;
+import still88.backend.dto.ingredient.EditIngredientRequestDTO;
 import still88.backend.dto.ingredient.RegisterIngredientDTO;
 
 @RestController
@@ -17,12 +18,6 @@ public class IngredientController {
     @Autowired
     IngredientService ingredientService;
 
-    /**
-     * Ingredient를 저장하는 함수
-     * @param refrigeId : 사용중인 냉장고 번호
-     * @param request : 재료이름,수량,구매일,유통기한,메모 저장한 DTO
-     * @return
-     */
     @PostMapping("/register/{refrigeId}")
     public ResponseEntity<?> registerIngredient(@PathVariable("refrigeId") int refrigeId,
                                                 @RequestBody RegisterIngredientDTO request,
@@ -38,8 +33,7 @@ public class IngredientController {
     @DeleteMapping("/delete/{refrigeId}/{ingredientId}")
     public ResponseEntity<?> deleteIngredient(@PathVariable("refrigeId") int refrigeId,
                                               @PathVariable("ingredientId") int ingredientId,
-                                              @CookieValue String userId)
-    {
+                                              @CookieValue String userId) {
         try{
             ingredientService.deleteIngredient(refrigeId, ingredientId, userId);
             return ResponseEntity.ok("재료 삭제 완료");
@@ -51,11 +45,22 @@ public class IngredientController {
 
     @GetMapping("/{refrigeId}/{ingredientId}")
     public ResponseEntity<?> showIngredientDetail(@PathVariable("refrigeId") int refrigeId,
-                                                  @PathVariable("ingredientId") int ingredientId)
-    {
+                                                  @PathVariable("ingredientId") int ingredientId) {
         try{
             return ResponseEntity.ok(ingredientService.ingredientDetail(refrigeId, ingredientId));
         }catch(Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PatchMapping("/edit/{refrigeId}/{ingredientId}")
+    public ResponseEntity<?> editIngredient(@PathVariable("refrigeId") int refrigeId,
+                                            @PathVariable("ingredientId") int ingredientId,
+                                            @RequestBody EditIngredientRequestDTO request) {
+        try{
+            ingredientService.editIngredient(refrigeId, ingredientId, request);
+            return ResponseEntity.ok("수정완료");
+        }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

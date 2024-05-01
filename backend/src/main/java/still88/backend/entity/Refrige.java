@@ -48,9 +48,15 @@ public class Refrige {
     @Column
     private String ingredientMemo;
 
+    public void updateInfo(LocalDate createdDate, LocalDate ingredientDeadline, int ingredientNum, String ingredientPlace){
+        this.createdDate = createdDate;
+        this.ingredientDeadline = ingredientDeadline;
+        this.ingredientNum = ingredientNum;
+        this.ingredientPlace = ingredientPlace;
+
+    }
     // 생성자 + Builder로 일관성 유지
     @Builder
-
     public Refrige(RefrigeList refrigeList, Ingredient ingredient, User user, LocalDate createdDate, int ingredientNum, String ingredientPlace, LocalDate ingredientDeadline, String ingredientMemo) {
         this.refrigeList = refrigeList;
         this.ingredient = ingredient;

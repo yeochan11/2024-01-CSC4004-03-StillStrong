@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CookieValue;
+import still88.backend.dto.ingredient.EditIngredientRequestDTO;
 import still88.backend.dto.ingredient.IngredientDetailResponseDTO;
 import still88.backend.repository.*;
 import still88.backend.dto.ingredient.RegisterIngredientDTO;
@@ -56,6 +57,7 @@ public class IngredientServiceImpl implements IngredientService {
                     .ingredientDeadline(ingredientDeadline)
                     .ingredientMemo(ingredientMemo)
                     .build();
+
             refrigeRepository.save(refrige);
 
         }catch (Exception e){
@@ -93,5 +95,21 @@ public class IngredientServiceImpl implements IngredientService {
                                                                                         createdDate, ingredientDeadline, ingredientNum);
 
         return ingredientDetail;
+    }
+
+    @Override
+    public void editIngredient(int refrigeId, int ingredientId, EditIngredientRequestDTO request) {
+        RefrigeList refrigeList = refrigeListRepository.findByRefrigeId(refrigeId);
+        Ingredient ingredient = ingredientRepository.findIngredientByIngredientId(ingredientId);
+
+        Refrige refrige = refrigeRepository.findRefrigeByRefrigeListAndIngredient(refrigeList, ingredient);
+
+        String ingredientName = request.getIngredientName();
+        LocalDate ingredientDeadline = request.getIngredientDeadline();
+        LocalDate createdDate = request.getCreatedDate();
+        int ingredientNum = request.getIngredientNum();
+
+        refrige.updateInfo(createdDate, ingredientDeadline, ingredientNum, ingredientName);
+        refrigeRepository.save(refrige);
     }
 }
