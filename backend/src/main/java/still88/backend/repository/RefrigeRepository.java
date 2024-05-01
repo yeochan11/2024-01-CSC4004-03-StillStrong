@@ -10,4 +10,6 @@ public interface RefrigeRepository extends JpaRepository<Refrige, Long> {
     void deleteRefrigeByRefrigeListAndIngredientAndUser(RefrigeList refrigeList, Ingredient ingredient, User user);
 
     Refrige findRefrigeByRefrigeListAndIngredient(RefrigeList refrigeList, Ingredient ingredient);
+
+    Refrige findRefrigeByRefrigeListAndIngredientAndUser(RefrigeList refrigeList, Ingredient ingredient, User user);
 }

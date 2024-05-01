@@ -43,22 +43,26 @@ public class IngredientController {
         }
     }
 
+    // userId 추가
     @GetMapping("/{refrigeId}/{ingredientId}")
     public ResponseEntity<?> showIngredientDetail(@PathVariable("refrigeId") int refrigeId,
-                                                  @PathVariable("ingredientId") int ingredientId) {
+                                                  @PathVariable("ingredientId") int ingredientId,
+                                                  @CookieValue String userId) {
         try{
-            return ResponseEntity.ok(ingredientService.ingredientDetail(refrigeId, ingredientId));
+            return ResponseEntity.ok(ingredientService.ingredientDetail(refrigeId, ingredientId,userId));
         }catch(Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @PatchMapping("/edit/{refrigeId}/{ingredientId}")
+    // userId 추가
+    @PatchMapping("/{refrigeId}/{ingredientId}/edit")
     public ResponseEntity<?> editIngredient(@PathVariable("refrigeId") int refrigeId,
                                             @PathVariable("ingredientId") int ingredientId,
-                                            @RequestBody EditIngredientRequestDTO request) {
+                                            @RequestBody EditIngredientRequestDTO request,
+                                            @CookieValue String userId) {
         try{
-            ingredientService.editIngredient(refrigeId, ingredientId, request);
+            ingredientService.editIngredient(refrigeId, ingredientId, request, userId);
             return ResponseEntity.ok("수정완료");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
