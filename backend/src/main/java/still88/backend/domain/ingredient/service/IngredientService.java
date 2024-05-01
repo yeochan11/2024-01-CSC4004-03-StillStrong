@@ -14,7 +14,5 @@ public interface IngredientService {
     IngredientDetailResponseDTO ingredientDetail(int refrigeId, int ingredientId, String userId);
 
     void editIngredient(int refrigeId, int ingredientId, EditIngredientRequestDTO request, String userId);
-
-    public Ingredient insertIngredient();
 }
 

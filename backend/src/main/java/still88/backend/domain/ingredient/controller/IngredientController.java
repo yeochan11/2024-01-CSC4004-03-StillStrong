@@ -63,11 +63,5 @@ public class IngredientController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
-    // 재료 데이터 추가
-    @PostMapping("/insert")
-    public ResponseEntity insertIngredient() {
-        return ResponseEntity.ok(ingredientService.insertIngredient());
-    }
 }
 

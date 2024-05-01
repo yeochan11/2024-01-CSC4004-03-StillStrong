@@ -1,5 +1,6 @@
 package still88.backend.domain.ingredient.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
+    @Transactional
     public void deleteIngredient(int refrigeId, int ingredientId, String userId) {
         try {
             RefrigeList refrigeList = refrigeListRepository.findByRefrigeId(refrigeId);
@@ -66,7 +68,6 @@ public class IngredientServiceImpl implements IngredientService {
         }catch (Exception e){
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
@@ -106,12 +107,5 @@ public class IngredientServiceImpl implements IngredientService {
 
         refrige.updateInfo(createdDate, ingredientDeadline, ingredientNum, ingredientPlace, ingredientMemo);
         refrigeRepository.save(refrige);
-    }
-
-    public Ingredient insertIngredient() {
-        return ingredientRepository.save(Ingredient.builder()
-                .ingredientName("목살")
-                .ingredientCategory("고기")
-                .build());
     }
 }
