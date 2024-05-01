@@ -1,6 +1,7 @@
 package still88.backend.domain.ingredient.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,17 @@ public class IngredientController {
             return ResponseEntity.ok("재료 삭제 완료");
         }catch (Exception e)
         {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{refrigeId}/{ingredientId}")
+    public ResponseEntity<?> showIngredientDetail(@PathVariable("refrigeId") int refrigeId,
+                                                  @PathVariable("ingredientId") int ingredientId)
+    {
+        try{
+            return ResponseEntity.ok(ingredientService.ingredientDetail(refrigeId, ingredientId));
+        }catch(Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

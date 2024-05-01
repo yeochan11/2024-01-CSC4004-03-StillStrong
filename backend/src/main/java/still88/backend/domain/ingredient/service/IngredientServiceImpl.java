@@ -2,15 +2,16 @@ package still88.backend.domain.ingredient.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CookieValue;
+import still88.backend.dto.ingredient.IngredientDetailResponseDTO;
 import still88.backend.repository.*;
 import still88.backend.dto.ingredient.RegisterIngredientDTO;
 import still88.backend.entity.*;
 import still88.backend.repository.IngredientRepository;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 @Slf4j
@@ -74,5 +75,23 @@ public class IngredientServiceImpl implements IngredientService {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public IngredientDetailResponseDTO ingredientDetail(int refrigeId, int ingredientId) {
+        Ingredient ingredient = ingredientRepository.findIngredientByIngredientId(ingredientId);
+        RefrigeList refrigeList = refrigeListRepository.findByRefrigeId(refrigeId);
+        Refrige refrige = refrigeRepository.findRefrigeByRefrigeListAndIngredient(refrigeList, ingredient);
+
+        String ingredientPlace = refrige.getIngredientPlace();
+        String ingredientName = ingredient.getIngredientName();
+        LocalDate createdDate = refrige.getCreatedDate();
+        LocalDate ingredientDeadline = refrige.getIngredientDeadline();
+        int ingredientNum = refrige.getIngredientNum();
+
+        IngredientDetailResponseDTO ingredientDetail = new IngredientDetailResponseDTO(ingredientPlace, ingredientName,
+                                                                                        createdDate, ingredientDeadline, ingredientNum);
+
+        return ingredientDetail;
     }
 }

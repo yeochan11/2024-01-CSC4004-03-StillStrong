@@ -8,4 +8,6 @@ import still88.backend.entity.User;
 
 public interface RefrigeRepository extends JpaRepository<Refrige, Long> {
     void deleteRefrigeByRefrigeListAndIngredientAndUser(RefrigeList refrigeList, Ingredient ingredient, User user);
+
+    Refrige findRefrigeByRefrigeListAndIngredient(RefrigeList refrigeList, Ingredient ingredient);
 }
