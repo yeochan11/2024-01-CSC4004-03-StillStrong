@@ -7,6 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CreateRefrigeResponseDto {
+public class CreateUpdateRefrigeResponseDto {
     private int refrigeId;
+    private String refrigeName;
 }

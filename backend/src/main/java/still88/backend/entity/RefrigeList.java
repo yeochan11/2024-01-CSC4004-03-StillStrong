@@ -38,4 +38,9 @@ public class RefrigeList {
         this.refrigeName = refrigeName;
         this.user = user;
     }
+
+    // 수정 메서드
+    public void updateRefrigeName(String refrigeName) {
+        this.refrigeName = refrigeName;
+    }
 }
