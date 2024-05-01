@@ -1,5 +1,6 @@
 package still88.backend.domain.ingredient.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@Slf4j
 public class IngredientServiceImpl implements IngredientService {
     private final IngredientRepository ingredientRepository;
     private final RefrigeListRepository refrigeListRepository;
@@ -56,6 +58,7 @@ public class IngredientServiceImpl implements IngredientService {
             refrigeRepository.save(refrige);
 
         }catch (Exception e){
+            log.info("error={}", e);
             throw new RuntimeException(e);
         }
     }

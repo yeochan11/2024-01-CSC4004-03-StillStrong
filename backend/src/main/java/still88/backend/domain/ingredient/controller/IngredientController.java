@@ -34,7 +34,7 @@ public class IngredientController {
         }
     }
 
-    @DeleteMapping("/{refrigeId}/{ingredientId}")
+    @DeleteMapping("/delete/{refrigeId}/{ingredientId}")
     public ResponseEntity<?> deleteIngredient(@PathVariable("refrigeId") int refrigeId,
                                               @PathVariable("ingredientId") int ingredientId,
                                               @CookieValue String userId)
