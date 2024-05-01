@@ -1,14 +1,17 @@
-package still88.backend.domain.refrige;
+package still88.backend.domain.refrige.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import still88.backend.dto.refrige.CreateRefrigeRequestDto;
-import still88.backend.dto.refrige.CreateUpdateRefrigeResponseDto;
-import still88.backend.dto.refrige.UpdateRefrigeRequestDto;
+import still88.backend.dto.refrige.*;
+import still88.backend.entity.Refrige;
 import still88.backend.entity.RefrigeList;
 import still88.backend.entity.User;
 import still88.backend.repository.RefrigeListRepository;
+import still88.backend.repository.RefrigeRepository;
 import still88.backend.repository.UserRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +19,7 @@ public class RefrigeServiceImpl implements RefrigeService {
 
     private final RefrigeListRepository refrigeListRepository;
     private final UserRepository userRepository;
+    private final RefrigeRepository refrigeRepository;
 
     public CreateUpdateRefrigeResponseDto createRefrige(String userId, CreateRefrigeRequestDto createRefrigeRequestDto) {
         User user = userRepository.findById(Long.parseLong(userId))
@@ -44,6 +48,38 @@ public class RefrigeServiceImpl implements RefrigeService {
         return CreateUpdateRefrigeResponseDto.builder()
                 .refrigeId(updatedRefrigeList.getRefrigeId())
                 .refrigeName(updatedRefrigeList.getRefrigeName())
+                .build();
+    }
+
+    public GetRefrigeListResponseDto getRefrigeList(int userId) {
+        User user = userRepository.findById((long) userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+
+        List<RefrigeList> refrigeLists = refrigeListRepository.findByUser(user);
+        List<RefrigeInfoDto> refrigeInfoList = refrigeLists.stream()
+                .map(refrigeList -> {
+                    List<Integer> refrigeIds = refrigeList.getRefriges().stream()
+                            .map(Refrige::getId)
+                            .collect(Collectors.toList());
+
+                    return refrigeIds.stream()
+                            .map(refrigeId -> {
+                                String refrigeName = refrigeRepository.findById(Long.valueOf(refrigeId))
+                                        .map(Refrige::getRefrigeList)
+                                        .map(RefrigeList::getRefrigeName)
+                                        .orElse("");
+                                return RefrigeInfoDto.builder()
+                                        .refrigeId(refrigeId)
+                                        .refrigeName(refrigeName)
+                                        .build();
+                            })
+                            .collect(Collectors.toList());
+                })
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+
+        return GetRefrigeListResponseDto.builder()
+                .refrigeList(refrigeInfoList)
                 .build();
     }
 }

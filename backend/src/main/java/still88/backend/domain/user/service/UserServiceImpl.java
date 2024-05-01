@@ -1,4 +1,4 @@
-package still88.backend.domain.user;
+package still88.backend.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

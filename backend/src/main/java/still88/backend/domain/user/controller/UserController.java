@@ -1,4 +1,4 @@
-package still88.backend.domain.user;
+package still88.backend.domain.user.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import still88.backend.domain.user.service.UserService;
 import still88.backend.dto.user.UserRequestDto;
 
 @Controller

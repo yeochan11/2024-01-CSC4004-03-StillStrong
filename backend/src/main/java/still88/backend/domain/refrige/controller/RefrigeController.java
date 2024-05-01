@@ -1,9 +1,10 @@
-package still88.backend.domain.refrige;
+package still88.backend.domain.refrige.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import still88.backend.domain.refrige.service.RefrigeService;
 import still88.backend.dto.refrige.CreateRefrigeRequestDto;
 import still88.backend.dto.refrige.UpdateRefrigeRequestDto;
 
@@ -24,5 +25,11 @@ public class RefrigeController {
     @PatchMapping("/update/{refrigeId}")
     public ResponseEntity<?> updateRefrige(@PathVariable int refrigeId, @RequestBody UpdateRefrigeRequestDto updateRefrigeRequestDto) {
         return ResponseEntity.ok(refrigeService.updateRefrige(refrigeId, updateRefrigeRequestDto));
+    }
+
+    // 냉장고 안 재료 조회
+    @GetMapping("/get/refrigeList")
+    public ResponseEntity<?> getRefrigeList(@CookieValue int userId) {
+        return ResponseEntity.ok(refrigeService.getRefrigeList(userId));
     }
 }

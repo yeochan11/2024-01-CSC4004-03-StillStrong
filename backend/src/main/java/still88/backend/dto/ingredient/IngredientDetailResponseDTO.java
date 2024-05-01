@@ -1,18 +1,19 @@
 package still88.backend.dto.ingredient;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
-public class AddIngredientRequestDto {
-    private int refrigeId;
-    private int userId;
-    private String ingredientName;
-    private String ingredientCategory;
-    private LocalDate createdDate;
-    private int ingredientNum;
+@AllArgsConstructor
+@NoArgsConstructor
+public class IngredientDetailResponseDTO {
     private String ingredientPlace;
+    private String ingredientName;
+    private LocalDate createdDate;
     private LocalDate ingredientDeadline;
+    private int ingredientNum;
     private String ingredientMemo;
 }
