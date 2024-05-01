@@ -15,4 +15,5 @@ public class IngredientDetailResponseDTO {
     private LocalDate createdDate;
     private LocalDate ingredientDeadline;
     private int ingredientNum;
+    private String ingredientMemo;
 }

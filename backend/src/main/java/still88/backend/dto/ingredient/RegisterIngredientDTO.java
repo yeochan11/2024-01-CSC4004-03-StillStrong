@@ -16,3 +16,4 @@ public class RegisterIngredientDTO {
     private String ingredientMemo;
     private String ingredientPlace;
 }
+

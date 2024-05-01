@@ -1,9 +1,8 @@
 package still88.backend.domain.ingredient.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.Getter;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +13,9 @@ import still88.backend.dto.ingredient.RegisterIngredientDTO;
 @RestController
 @Slf4j
 @RequestMapping("/refrige/ingredient")
+@RequiredArgsConstructor
 public class IngredientController {
-    @Autowired
-    IngredientService ingredientService;
+    private final IngredientService ingredientService;
 
     @PostMapping("/register/{refrigeId}")
     public ResponseEntity<?> registerIngredient(@PathVariable("refrigeId") int refrigeId,
@@ -37,8 +36,7 @@ public class IngredientController {
         try{
             ingredientService.deleteIngredient(refrigeId, ingredientId, userId);
             return ResponseEntity.ok("재료 삭제 완료");
-        }catch (Exception e)
-        {
+        }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -53,7 +51,6 @@ public class IngredientController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
     @PatchMapping("/{refrigeId}/{ingredientId}/edit")
     public ResponseEntity<?> editIngredient(@PathVariable("refrigeId") int refrigeId,
                                             @PathVariable("ingredientId") int ingredientId,
@@ -66,4 +63,11 @@ public class IngredientController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    // 재료 데이터 추가
+    @PostMapping("/insert")
+    public ResponseEntity insertIngredient() {
+        return ResponseEntity.ok(ingredientService.insertIngredient());
+    }
 }
+

@@ -1,8 +1,8 @@
 package still88.backend.domain.ingredient.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CookieValue;
 import still88.backend.dto.ingredient.EditIngredientRequestDTO;
@@ -16,6 +16,7 @@ import java.time.LocalDate;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class IngredientServiceImpl implements IngredientService {
     private final IngredientRepository ingredientRepository;
     private final RefrigeListRepository refrigeListRepository;
@@ -23,20 +24,9 @@ public class IngredientServiceImpl implements IngredientService {
     private final UserRepository userRepository;
     private final RefrigeRepository refrigeRepository;
 
-    @Autowired
-    public IngredientServiceImpl(IngredientRepository ingredientRepository,
-                                 RefrigeListRepository refrigeListRepository,
-                                 ShareRefrigeRepository shareRefrigeRepository,
-                                 UserRepository userRepository, RefrigeRepository refrigeRepository) {
-        this.ingredientRepository = ingredientRepository;
-        this.refrigeListRepository = refrigeListRepository;
-        this.shareRefrigeRepository = shareRefrigeRepository;
-        this.userRepository = userRepository;
-        this.refrigeRepository = refrigeRepository;
-    }
-
     @Override
     public void registerIngredient(int refrigeId, RegisterIngredientDTO request, String userId) {
+
         try {
             RefrigeList refirigeList = refrigeListRepository.findByRefrigeId(refrigeId);
             Ingredient ingredient = ingredientRepository.findIngredientByIngredientName(request.getIngredientName());
@@ -92,9 +82,10 @@ public class IngredientServiceImpl implements IngredientService {
         LocalDate createdDate = refrige.getCreatedDate();
         LocalDate ingredientDeadline = refrige.getIngredientDeadline();
         int ingredientNum = refrige.getIngredientNum();
+        String ingredientMemo = refrige.getIngredientMemo();
 
         IngredientDetailResponseDTO ingredientDetail = new IngredientDetailResponseDTO(ingredientPlace, ingredientName,
-                                                                                        createdDate, ingredientDeadline, ingredientNum);
+                createdDate, ingredientDeadline, ingredientNum, ingredientMemo);
 
         return ingredientDetail;
     }
@@ -107,12 +98,20 @@ public class IngredientServiceImpl implements IngredientService {
 
         Refrige refrige = refrigeRepository.findRefrigeByRefrigeListAndIngredientAndUser(refrigeList, ingredient, user);
 
-        String ingredientName = request.getIngredientName();
-        LocalDate ingredientDeadline = request.getIngredientDeadline();
         LocalDate createdDate = request.getCreatedDate();
+        LocalDate ingredientDeadline = request.getIngredientDeadline();
         int ingredientNum = request.getIngredientNum();
+        String ingredientPlace = request.getIngredientPlace();
+        String ingredientMemo = request.getIngredientMemo();
 
-        refrige.updateInfo(createdDate, ingredientDeadline, ingredientNum, ingredientName);
+        refrige.updateInfo(createdDate, ingredientDeadline, ingredientNum, ingredientPlace, ingredientMemo);
         refrigeRepository.save(refrige);
+    }
+
+    public Ingredient insertIngredient() {
+        return ingredientRepository.save(Ingredient.builder()
+                .ingredientName("목살")
+                .ingredientCategory("고기")
+                .build());
     }
 }
