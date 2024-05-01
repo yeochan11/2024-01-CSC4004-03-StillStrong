@@ -56,7 +56,19 @@ public class IngredientServiceImpl implements IngredientService {
             refrigeRepository.save(refrige);
 
         }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
 
+    @Override
+    public void deleteIngredient(int refrigeId, int ingredientId, @CookieValue String userId) {
+        try {
+            RefrigeList refrigeList = refrigeListRepository.findByRefrigeId(refrigeId);
+            Ingredient ingredient = ingredientRepository.findIngredientByIngredientId(ingredientId);
+            User user = userRepository.findUserByUserId(Integer.parseInt(userId));
+            refrigeRepository.deleteRefrigeByRefrigeListAndIngredientAndUser(refrigeList, ingredient, user);
+        }catch (Exception e){
+            throw new RuntimeException(e);
         }
 
     }

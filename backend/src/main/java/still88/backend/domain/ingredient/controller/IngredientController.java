@@ -2,6 +2,7 @@ package still88.backend.domain.ingredient.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class IngredientController {
      */
     @PostMapping("/register/{refrigeId}")
     public ResponseEntity<?> registerIngredient(@PathVariable("refrigeId") int refrigeId,
-                                                @RequestParam RegisterIngredientDTO request,
+                                                @RequestBody RegisterIngredientDTO request,
                                                 @CookieValue String userId){
         try{
             ingredientService.registerIngredient(refrigeId, request, userId);
@@ -33,4 +34,17 @@ public class IngredientController {
         }
     }
 
+    @DeleteMapping("/{refrigeId}/{ingredientId}")
+    public ResponseEntity<?> deleteIngredient(@PathVariable("refrigeId") int refrigeId,
+                                              @PathVariable("ingredientId") int ingredientId,
+                                              @CookieValue String userId)
+    {
+        try{
+            ingredientService.deleteIngredient(refrigeId, ingredientId, userId);
+            return ResponseEntity.ok("재료 삭제 완료");
+        }catch (Exception e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
