@@ -14,3 +14,4 @@ public class EditIngredientRequestDTO {
     private String ingredientMemo;
     private String ingredientPlace;
 }
+

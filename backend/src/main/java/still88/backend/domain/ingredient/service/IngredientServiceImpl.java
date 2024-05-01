@@ -1,5 +1,7 @@
 package still88.backend.domain.ingredient.service;
 
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.time.LocalDate;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class IngredientServiceImpl implements IngredientService {
     private final IngredientRepository ingredientRepository;
     private final RefrigeListRepository refrigeListRepository;
@@ -22,20 +25,9 @@ public class IngredientServiceImpl implements IngredientService {
     private final UserRepository userRepository;
     private final RefrigeRepository refrigeRepository;
 
-    @Autowired
-    public IngredientServiceImpl(IngredientRepository ingredientRepository,
-                                 RefrigeListRepository refrigeListRepository,
-                                 ShareRefrigeRepository shareRefrigeRepository,
-                                 UserRepository userRepository, RefrigeRepository refrigeRepository) {
-        this.ingredientRepository = ingredientRepository;
-        this.refrigeListRepository = refrigeListRepository;
-        this.shareRefrigeRepository = shareRefrigeRepository;
-        this.userRepository = userRepository;
-        this.refrigeRepository = refrigeRepository;
-    }
-
     @Override
-    public void registerIngredient(int refrigeId, RegisterIngredientDTO request, @CookieValue String userId) {
+    public void registerIngredient(int refrigeId, RegisterIngredientDTO request, String userId) {
+
         try {
             RefrigeList refirigeList = refrigeListRepository.findByRefrigeId(refrigeId);
             Ingredient ingredient = ingredientRepository.findIngredientByIngredientName(request.getIngredientName());
@@ -66,7 +58,8 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public void deleteIngredient(int refrigeId, int ingredientId, @CookieValue String userId) {
+    @Transactional
+    public void deleteIngredient(int refrigeId, int ingredientId, String userId) {
         try {
             RefrigeList refrigeList = refrigeListRepository.findByRefrigeId(refrigeId);
             Ingredient ingredient = ingredientRepository.findIngredientByIngredientId(ingredientId);
@@ -75,14 +68,15 @@ public class IngredientServiceImpl implements IngredientService {
         }catch (Exception e){
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
-    public IngredientDetailResponseDTO ingredientDetail(int refrigeId, int ingredientId) {
+    public IngredientDetailResponseDTO ingredientDetail(int refrigeId, int ingredientId, String userId) {
         Ingredient ingredient = ingredientRepository.findIngredientByIngredientId(ingredientId);
         RefrigeList refrigeList = refrigeListRepository.findByRefrigeId(refrigeId);
-        Refrige refrige = refrigeRepository.findRefrigeByRefrigeListAndIngredient(refrigeList, ingredient);
+        User user = userRepository.findUserByUserId(Integer.parseInt(userId));
+
+        Refrige refrige = refrigeRepository.findRefrigeByRefrigeListAndIngredientAndUser(refrigeList, ingredient, user);
 
         String ingredientPlace = refrige.getIngredientPlace();
         String ingredientName = ingredient.getIngredientName();
@@ -98,26 +92,20 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public void editIngredient(int refrigeId, int ingredientId, EditIngredientRequestDTO request) {
+    public void editIngredient(int refrigeId, int ingredientId, EditIngredientRequestDTO request, String userId) {
         RefrigeList refrigeList = refrigeListRepository.findByRefrigeId(refrigeId);
         Ingredient ingredient = ingredientRepository.findIngredientByIngredientId(ingredientId);
+        User user = userRepository.findUserByUserId(Integer.parseInt(userId));
 
-        Refrige refrige = refrigeRepository.findRefrigeByRefrigeListAndIngredient(refrigeList, ingredient);
+        Refrige refrige = refrigeRepository.findRefrigeByRefrigeListAndIngredientAndUser(refrigeList, ingredient, user);
 
-        LocalDate ingredientDeadline = request.getIngredientDeadline();
         LocalDate createdDate = request.getCreatedDate();
+        LocalDate ingredientDeadline = request.getIngredientDeadline();
         int ingredientNum = request.getIngredientNum();
         String ingredientPlace = request.getIngredientPlace();
         String ingredientMemo = request.getIngredientMemo();
 
         refrige.updateInfo(createdDate, ingredientDeadline, ingredientNum, ingredientPlace, ingredientMemo);
         refrigeRepository.save(refrige);
-    }
-
-    public Ingredient insertIngredient() {
-        return ingredientRepository.save(Ingredient.builder()
-                .ingredientName("목살")
-                .ingredientCategory("고기")
-                .build());
     }
 }

@@ -7,7 +7,6 @@ import still88.backend.entity.Ingredient;
 import java.util.List;
 
 public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
-
     Ingredient findIngredientByIngredientId(int ingredientId);
 
     Ingredient findIngredientByIngredientName(String ingredientName);

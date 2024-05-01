@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface RefrigeListRepository extends JpaRepository<RefrigeList, Long> {
     List<RefrigeList> findByUser(User user);
+
     RefrigeList findByRefrigeId(int refrigeId);
 }

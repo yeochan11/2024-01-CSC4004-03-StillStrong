@@ -14,8 +14,9 @@ import java.util.List;
 public interface RefrigeRepository extends JpaRepository<Refrige, Long> {
     void deleteRefrigeByRefrigeListAndIngredientAndUser(RefrigeList refrigeList, Ingredient ingredient, User user);
 
-    Refrige findRefrigeByRefrigeListAndIngredient(RefrigeList refrigeList, Ingredient ingredient);
+    Refrige findRefrigeByRefrigeListAndIngredientAndUser(RefrigeList refrigeList, Ingredient ingredient, User user);
 
     @Query("SELECT r.ingredient.ingredientId FROM Refrige r WHERE r.refrigeList.refrigeId = :refrigeId")
     List<Integer> findIngredientIdsByRefrigeId(int refrigeId);
 }
+

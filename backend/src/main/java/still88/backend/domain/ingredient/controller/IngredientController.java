@@ -1,5 +1,7 @@
 package still88.backend.domain.ingredient.controller;
 
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,18 +13,18 @@ import still88.backend.dto.ingredient.RegisterIngredientDTO;
 @RestController
 @Slf4j
 @RequestMapping("/refrige/ingredient")
+@RequiredArgsConstructor
 public class IngredientController {
-    @Autowired
-    IngredientService ingredientService;
+    private final IngredientService ingredientService;
 
     @PostMapping("/register/{refrigeId}")
     public ResponseEntity<?> registerIngredient(@PathVariable("refrigeId") int refrigeId,
                                                 @RequestBody RegisterIngredientDTO request,
-                                                @CookieValue String userId) {
-        try {
+                                                @CookieValue String userId){
+        try{
             ingredientService.registerIngredient(refrigeId, request, userId);
             return ResponseEntity.ok("재료 등록 완료");
-        } catch (Exception e) {
+        }catch(Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -31,39 +33,35 @@ public class IngredientController {
     public ResponseEntity<?> deleteIngredient(@PathVariable("refrigeId") int refrigeId,
                                               @PathVariable("ingredientId") int ingredientId,
                                               @CookieValue String userId) {
-        try {
+        try{
             ingredientService.deleteIngredient(refrigeId, ingredientId, userId);
             return ResponseEntity.ok("재료 삭제 완료");
-        } catch (Exception e) {
+        }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @GetMapping("/{refrigeId}/{ingredientId}")
     public ResponseEntity<?> showIngredientDetail(@PathVariable("refrigeId") int refrigeId,
-                                                  @PathVariable("ingredientId") int ingredientId) {
-        try {
-            return ResponseEntity.ok(ingredientService.ingredientDetail(refrigeId, ingredientId));
-        } catch (Exception e) {
+                                                  @PathVariable("ingredientId") int ingredientId,
+                                                  @CookieValue String userId) {
+        try{
+            return ResponseEntity.ok(ingredientService.ingredientDetail(refrigeId, ingredientId,userId));
+        }catch(Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
-    @PatchMapping("/edit/{refrigeId}/{ingredientId}")
+    @PatchMapping("/{refrigeId}/{ingredientId}/edit")
     public ResponseEntity<?> editIngredient(@PathVariable("refrigeId") int refrigeId,
                                             @PathVariable("ingredientId") int ingredientId,
-                                            @RequestBody EditIngredientRequestDTO request) {
-        try {
-            ingredientService.editIngredient(refrigeId, ingredientId, request);
+                                            @RequestBody EditIngredientRequestDTO request,
+                                            @CookieValue String userId) {
+        try{
+            ingredientService.editIngredient(refrigeId, ingredientId, request, userId);
             return ResponseEntity.ok("수정완료");
-        } catch (Exception e) {
+        }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
-    // 재료 데이터 추가
-    @PostMapping("/insert")
-    public ResponseEntity insertIngredient() {
-        return ResponseEntity.ok(ingredientService.insertIngredient());
-    }
 }
+

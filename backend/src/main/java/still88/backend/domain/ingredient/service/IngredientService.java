@@ -7,13 +7,12 @@ import still88.backend.dto.ingredient.RegisterIngredientDTO;
 import still88.backend.entity.Ingredient;
 
 public interface IngredientService {
-    void registerIngredient(int refrigeId, RegisterIngredientDTO registerIngredientDTO, @CookieValue String userId);
+    void registerIngredient(int refrigeId, RegisterIngredientDTO registerIngredientDTO, String userId);
 
-    void deleteIngredient(int refrigeId, int ingredientId, @CookieValue String userId);
+    void deleteIngredient(int refrigeId, int ingredientId, String userId);
 
-    IngredientDetailResponseDTO ingredientDetail(int refrigeId, int ingredientId);
+    IngredientDetailResponseDTO ingredientDetail(int refrigeId, int ingredientId, String userId);
 
-    void editIngredient(int refrigeId, int ingredientId, EditIngredientRequestDTO request);
-
-    public Ingredient insertIngredient();
+    void editIngredient(int refrigeId, int ingredientId, EditIngredientRequestDTO request, String userId);
 }
+
