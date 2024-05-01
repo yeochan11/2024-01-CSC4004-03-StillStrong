@@ -2,6 +2,7 @@ package still88.backend.domain.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import still88.backend.domain.user.service.UserService;
 import still88.backend.dto.user.UserRequestDto;
 import still88.backend.dto.user.UserResponseDto;
 import still88.backend.entity.User;
