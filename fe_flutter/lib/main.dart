@@ -1,8 +1,10 @@
+import 'package:fe_flutter/MyRefrigerator/myRefrigerator.dart';
 import 'package:flutter/material.dart';
-import 'signup.dart';
+import 'MyRefrigerator/myRefrigerator.dart';
+//import 'signup.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MyRefrigerator());
 }
 
 class MyApp extends StatelessWidget {
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routes: {
-        '/signup': (context) => SignupPage(),
+        //'/signup': (context) => SignupPage(),
       },
     );
   }

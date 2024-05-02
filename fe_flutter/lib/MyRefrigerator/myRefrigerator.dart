@@ -27,8 +27,7 @@ class MyRefrigerator extends StatelessWidget {
           body: Container(
             child: Column(
               children: [
-                Text('기본 냉장고'),
-                DropdownExample(),
+                DropdownRefrige(),
                 IngredientSearch(),
                 Row(
                   children: [
