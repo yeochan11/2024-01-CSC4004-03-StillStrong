@@ -10,17 +10,17 @@ Widget buildTextFormField({
 }) {
   return Container(
     width: 300.0,
+    height: 57.0,
     child: TextFormField(
       controller: controller,
       obscureText: isPassword,
       validator: validator != null
           ? (value) {
             // 내부, 외부 validator 모두 수행
-              final internalResult = validator!(value);
-              if (internalResult != null) {
-                return internalResult;
-              }
-            // 빌드된 위젯에서 정의한 validator 실행
+            final internalResult = validator!(value);
+            if (internalResult != null) {
+              return internalResult;
+            }
             if (value == null || value.isEmpty) {
               return '$labelText을 입력해주세요.';
             }
