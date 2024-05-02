@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'login/login.dart';
-import 'login/signup.dart';
+import 'login/join.dart';
+import 'register/category.dart';
+import 'register/allergy.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,19 +25,12 @@ class MyApp extends StatelessWidget {
               color: Colors.white,
             ),
         ),
-        textButtonTheme: TextButtonThemeData(
-            style: TextButton.styleFrom(
-              backgroundColor: const Color(0xffF6A90A),
-              padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-            ),
-        ),
       ),
       routes: {
         '/login': (context) => LoginPage(),
-        '/signup': (context) => SignupPage(),
+        '/join': (context) => JoinPage(),
+        '/register/category': (context) => CategoryPage(),
+        '/register/allergy': (context) => AllergyPage(),
       },
     );
   }
