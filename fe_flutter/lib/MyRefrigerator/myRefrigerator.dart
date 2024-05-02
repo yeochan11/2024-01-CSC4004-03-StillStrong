@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'myRefrigeratorDropdown.dart';
 import 'ingredientSearch.dart';
+import 'ingredientSelect.dart';
 
 class MyRefrigerator extends StatelessWidget {
   const MyRefrigerator({super.key});
@@ -29,15 +30,10 @@ class MyRefrigerator extends StatelessWidget {
               children: [
                 DropdownRefrige(),
                 IngredientSearch(),
+                IngredientSelect(),
                 Row(
                   children: [
-                    ElevatedButton(
-                        onPressed: (){},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0Xffffbc3b),
-                        ),
-                        child: Text('재료 선택', style: TextStyle(color: Colors.white),)
-                    ),
+                    SizedBox(),
                   ],
                 ),
                 SizedBox(
