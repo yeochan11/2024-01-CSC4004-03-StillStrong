@@ -20,9 +20,7 @@ class _JoinPageState extends State<JoinPage> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      _selectedSex = null;
-    });
+    _selectedSex = null;
   }
 
   @override
@@ -51,7 +49,7 @@ class _JoinPageState extends State<JoinPage> {
           },
           child: Center(
             child: Padding(
-              padding: EdgeInsets.only(top: 115.0),
+              padding: EdgeInsets.only(top: 40.0),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -145,10 +143,14 @@ class _JoinPageState extends State<JoinPage> {
                                 if (value == null || value.isEmpty) {
                                   return '나이를 입력해주세요.';
                                 }
-                                if (value is! int) {
-                                  return '숫자 형식으로 입력해주세요.';
+                                else {
+                                  try {
+                                    int.parse(value);
+                                    return null;
+                                  } catch (e) {
+                                    return '숫자 형식으로 입력해주세요.';
+                                  }
                                 }
-                                return null;
                               },
                           ),
                           SizedBox(height: 10.0,),
