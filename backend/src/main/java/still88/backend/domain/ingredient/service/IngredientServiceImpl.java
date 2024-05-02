@@ -50,7 +50,6 @@ public class IngredientServiceImpl implements IngredientService {
                     .build();
 
             refrigeRepository.save(refrige);
-
         }catch (Exception e){
             log.info("error={}", e);
             throw new RuntimeException(e);

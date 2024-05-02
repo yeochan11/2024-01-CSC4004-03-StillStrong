@@ -2,6 +2,7 @@ package still88.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,7 @@ public class User{
     private String userFavorite;
 
     @Column
+    @ColumnDefault("true")
     private Boolean alarm;
 
     // 생성자 + Builder로 일관성 유지
