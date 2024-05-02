@@ -77,17 +77,17 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Inter
-      fonts:
-        - asset: assets/fonts/Inter-Bold.ttf
-          weight: 700
-        - asset: assets/fonts/Inter-ExtraBold.ttf
-          weight: 800
-        - asset: assets/fonts/Inter-Black.ttf
-          weight: 900
     - family: Pretendard
       fonts:
         - asset: assets/fonts/Pretendard-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Pretendard-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Pretendard-Medium.ttf
+          weight: 500
+    - family: NotoSans
+      fonts:
+        - asset: assets/fonts/NotoSansKR-Bold.ttf
           weight: 700
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
