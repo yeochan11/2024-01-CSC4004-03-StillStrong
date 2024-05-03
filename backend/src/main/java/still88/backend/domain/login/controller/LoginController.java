@@ -42,8 +42,12 @@ public class LoginController {
 
     @GetMapping("/logout")
     public ResponseEntity<?> logout(@CookieValue String userId){
-        LogoutResponseDTO response = loginService.logout(userId);
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, response.getCookie().toString()).body(response.getUserNickname() + "님 안녕히 가세요!");
+        try {
+            LogoutResponseDTO response = loginService.logout(userId);
+            return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, response.getCookie().toString()).body(response.getUserNickname() + "님 안녕히 가세요!");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PostMapping("/find-pw")

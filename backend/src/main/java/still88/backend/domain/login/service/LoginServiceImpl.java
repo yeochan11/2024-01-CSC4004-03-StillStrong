@@ -61,6 +61,9 @@ public class LoginServiceImpl implements LoginService{
     @Override
     public LogoutResponseDTO logout(String userId) {
         User user = userRepository.findUserByUserId(Integer.parseInt(userId));
+        if(user == null)
+            throw new IllegalArgumentException("사용자 인식 불가");
+
         Cookie cookie = new Cookie("userId", null);
         cookie.setMaxAge(0);
         return new LogoutResponseDTO(user.getUserNickname(), cookie);
