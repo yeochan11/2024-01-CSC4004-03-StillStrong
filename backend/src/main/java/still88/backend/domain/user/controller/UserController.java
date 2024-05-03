@@ -3,11 +3,8 @@ package still88.backend.domain.user.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import still88.backend.domain.user.service.UserService;
-import still88.backend.dto.user.UserRequestDto;
 
 @Controller
 @RequiredArgsConstructor
@@ -16,9 +13,9 @@ public class UserController {
 
     private final UserService userService;
 
-    // 유저 생성하기
-    @PostMapping("/create")
-    public ResponseEntity<?> insertUser(@RequestBody UserRequestDto userRequestDto) {
-        return ResponseEntity.ok(userService.createUser(userRequestDto));
+    // 사용자 정보 조회
+    @GetMapping("/get/detail/{userId}")
+    public ResponseEntity<?> getUserDetail(@PathVariable int userId) {
+        return ResponseEntity.ok(userService.getUserDetail(userId));
     }
 }
