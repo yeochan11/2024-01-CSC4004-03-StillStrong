@@ -38,7 +38,7 @@ public class User{
     @Column(nullable = false)
     private Boolean userGender;
 
-    @Column(nullable = false)
+    @Column
     private String userImage;
 
     @Column
@@ -61,5 +61,15 @@ public class User{
         this.userAllergy = userAllergy;
         this.userFavorite = userFavorite;
         this.alarm = alarm;
+    }
+
+    @Builder
+    public User(String userNickname, int userAge, Boolean userGender){
+        this.userNickname = userNickname;
+        this.userAge = userAge;
+        this.userGender = userGender;
+        this.userImage = "";
+        this.userAllergy = "";
+        this.userFavorite = "";
     }
 }
