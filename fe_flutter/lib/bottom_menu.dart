@@ -1,21 +1,20 @@
-import 'package:fe_flutter/IngredientMoreInformation.dart';
-import 'package:fe_flutter/MainPage.dart';
-import 'package:fe_flutter/MyPage.dart';
-import 'package:fe_flutter/main.dart';
+import 'package:fe_flutter/main_page.dart';
+import 'package:fe_flutter/my_page.dart';
+import 'package:fe_flutter/my_refrigerator.dart';
 import 'package:flutter/material.dart';
 
 class BottomMenu extends StatefulWidget {
   const BottomMenu({super.key});
 
   @override
-  _BottomMenuState createState() => _BottomMenuState();
+  BottomMenuState createState() => BottomMenuState();
 }
 
-class _BottomMenuState extends State<BottomMenu> {
+class BottomMenuState extends State<BottomMenu> {
   int _selectedIndex = 1;
 
   final List<Widget> _navIndex = [ //하단 바에서 선택할 페이지
-    IngredientMoreInformation(), // My 냉장고 페이지로 변경해야 함.
+    MyRefrigerator(),
     MainPage(),
     MyPage(),
   ];
@@ -25,6 +24,7 @@ class _BottomMenuState extends State<BottomMenu> {
       _selectedIndex = index;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
