@@ -1,5 +1,8 @@
+import 'package:fe_flutter/bottom_menu.dart';
 import 'package:flutter/material.dart';
-import 'signup.dart';
+//import 'signup.dart';
+import 'ingredient_more_information/ingredient_more_information.dart';
+import 'main_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
           toolbarHeight: 58.0,
-          backgroundColor: const Color(0xffFFC94A),
+          backgroundColor: Color(0xffFFC94A),
           centerTitle: true,
           titleTextStyle: TextStyle(
             fontFamily: 'Pretendard',
@@ -24,7 +27,10 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routes: {
-        '/signup': (context) => SignupPage(),
+        //'/signup': (context) => SignupPage(),
+        //'/Mainpage': (context) => MainPage(), //메인페이지 생기면
+        '/IngredientMoreInformation': (context) => IngredientMoreInformation(),
+        '/BottomMenu': (context) => BottomMenu(),
       },
     );
   }
@@ -34,7 +40,7 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context,'/signup');
+      Navigator.pushReplacementNamed(context,'/BottomMenu');
     });
     return Scaffold(
       backgroundColor: const Color(0xffFFC94A),
@@ -58,3 +64,5 @@ class WelcomePage extends StatelessWidget {
       );
   }
 }
+
+
