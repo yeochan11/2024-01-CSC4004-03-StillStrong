@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class CustomIconButton extends StatelessWidget {
   final String buttonText;
@@ -15,27 +16,23 @@ class CustomIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-        onPressed: onPressed,
-        icon: Column(
-          children: [
-            Image.asset(
-              'assets/images/categoryfield.png',
-              height: 80.0,
-              width: 80.0,
+      onPressed: onPressed,
+      icon: Column(
+        children: [
+          icon,
+          Text(
+            buttonText,
+            style: TextStyle(
+              fontFamily: 'Pretendard',
+              fontSize: 17.0,
+              fontWeight: FontWeight.w600,
             ),
-            Text(
-              buttonText,
-              style: TextStyle(
-                fontFamily: 'Pretendard',
-                fontSize: 17.0,
-                fontWeight: FontWeight.w600
-              ),
-            ),
-          ],
-        ),
-        style: IconButton.styleFrom(
-          foregroundColor: const Color(0xffF6A90A),
-        ),
+          ),
+        ],
+      ),
+      style: IconButton.styleFrom(
+        foregroundColor: const Color(0xffF6A90A),
+      ),
     );
   }
 }
@@ -109,20 +106,20 @@ class _CategoryPageState extends State<CategoryPage> {
                           },
                           child: CustomIconButton(
                               buttonText: '한식',
-                              icon: Image.asset('assets/images/yorijori.png'),
+                              icon: Image.asset('assets/images/food/koreanfood.png', width: 80, height: 80,),
                               onPressed: () {},
                           ),
                         ),
                         SizedBox(width: 15.0),
                         CustomIconButton(
                           buttonText: '일식',
-                          icon: Image.asset('assets/images/yorijori.png'),
+                          icon: Image.asset('assets/images/food/japanesefood.png', width: 80, height: 80,),
                           onPressed: () {},
                         ),
                         SizedBox(width: 15.0),
                         CustomIconButton(
                           buttonText: '중식',
-                          icon: Image.asset('assets/images/yorijori.png'),
+                          icon: Image.asset('assets/images/food/chinesefood.png', width: 80, height: 80,),
                           onPressed: () {},
                         ),
                       ],
@@ -132,19 +129,19 @@ class _CategoryPageState extends State<CategoryPage> {
                       children: <Widget> [
                         CustomIconButton(
                           buttonText: '양식',
-                          icon: Image.asset('assets/images/yorijori.png'),
+                          icon: Image.asset('assets/images/food/westernfood.png', width: 80, height: 80,),
                           onPressed: () {},
                         ),
                         SizedBox(width: 15.0),
                         CustomIconButton(
                           buttonText: '아시안',
-                          icon: Image.asset('assets/images/yorijori.png'),
+                          icon: Image.asset('assets/images/food/asianfood.png', width: 80, height: 80,),
                           onPressed: () {},
                         ),
                         SizedBox(width: 15.0),
                         CustomIconButton(
                           buttonText: '찜•탕',
-                          icon: Image.asset('assets/images/yorijori.png'),
+                          icon: Image.asset('assets/images/food/hotfood.png', width: 80, height: 80,),
                           onPressed: () {},
                         ),
                       ],
@@ -154,19 +151,19 @@ class _CategoryPageState extends State<CategoryPage> {
                       children: <Widget> [
                         CustomIconButton(
                           buttonText: '고기',
-                          icon: Image.asset('assets/images/yorijori.png'),
+                          icon: Image.asset('assets/images/food/meat.png', width: 80, height: 80,),
                           onPressed: () {},
                         ),
                         SizedBox(width: 15.0),
                         CustomIconButton(
                           buttonText: '죽',
-                          icon: Image.asset('assets/images/yorijori.png'),
+                          icon: Image.asset('assets/images/food/porridge.png', width: 80, height: 80,),
                           onPressed: () {},
                         ),
                         SizedBox(width: 15.0),
                         CustomIconButton(
                           buttonText: '채소',
-                          icon: Image.asset('assets/images/yorijori.png'),
+                          icon: Image.asset('assets/images/food/salad.png', width: 80, height: 80,),
                           onPressed: () {},
                         ),
                       ],
