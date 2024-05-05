@@ -14,8 +14,6 @@ class _IngredientEditState extends State<IngredientEdit> {
   String ingredientName = "사과";
   String createdDate = '2024-05-01';
   String ingredientDeadLine = '2024-05-06';
-  
-  
   int ingredientNum = 5;
   final List<bool> _isSelected = [false, false, false];
   final List<String> _ingredientPlaceList = ["냉장","냉동","실내"];
@@ -234,8 +232,5 @@ class _IngredientEditState extends State<IngredientEdit> {
         ),
       ),
     );
-  }
-  DateTime getTime(String dateString) {
-    return DateTime.parse(dateString);
   }
 }
