@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import still88.backend.dto.refrige.GetRefrigeListResponseDto;
 import still88.backend.dto.refrige.RefrigeInfoDto;
 import still88.backend.dto.user.GetUserDetailResponseDto;
+import still88.backend.dto.user.UpdateUserDetailRequestDto;
 import still88.backend.entity.IdPassword;
 import still88.backend.entity.RefrigeList;
 import still88.backend.entity.User;
@@ -36,5 +37,34 @@ public class UserServiceImpl implements UserService {
                 .userImage(user.getUserImage())
                 .secretEmail(idPassword.getSecretEmail())
                 .build();
+    }
+
+    public GetUserDetailResponseDto updateUserDetail(int userId, UpdateUserDetailRequestDto updateUserDetailRequestDto) {
+        User user = userRepository.findById((long) userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+
+        IdPassword idPassword = idPasswordRepository.findById((long) userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+
+        user.updateInfo(updateUserDetailRequestDto.getUserNickname(),
+                updateUserDetailRequestDto.getUserAge(),
+                updateUserDetailRequestDto.getUserGender(),
+                updateUserDetailRequestDto.getUserImage(),
+                updateUserDetailRequestDto.getAlarm());
+        idPassword.updateEmail(updateUserDetailRequestDto.getSecretEmail());
+
+        User updatedUser = userRepository.save(user);
+        IdPassword updatedIdPassword = idPasswordRepository.save(idPassword);
+
+        return GetUserDetailResponseDto.builder()
+                .userId(String.valueOf(updatedUser.getUserId()))
+                .userNickname(updatedUser.getUserNickname())
+                .userAge(updatedUser.getUserAge())
+                .userGender(updatedUser.getUserGender())
+                .userImage(updatedUser.getUserImage())
+                .alarm(updatedUser.getAlarm())
+                .secretEmail(updatedIdPassword.getSecretEmail())
+                .build();
+
     }
 }

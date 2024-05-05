@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import still88.backend.domain.user.service.UserService;
+import still88.backend.dto.user.UpdateUserDetailRequestDto;
 
 @Controller
 @RequiredArgsConstructor
@@ -19,5 +20,9 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserDetail(userId));
     }
 
-
+    // 사용자 정보 수정
+    @PatchMapping("/update/{userId}")
+    public ResponseEntity<?> updateUserDetail(@PathVariable int userId, @RequestBody UpdateUserDetailRequestDto updateUserDetailRequestDto) {
+        return ResponseEntity.ok(userService.updateUserDetail(userId, updateUserDetailRequestDto));
+    }
 }

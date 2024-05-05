@@ -30,6 +30,11 @@ public class IdPassword {
     public void updateSecretPassword(String newEncodedPassword){
         this.secretPassword = newEncodedPassword;
     }
+
+    public void updateEmail(String newEmail) {
+        this.secretEmail = newEmail;
+    }
+
     // 생성자 + Builder로 일관성 유지
     @Builder
     public IdPassword(User user, String secretEmail, String secretPassword) {
