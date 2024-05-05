@@ -12,15 +12,16 @@ class _IngredientEditState extends State<IngredientEdit> {
 //TEST
   String ingredientPlace = "실내";
   String ingredientName = "사과";
-  DateTime createdDate = DateTime(2024, 05, 01);
-  DateTime ingredientDeadLine = DateTime(2024, 05, 06);
+  String createdDate = '2024-05-01';
+  String ingredientDeadLine = '2024-05-06';
+  
+  
   int ingredientNum = 5;
   final List<bool> _isSelected = [false, false, false];
   final List<String> _ingredientPlaceList = ["냉장","냉동","실내"];
-
+  
   @override
   Widget build(BuildContext context) {
-
     for (int i = 0; i < 3; i++) {
      if (ingredientPlace.compareTo(_ingredientPlaceList[i]) == 0) {
        _isSelected[i] = true;
@@ -125,7 +126,7 @@ class _IngredientEditState extends State<IngredientEdit> {
                           initialValue: ingredientNum.toString(),
                           onChanged: (value) {
                             setState(() {
-                              ingredientName = value;
+                              ingredientNum = int.parse(value);
                             });
                           },
                           decoration: const InputDecoration(
@@ -149,13 +150,13 @@ class _IngredientEditState extends State<IngredientEdit> {
                         OutlinedButton(onPressed: () async{ // 등록날짜 버튼
                           final DateTime? selectDate = await showDatePicker(
                             context: context,
-                              initialDate : createdDate,
+                              initialDate : DateTime.parse(createdDate),
                               firstDate: DateTime(1950),
                               lastDate: DateTime.now(),
                           );
                           if(selectDate != null) {
                             setState(() {
-                              createdDate = selectDate;
+                              createdDate = selectDate.toString().substring(0,10);
                             });
                           }
                         },
@@ -168,7 +169,7 @@ class _IngredientEditState extends State<IngredientEdit> {
                            child: Row(
                              mainAxisAlignment: MainAxisAlignment.start,
                              children: [
-                               Text(createdDate.toString().substring(0,10),style: const TextStyle(color: Colors.black)),
+                               Text(createdDate,style: const TextStyle(color: Colors.black)),
                                const SizedBox(height: 50,width: 155),
                                const Text('등록날짜', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.amber)),
                              ],
@@ -178,13 +179,13 @@ class _IngredientEditState extends State<IngredientEdit> {
                         OutlinedButton(onPressed: () async{ // 유통기한 버튼
                           final DateTime? selectDate = await showDatePicker(
                             context: context,
-                            initialDate : ingredientDeadLine,
-                            firstDate: createdDate,
+                            initialDate : DateTime.parse(ingredientDeadLine),
+                            firstDate:  DateTime.parse(createdDate),
                             lastDate: DateTime(2100),
                           );
                           if(selectDate != null) {
                             setState(() {
-                              ingredientDeadLine = selectDate;
+                              ingredientDeadLine = selectDate.toString().substring(0,10);
                             });
                           }
                         },
@@ -197,7 +198,7 @@ class _IngredientEditState extends State<IngredientEdit> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text(ingredientDeadLine.toString().substring(0,10),style: const TextStyle(color: Colors.black)),
+                                Text(ingredientDeadLine,style: const TextStyle(color: Colors.black)),
                                 const SizedBox(height: 50,width: 155),
                                 const Text('등록날짜', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.amber)),
                               ],
@@ -215,6 +216,11 @@ class _IngredientEditState extends State<IngredientEdit> {
                   minimumSize: MaterialStateProperty.all(const Size(350,40)),
                 ),
                 onPressed: () {
+                  // 값 변경 테스트용
+                  // debugPrint('Current Name : $ingredientName'); 
+                  // debugPrint('Current Number : $ingredientNum');
+                  // debugPrint('Current CreatedDate : ${createdDate.toString()}');
+                  // debugPrint('Current DeadLine : ${ingredientDeadLine.toString()}');
                   Navigator.pop(context);
                 },
                 child: const Text(
@@ -228,5 +234,8 @@ class _IngredientEditState extends State<IngredientEdit> {
         ),
       ),
     );
+  }
+  DateTime getTime(String dateString) {
+    return DateTime.parse(dateString);
   }
 }

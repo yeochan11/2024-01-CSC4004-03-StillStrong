@@ -13,8 +13,8 @@ class _IngredientMoreInformationState extends State<IngredientMoreInformation> {
 //TEST
   String ingredientPlace = "실내";
   String ingredientName = '사과';
-  DateTime createdDate = DateTime(2024, 05, 01);
-  DateTime ingredientDeadLine = DateTime(2024, 05, 06);
+  String createdDate = '2024-05-01';
+  String ingredientDeadLine = '2024-05-06';
   int ingredientNum = 5;
 
   @override
@@ -70,7 +70,7 @@ class _IngredientMoreInformationState extends State<IngredientMoreInformation> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                Text('D-${ingredientDeadLine.difference(createdDate).inDays}',
+                                Text('D-${DateTime.parse(ingredientDeadLine).difference(DateTime.parse(createdDate)).inDays.toString()}',
                                 style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),),
                               ],
                             ),
@@ -101,7 +101,7 @@ class _IngredientMoreInformationState extends State<IngredientMoreInformation> {
                           style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 20),
                         ),
                         Text(
-                          createdDate.toString().substring(0,10),
+                          createdDate,
                           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                         ),
                       ],
@@ -115,7 +115,7 @@ class _IngredientMoreInformationState extends State<IngredientMoreInformation> {
                           style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 20),
                         ),
                         Text(
-                            ingredientDeadLine.toString().substring(0,10),
+                            ingredientDeadLine,
                             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                         ),
                       ],
