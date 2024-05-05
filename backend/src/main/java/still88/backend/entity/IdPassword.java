@@ -27,6 +27,9 @@ public class IdPassword {
     @Column(nullable = false)
     private String secretPassword;
 
+    public void updateSecretPassword(String newEncodedPassword){
+        this.secretPassword = newEncodedPassword;
+    }
     // 생성자 + Builder로 일관성 유지
     @Builder
     public IdPassword(User user, String secretEmail, String secretPassword) {
