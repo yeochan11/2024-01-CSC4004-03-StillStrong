@@ -5,8 +5,10 @@ import org.springframework.stereotype.Service;
 import still88.backend.dto.refrige.GetRefrigeListResponseDto;
 import still88.backend.dto.refrige.RefrigeInfoDto;
 import still88.backend.dto.user.GetUserDetailResponseDto;
+import still88.backend.entity.IdPassword;
 import still88.backend.entity.RefrigeList;
 import still88.backend.entity.User;
+import still88.backend.repository.IdPasswordRepository;
 import still88.backend.repository.UserRepository;
 
 import java.util.List;
@@ -16,9 +18,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final IdPasswordRepository idPasswordRepository;
 
     public GetUserDetailResponseDto getUserDetail(int userId) {
         User user = userRepository.findById((long) userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+
+        IdPassword idPassword = idPasswordRepository.findById((long) userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
 
         return GetUserDetailResponseDto.builder()
@@ -28,6 +34,7 @@ public class UserServiceImpl implements UserService {
                 .userAge(user.getUserAge())
                 .alarm(user.getAlarm())
                 .userImage(user.getUserImage())
+                .secretEmail(idPassword.getSecretEmail())
                 .build();
     }
 }

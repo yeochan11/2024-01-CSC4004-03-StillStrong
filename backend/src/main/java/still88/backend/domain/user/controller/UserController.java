@@ -18,4 +18,6 @@ public class UserController {
     public ResponseEntity<?> getUserDetail(@PathVariable int userId) {
         return ResponseEntity.ok(userService.getUserDetail(userId));
     }
+
+
 }

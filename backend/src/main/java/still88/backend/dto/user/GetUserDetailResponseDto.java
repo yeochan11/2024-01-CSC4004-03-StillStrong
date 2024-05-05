@@ -21,4 +21,6 @@ public class GetUserDetailResponseDto {
     private String userImage;
 
     private Boolean alarm;
+
+    private String secretEmail;
 }
