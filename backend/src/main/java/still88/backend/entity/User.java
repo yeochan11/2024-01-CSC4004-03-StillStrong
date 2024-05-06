@@ -51,18 +51,14 @@ public class User{
     @ColumnDefault("true")
     private Boolean alarm;
 
-    // 생성자 + Builder로 일관성 유지
-    @Builder
-    public User(String userNickname, int userAge, Boolean userGender, String userImage, String userAllergy, String userFavorite, Boolean alarm) {
+    public void updateInfo(String userNickname, int userAge, Boolean userGender, String userImage, Boolean alarm) {
         this.userNickname = userNickname;
         this.userAge = userAge;
         this.userGender = userGender;
         this.userImage = userImage;
-        this.userAllergy = userAllergy;
-        this.userFavorite = userFavorite;
-        this.alarm = alarm;
     }
 
+    // 생성자 + Builder로 일관성 유지
     @Builder
     public User(String userNickname, int userAge, Boolean userGender){
         this.userNickname = userNickname;

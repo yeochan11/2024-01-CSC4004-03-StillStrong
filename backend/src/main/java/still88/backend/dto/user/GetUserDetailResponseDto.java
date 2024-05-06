@@ -1,12 +1,17 @@
 package still88.backend.dto.user;
 
 import jakarta.persistence.Column;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-public class UserRequestDto {
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class GetUserDetailResponseDto {
+
+    private String userId;
+
     private String userNickname;
 
     private int userAge;
@@ -15,7 +20,7 @@ public class UserRequestDto {
 
     private String userImage;
 
-    private String userAllergy;
+    private Boolean alarm;
 
-    private String userFavorite;
+    private String secretEmail;
 }

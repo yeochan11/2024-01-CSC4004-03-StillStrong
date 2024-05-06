@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
-
 public class BackendApplication {
 
 	public static void main(String[] args) {

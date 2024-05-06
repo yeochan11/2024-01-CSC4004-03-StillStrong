@@ -1,8 +1,11 @@
 package still88.backend.domain.user.service;
 
-import still88.backend.dto.user.UserRequestDto;
-import still88.backend.dto.user.UserResponseDto;
+import still88.backend.dto.user.GetUserDetailResponseDto;
+import still88.backend.dto.user.UpdateUserDetailRequestDto;
 
 public interface UserService {
-    public UserResponseDto createUser(UserRequestDto userRequestDto);
+    GetUserDetailResponseDto getUserDetail(int userId);
+
+    GetUserDetailResponseDto updateUserDetail(int userId, UpdateUserDetailRequestDto updateUserDetailRequestDto);
+
 }
