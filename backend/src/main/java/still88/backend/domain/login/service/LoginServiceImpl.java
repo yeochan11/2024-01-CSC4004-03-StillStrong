@@ -46,12 +46,17 @@ public class LoginServiceImpl implements LoginService{
         Boolean gender = request.getGender();
         int userAge = request.getUserAge();
         String userNickname = request.getUserNickname();
-        User user = User.builder().userAge(userAge).userGender(gender).userNickname(userNickname).build();
-
         String secretEmail = request.getSecretEmail();
         String secretPassword = toSHA256(request.getSecretPassword());
+
+        IdPassword checkDuplicate = idPasswordRepository.findIdPasswordBySecretEmail(secretEmail);
+        if(checkDuplicate != null){
+            throw new IllegalArgumentException("중복된 이메일입니다.");
+        }
+
+        User user = User.builder().userAge(userAge).userGender(gender).userNickname(userNickname).build();
         IdPassword idPassword = IdPassword.builder().user(user)
-                                        .secretEmail(secretEmail).secretPassword(secretPassword).build();
+                .secretEmail(secretEmail).secretPassword(secretPassword).build();
 
         userRepository.save(user);
         idPasswordRepository.save(idPassword);

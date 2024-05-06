@@ -9,6 +9,8 @@ public interface IdPasswordRepository extends JpaRepository<IdPassword, Long> {
     IdPassword findIdPasswordByUser(User user);
 
     IdPassword findIdPasswordBySecretEmailAndUser(String secretEmail, User user);
+
+    IdPassword findIdPasswordBySecretEmail(String secretEmail);
     @Query("SELECT i.user FROM IdPassword i WHERE i.secretEmail = :email")
     User findIdUserBySecretEmail(String email);
 }
