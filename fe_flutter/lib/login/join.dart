@@ -51,7 +51,7 @@ class _JoinPageState extends State<JoinPage> {
           },
           child: Center(
             child: Padding(
-              padding: EdgeInsets.only(top: 115.0),
+              padding: EdgeInsets.only(top: 40.0),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
