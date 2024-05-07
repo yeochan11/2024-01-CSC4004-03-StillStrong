@@ -13,6 +13,7 @@ class _IngredientSelectState extends State<IngredientSelect> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         ElevatedButton(
             onPressed:(){
