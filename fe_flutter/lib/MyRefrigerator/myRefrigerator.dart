@@ -5,6 +5,9 @@ import 'ingredientSelect.dart';
 
 class MyRefrigerator extends StatelessWidget {
   const MyRefrigerator({super.key});
+
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -46,6 +49,12 @@ class MyRefrigerator extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: (){},
+            shape: CircleBorder(),
+            child: Icon(Icons.add),
+            backgroundColor: Color(0Xffffc94a),
           ),
           bottomNavigationBar: BottomNavigationBar(
             items: [
