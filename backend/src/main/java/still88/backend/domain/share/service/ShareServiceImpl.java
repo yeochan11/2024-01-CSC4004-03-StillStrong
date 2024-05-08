@@ -6,5 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ShareServiceImpl implements ShareService {
+    public void inviteUser(String userNickname, int refrigeId) {
 
+    }
 }
