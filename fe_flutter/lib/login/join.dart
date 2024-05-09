@@ -145,10 +145,14 @@ class _JoinPageState extends State<JoinPage> {
                                 if (value == null || value.isEmpty) {
                                   return '나이를 입력해주세요.';
                                 }
-                                if (value is! int) {
-                                  return '숫자 형식으로 입력해주세요.';
+                                else {
+                                  try {
+                                    int.parse(value);
+                                    return null;
+                                  } catch (e) {
+                                    return '숫자 형식으로 입력해주세요.';
+                                  }
                                 }
-                                return null;
                               },
                           ),
                           SizedBox(height: 10.0,),
@@ -194,10 +198,10 @@ class _JoinPageState extends State<JoinPage> {
                                         fontSize: 13.0,
                                         ),
                                       ),
-                                      duration: Duration(milliseconds: 3000),
+                                      duration: Duration(milliseconds: 2000),
                                     ),
                                   );
-                                  Future.delayed(Duration(seconds: 2), () {
+                                  Future.delayed(Duration(seconds: 1), () {
                                     Navigator.pushReplacementNamed(context, '/register/category');
                                   });
                                 }
