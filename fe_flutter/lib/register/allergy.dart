@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
@@ -24,10 +23,10 @@ class _AllergyPageState extends State<AllergyPage> {
     Allergy(id: 3, name: "돼지고기"),
     Allergy(id: 4, name: "땅콩"),
   ];
-  final _items = _allergy.map((allergy) => MultiSelectItem<Allergy>(allergy, allergy.name))
+  final _items = _allergy
+      .map((allergy) => MultiSelectItem<Allergy>(allergy, allergy.name))
       .toList();
   List<Allergy> _selectedAllergy = [];
-  //List<String> _selectedAllergy = [];
   String? _currentItem;
   final _multiSelectKey = GlobalKey<FormFieldState>();
 
@@ -81,7 +80,8 @@ class _AllergyPageState extends State<AllergyPage> {
                         fontFamily: 'Pretendard',
                         fontSize: 14,
                       ),
-                      title: Text("알러지 선택",
+                      title: Text(
+                        "알러지 선택",
                         style: TextStyle(
                           fontFamily: 'Pretendard',
                           fontSize: 16,
@@ -93,6 +93,20 @@ class _AllergyPageState extends State<AllergyPage> {
                         fontSize: 14,
                       ),
                       searchable: true,
+                      searchHint: '알러지 유발식품 검색',
+                      searchHintStyle: TextStyle(
+                        fontFamily: 'Pretendard',
+                        fontSize: 14,
+                      ),
+                      chipDisplay: MultiSelectChipDisplay(
+                        chipColor: const Color(0xffF2F4F7),
+                        textStyle: TextStyle(color: Colors.white),
+                        onTap: (value) {
+                          setState(() {
+                            _selectedAllergy.remove(value);
+                          });
+                        },
+                      ),
                       selectedColor: const Color(0xffF6A90A),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -114,11 +128,87 @@ class _AllergyPageState extends State<AllergyPage> {
                         ),
                       ),
                       onConfirm: (results) {
-                        _selectedAllergy = results;
+                        _selectedAllergy = results.cast<Allergy>();
                       },
                     ),
                   ),
-                  SizedBox(height: 20,),
+                  SizedBox(height: 20),
+                  Container(
+                    width: 300.0,
+                    height: 30.0,
+                    child: TextButton(
+                      onPressed: () {
+                        if (_selectedAllergy.isNotEmpty) {
+                          Navigator.pushReplacementNamed(context, '/main');
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              title: Text('알림'),
+                              content: Text('알러지를 선택해주세요!'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('확인'),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: const Color(0xffF6A90A),
+                        padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      child: Text(
+                        '확인',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Pretendard',
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Container(
+                      width: 90,
+                      height: 40,
+                      child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            _selectedAllergy.clear();
+                          });
+                        },
+                        style: ButtonStyle(
+                          // add your custom style here
+                        ),
+                        child: Row(
+                          children: [
+                            Image.asset('assets/images/noselection.png'),
+                            SizedBox(width: 3),
+                            Text(
+                              '없어요',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Pretendard',
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
