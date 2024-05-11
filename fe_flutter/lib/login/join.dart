@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fe_flutter/login/buildTextFormField.dart';
+import 'package:fe_flutter/widget/buildTextFormField.dart';
 
 class JoinPage extends StatefulWidget {
   @override
