@@ -20,9 +20,7 @@ class _JoinPageState extends State<JoinPage> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      _selectedSex = null;
-    });
+    _selectedSex = null;
   }
 
   @override

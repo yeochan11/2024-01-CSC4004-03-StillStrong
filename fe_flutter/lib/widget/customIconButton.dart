@@ -42,9 +42,7 @@ class _CustomIconButtonState extends State<CustomIconButton> {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 2, horizontal: 3),
         decoration: BoxDecoration(
-          border: isPressed ? Border.all(
               color: const Color(0xffF6A90A), width: 1.5) : Border.all(color: Colors.transparent),
-          borderRadius: BorderRadius.circular(15.0),
         ),
         child: Column(
           children: [
