@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fe_flutter/register/customIconButton.dart';
+import 'package:fe_flutter/widget/customIconButton.dart';
 
 class CategoryPage extends StatefulWidget {
   @override
@@ -117,7 +117,46 @@ class _CategoryPageState extends State<CategoryPage> {
                         height: 30.0,
                         child: TextButton(
                           onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/register/allergy');
+                            if (selectedButtons.isNotEmpty) {
+                              Navigator.pushNamed(context, '/register/allergy');
+                            }
+                            else {
+                              showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  title: Text('알림',
+                                    style: TextStyle(
+                                      fontFamily: 'Pretendard',
+                                      fontSize: 24.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  content: Text('취향을 선택해주세요!',
+                                    style: TextStyle(
+                                      fontFamily: 'Pretendard',
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  backgroundColor: Colors.white,
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('확인',
+                                        style: TextStyle(
+                                          fontFamily: 'Pretendard',
+                                          fontSize: 15.0,
+                                          color: const Color(0xffF6A90A),
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
                           },
                           style: TextButton.styleFrom(
                             backgroundColor: const Color(0xffF6A90A),
@@ -145,7 +184,8 @@ class _CategoryPageState extends State<CategoryPage> {
                           height: 40,
                           child: TextButton(
                             onPressed: () {
-                              Navigator.pushReplacementNamed(context, '/register/allergy');
+                              selectedButtons.clear();
+                              Navigator.pushNamed(context, '/register/allergy');
                             },
                               child: Row(
                                 children: [

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
+List<Allergy> _selectedAllergy = [];
+
 class AllergyPage extends StatefulWidget {
   @override
   _AllergyPageState createState() => _AllergyPageState();
@@ -26,15 +28,7 @@ class _AllergyPageState extends State<AllergyPage> {
   final _items = _allergy
       .map((allergy) => MultiSelectItem<Allergy>(allergy, allergy.name))
       .toList();
-  List<Allergy> _selectedAllergy = [];
-  String? _currentItem;
-  final _multiSelectKey = GlobalKey<FormFieldState>();
 
-  @override
-  void initState() {
-    _selectedAllergy = _allergy;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +70,9 @@ class _AllergyPageState extends State<AllergyPage> {
                   SingleChildScrollView(
                     child: MultiSelectDialogField(
                       items: _items,
+                      onConfirm: (results) {
+                        _selectedAllergy = results.cast<Allergy>();
+                      },
                       itemsTextStyle: TextStyle(
                         fontFamily: 'Pretendard',
                         fontSize: 14,
@@ -100,11 +97,17 @@ class _AllergyPageState extends State<AllergyPage> {
                       ),
                       chipDisplay: MultiSelectChipDisplay(
                         chipColor: const Color(0xffF2F4F7),
-                        textStyle: TextStyle(color: Colors.white),
+                        textStyle: TextStyle(
+                          fontFamily: 'Pretendard',
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black
+                        ),
                         onTap: (value) {
                           setState(() {
                             _selectedAllergy.remove(value);
                           });
+                          //print(_selectedAllergy.map((allergy) => allergy.name).join(', '));
                         },
                       ),
                       selectedColor: const Color(0xffF6A90A),
@@ -127,9 +130,6 @@ class _AllergyPageState extends State<AllergyPage> {
                           fontSize: 14,
                         ),
                       ),
-                      onConfirm: (results) {
-                        _selectedAllergy = results.cast<Allergy>();
-                      },
                     ),
                   ),
                   SizedBox(height: 20),
@@ -144,14 +144,34 @@ class _AllergyPageState extends State<AllergyPage> {
                           showDialog(
                             context: context,
                             builder: (_) => AlertDialog(
-                              title: Text('알림'),
-                              content: Text('알러지를 선택해주세요!'),
+                              title: Text('알림',
+                                style: TextStyle(
+                                  fontFamily: 'Pretendard',
+                                  fontSize: 24.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              content: Text('알러지를 선택해주세요!',
+                                style: TextStyle(
+                                  fontFamily: 'Pretendard',
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              backgroundColor: Colors.white,
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text('확인'),
+                                  child: Text('확인',
+                                    style: TextStyle(
+                                      fontFamily: 'Pretendard',
+                                      fontSize: 15.0,
+                                      color: const Color(0xffF6A90A),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -186,11 +206,9 @@ class _AllergyPageState extends State<AllergyPage> {
                         onPressed: () {
                           setState(() {
                             _selectedAllergy.clear();
+                            Navigator.pushReplacementNamed(context, '/main');
                           });
                         },
-                        style: ButtonStyle(
-                          // add your custom style here
-                        ),
                         child: Row(
                           children: [
                             Image.asset('assets/images/noselection.png'),
