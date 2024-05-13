@@ -198,7 +198,7 @@ class _IngredientEditState extends State<IngredientEdit> {
                               children: [
                                 Text(ingredientDeadLine,style: const TextStyle(color: Colors.black)),
                                 const SizedBox(height: 50,width: 155),
-                                const Text('등록날짜', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.amber)),
+                                const Text('유통기한', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.amber)),
                               ],
                             )
                         ),
