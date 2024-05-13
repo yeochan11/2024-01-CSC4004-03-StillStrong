@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'login/login.dart';
 import 'login/join.dart';
+import 'register/category.dart';
+import 'register/allergy.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,6 +29,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => LoginPage(),
         '/join': (context) => JoinPage(),
+        '/register/category': (context) => CategoryPage(),
+        '/register/allergy': (context) => AllergyPage(),
       },
     );
   }

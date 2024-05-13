@@ -196,10 +196,10 @@ class _JoinPageState extends State<JoinPage> {
                                         fontSize: 13.0,
                                         ),
                                       ),
-                                      duration: Duration(milliseconds: 3000),
+                                      duration: Duration(milliseconds: 2000),
                                     ),
                                   );
-                                  Future.delayed(Duration(seconds: 2), () {
+                                  Future.delayed(Duration(seconds: 1), () {
                                     Navigator.pushReplacementNamed(context, '/register/category');
                                   });
                                 }
