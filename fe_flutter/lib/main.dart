@@ -41,22 +41,22 @@ class WelcomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xffFFC94A),
       body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset('assets/images/welcomelogo.png'),
-                  SizedBox(height: 20),
-                  Text("냉장고를 털고 싶을 땐?", style: TextStyle(fontFamily: 'Pretendard', fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
-                  SizedBox(height: 3),
-                  Image.asset('assets/images/yorijori.png'),
-                ],
-              ),
-            ],
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+           children: <Widget>[
+             Column(
+               mainAxisAlignment: MainAxisAlignment.center,
+               children: <Widget>[
+                 Image.asset('assets/images/welcomelogo.png'),
+                 SizedBox(height: 20),
+                 Text("냉장고를 털고 싶을 땐?", style: TextStyle(fontFamily: 'Pretendard', fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
+                 SizedBox(height: 3),
+                 Image.asset('assets/images/yorijori.png'),
+              ],
+            ),
+          ],
         ),
-      );
+      ),
+    );
   }
 }
