@@ -1,8 +1,11 @@
+import 'package:fe_flutter/bottom_menu.dart';
 import 'package:flutter/material.dart';
 import 'login/login.dart';
 import 'login/join.dart';
 import 'register/category.dart';
 import 'register/allergy.dart';
+import 'main_page.dart';
+import 'ingredient_more_information/ingredient_more_information.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,15 +18,15 @@ class MyApp extends StatelessWidget {
       home: WelcomePage(),
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
-            toolbarHeight: 58.0,
-            backgroundColor: Color(0xffFFC94A),
-            centerTitle: true,
-            titleTextStyle: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+          toolbarHeight: 58.0,
+          backgroundColor: Color(0xffFFC94A),
+          centerTitle: true,
+          titleTextStyle: TextStyle(
+            fontFamily: 'Pretendard',
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          )
         ),
       ),
       routes: {
@@ -31,6 +34,9 @@ class MyApp extends StatelessWidget {
         '/join': (context) => JoinPage(),
         '/register/category': (context) => CategoryPage(),
         '/register/allergy': (context) => AllergyPage(),
+        //'/Mainpage': (context) => MainPage(), //메인페이지 생기면
+        '/IngredientMoreInformation': (context) => IngredientMoreInformation(),
+        '/BottomMenu': (context) => BottomMenu(),
       },
     );
   }
@@ -69,3 +75,5 @@ class WelcomePage extends StatelessWidget {
     );
   }
 }
+
+
