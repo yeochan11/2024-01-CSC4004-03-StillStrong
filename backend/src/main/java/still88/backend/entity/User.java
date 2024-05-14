@@ -56,6 +56,7 @@ public class User{
         this.userAge = userAge;
         this.userGender = userGender;
         this.userImage = userImage;
+        this.alarm = alarm;
     }
 
     // 생성자 + Builder로 일관성 유지
