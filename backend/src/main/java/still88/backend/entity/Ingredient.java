@@ -22,7 +22,7 @@ public class Ingredient {
     @Column(nullable = false)
     private String ingredientName;
 
-    @Column(nullable = false)
+    @Column
     private String ingredientCategory;
 
     // 연관 관계 매핑
