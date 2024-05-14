@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class IngredientEdit extends StatefulWidget {
   const IngredientEdit({super.key});
@@ -20,7 +19,7 @@ class _IngredientEditState extends State<IngredientEdit> {
   
   @override
   Widget build(BuildContext context) {
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++) { // 초기 보관 상태 지정하는 부분
      if (ingredientPlace.compareTo(_ingredientPlaceList[i]) == 0) {
        _isSelected[i] = true;
      }
@@ -37,7 +36,7 @@ class _IngredientEditState extends State<IngredientEdit> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const SizedBox(height: 50),
-            Container( // 임시
+            Container(
               width: 350,
               height: 450,
               decoration: BoxDecoration(
@@ -58,7 +57,7 @@ class _IngredientEditState extends State<IngredientEdit> {
                         ),
                         Column(
                           children: [
-                            ToggleButtons(
+                            ToggleButtons( // 보관 장소 지정 버튼
                               disabledColor: Colors.white,
                               renderBorder: false,
                               borderRadius: BorderRadius.circular(10),
@@ -102,6 +101,7 @@ class _IngredientEditState extends State<IngredientEdit> {
                             });
                           },
                           decoration: const InputDecoration(
+                            prefixText: '  ',
                               suffixText: '이름    ',
                               suffixStyle: TextStyle( fontSize: 14, fontWeight: FontWeight.bold, color: Colors.amber),
                             enabledBorder: OutlineInputBorder(
@@ -118,30 +118,54 @@ class _IngredientEditState extends State<IngredientEdit> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        TextFormField( // 수량 버튼
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                          initialValue: ingredientNum.toString(),
-                          onChanged: (value) {
-                            setState(() {
-                              ingredientNum = int.parse(value);
-                            });
-                          },
-                          decoration: const InputDecoration(
-                            prefixText: '  ',
-                            suffixText: '수량    ',
-                              suffixStyle: TextStyle( fontSize: 14, fontWeight: FontWeight.bold, color: Colors.amber),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.grey,
-                                  width: 2,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.amber,
+                        Container(
+                          height: 60,
+                          width: 330,
+                          decoration: BoxDecoration(border: Border.all(width:2.0, color: Colors.grey), borderRadius: BorderRadius.circular(5.0)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 70,
+                                    child: Text('     $ingredientNum개', style: const TextStyle(fontSize: 16),),
                                   ),
+                                  Container(width: 30, height: 30, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100.0)),
+                                    child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white24,
+                                            shape: const CircleBorder(),
+                                            padding: const EdgeInsets.all(0)
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            ingredientNum = ingredientNum - 1;
+                                          });
+                                        },
+                                        child: const Icon(Icons.remove, color: Colors.black, size: 20.0,)
+                                    ),),
+                                  const SizedBox(width: 5,),
+                                  Container(width: 30, height: 30, decoration: BoxDecoration(borderRadius: BorderRadius.circular(100.0)),
+                                    child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white24,
+                                            shape: const CircleBorder(),
+                                            padding: const EdgeInsets.all(0)
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            ingredientNum = ingredientNum + 1;
+                                          });
+                                        },
+                                        child: const Icon(Icons.add, color: Colors.black, size: 20.0,)
+                                    ),),
+                                ],
                               ),
+
+
+                              const Text('수량      ' ,style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.amber),),
+                            ],
                           ),
                         ),
                         const SizedBox(height: 10,),
@@ -159,6 +183,7 @@ class _IngredientEditState extends State<IngredientEdit> {
                           }
                         },
                           style: OutlinedButton.styleFrom(
+                            side: const BorderSide(color: Colors.grey, width: 2.0),
                             fixedSize: const Size(350, 60),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(6),
@@ -188,6 +213,7 @@ class _IngredientEditState extends State<IngredientEdit> {
                           }
                         },
                             style: OutlinedButton.styleFrom(
+                              side: const BorderSide(color: Colors.grey, width: 2.0),
                               fixedSize: const Size(350, 60),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(6),
@@ -208,14 +234,14 @@ class _IngredientEditState extends State<IngredientEdit> {
                 ),
             ),
             const SizedBox(height: 20,),
-            ElevatedButton(
+            ElevatedButton( //완료 버튼
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(const Color(0xffFFC94A)),
                   minimumSize: MaterialStateProperty.all(const Size(350,40)),
                 ),
                 onPressed: () {
                   // 값 변경 테스트용
-                  // debugPrint('Current Name : $ingredientName'); 
+                  // debugPrint('Current Name : $ingredientName');
                   // debugPrint('Current Number : $ingredientNum');
                   // debugPrint('Current CreatedDate : ${createdDate.toString()}');
                   // debugPrint('Current DeadLine : ${ingredientDeadLine.toString()}');
