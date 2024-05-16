@@ -18,15 +18,15 @@ class MyApp extends StatelessWidget {
       home: WelcomePage(),
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
-          toolbarHeight: 58.0,
-          backgroundColor: Color(0xffFFC94A),
-          centerTitle: true,
-          titleTextStyle: TextStyle(
-            fontFamily: 'Pretendard',
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          )
+            toolbarHeight: 58.0,
+            backgroundColor: Color(0xffFFC94A),
+            centerTitle: true,
+            titleTextStyle: TextStyle(
+              fontFamily: 'Pretendard',
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            )
         ),
       ),
       routes: {
@@ -75,5 +75,3 @@ class WelcomePage extends StatelessWidget {
     );
   }
 }
-
-
