@@ -5,6 +5,7 @@ class MyPage extends StatelessWidget { //재료 상세 정보 페이지
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('마이 페이지'),
       ),
       body: const Center(

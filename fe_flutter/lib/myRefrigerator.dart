@@ -1,4 +1,4 @@
-import 'package:fe_flutter/ingredient_more_information/ingredient_more_information.dart';
+import 'package:fe_flutter/ingredientMoreInfo/ingredientMoreInfo.dart';
 import 'package:flutter/material.dart';
 // 임시 페이지입니다.
 class MyRefrigerator extends StatelessWidget {
@@ -8,6 +8,7 @@ class MyRefrigerator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('My 냉장고'),
       ),
       body: Center(

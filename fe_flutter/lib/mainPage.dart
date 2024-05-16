@@ -5,6 +5,7 @@ class MainPage extends StatelessWidget { //재료 상세 정보 페이지
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Image.asset('assets/images/yorijori.png', scale: 1.5),
 
 

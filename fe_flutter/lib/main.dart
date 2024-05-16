@@ -1,11 +1,11 @@
-import 'package:fe_flutter/bottom_menu.dart';
+import 'package:fe_flutter/bottomMenu.dart';
 import 'package:flutter/material.dart';
+import 'ingredientMoreInfo/ingredientMoreInfo.dart';
 import 'login/login.dart';
 import 'login/join.dart';
 import 'register/category.dart';
 import 'register/allergy.dart';
-import 'main_page.dart';
-import 'ingredient_more_information/ingredient_more_information.dart';
+import 'mainPage.dart';
 
 void main() {
   runApp(MyApp());
