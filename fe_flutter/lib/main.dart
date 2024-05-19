@@ -1,10 +1,9 @@
-import 'package:fe_flutter/MyRefrigerator/myRefrigerator.dart';
+import 'package:fe_flutter/MyRefrigerator/myRefrig.dart';
 import 'package:flutter/material.dart';
-import 'MyRefrigerator/myRefrigerator.dart';
 //import 'signup.dart';
 
 void main() {
-  runApp(MyRefrigerator());
+  runApp(MyRefrigPage());
 }
 
 class MyApp extends StatelessWidget {

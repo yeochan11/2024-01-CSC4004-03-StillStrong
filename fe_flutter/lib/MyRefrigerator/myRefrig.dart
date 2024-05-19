@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'myRefrigeratorDropdown.dart';
 import 'ingredientSearch.dart';
 import 'ingredientSelect.dart';
-import 'package:fe_flutter/widget/ingredIconButton.dart';
 
 class MyRefrigPage extends StatefulWidget {
   @override
@@ -115,13 +114,7 @@ class _MyRefrigPageState extends State<MyRefrigPage> {
                 backgroundColor: Color(0Xffffc94a),
               ),
             ),
-            bottomNavigationBar: BottomNavigationBar(
-              items: [
-                BottomNavigationBarItem(icon: Icon(Icons.star), label: 'home'),
-                BottomNavigationBarItem(icon: Icon(Icons.star), label: 'star'),
-                BottomNavigationBarItem(icon: Icon(Icons.star), label: 'iiii'),
-              ],
-            ),
+
         ),
     );
   }
