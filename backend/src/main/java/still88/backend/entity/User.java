@@ -43,10 +43,10 @@ public class User{
     @Column
     private String userImage;
 
-    @Column
+    @Column(columnDefinition = "json")
     private String userAllergy;
 
-    @Column
+    @Column(columnDefinition = "json")
     private String userFavorite;
 
     @Column
@@ -59,6 +59,10 @@ public class User{
         this.userGender = userGender;
         this.userImage = userImage;
         this.alarm = alarm;
+    }
+
+    public void registerFavorite(String userFavorite) {
+        this.userFavorite = userFavorite;
     }
 
     // 생성자 + Builder로 일관성 유지
