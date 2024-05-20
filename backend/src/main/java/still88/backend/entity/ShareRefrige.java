@@ -21,8 +21,14 @@ public class ShareRefrige {
     @JoinColumn(name = "refrigeId", nullable = false)
     private RefrigeList refrigeList;
 
-    // 연관 관계 매핑
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="userId", nullable = false)
-    private User user;
+    // 냉장고를 만든 사용자 아이디
+    @Column(name = "createUserId", nullable = false)
+    private int createUserId;
+
+    // 공유 요청한 사용자 아이디
+    @Column(name = "requestUserId", nullable = false)
+    private int requestUserId;
+
+    @Column(nullable = false)
+    private boolean status;
 }
