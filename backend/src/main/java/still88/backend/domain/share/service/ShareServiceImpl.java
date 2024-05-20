@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import still88.backend.dto.share.AcceptRequestDto;
+import still88.backend.dto.share.GetShareListResponseDto;
 import still88.backend.dto.share.InviteRequestDto;
+import still88.backend.dto.share.ShareRefrigeInfo;
 import still88.backend.entity.RefrigeList;
 import still88.backend.entity.ShareRefrige;
 import still88.backend.entity.User;
@@ -12,7 +14,9 @@ import still88.backend.repository.RefrigeListRepository;
 import still88.backend.repository.ShareRefrigeRepository;
 import still88.backend.repository.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -73,5 +77,45 @@ public class ShareServiceImpl implements ShareService {
         } else {
             throw new IllegalArgumentException("올바르지 않은 응답입니다.");
         }
+    }
+
+    public GetShareListResponseDto getShareList(int userId) {
+        Optional<User> user = userRepository.findById((long) userId);
+        if (user.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 사용자입니다.");
+        }
+
+        List<ShareRefrigeInfo> pendingRequests = shareRefrigeRepository.findByCreateUserIdAndStatus(user.get(), false)
+                .stream()
+                .map(shareRefrige -> ShareRefrigeInfo.builder()
+                        .shareId((long) shareRefrige.getShareId())
+                        .createUserNickname(shareRefrige.getCreateUserId().getUserNickname())
+                        .requestUserNickname(shareRefrige.getRequestUserId().getUserNickname())
+                        .refrigeName(shareRefrige.getRefrigeList().getRefrigeName())
+                        .status(shareRefrige.isStatus())
+                        .build())
+                .collect(Collectors.toList());
+        List<ShareRefrigeInfo> receivedRequests = shareRefrigeRepository.findByRequestUserIdAndStatus(Optional.of(user.get()), false)
+                .stream()
+                .map(shareRefrige -> ShareRefrigeInfo.builder()
+                        .shareId((long) shareRefrige.getShareId())
+                        .createUserNickname(shareRefrige.getCreateUserId().getUserNickname())
+                        .requestUserNickname(shareRefrige.getRequestUserId().getUserNickname())
+                        .refrigeName(shareRefrige.getRefrigeList().getRefrigeName())
+                        .status(shareRefrige.isStatus())
+                        .build())
+                .collect(Collectors.toList());
+
+        List<ShareRefrigeInfo> acceptedRequests = shareRefrigeRepository.findByCreateUserIdAndStatusOrRequestUserIdAndStatus(user.get(), true, user.get(), true)
+                .stream()
+                .map(shareRefrige -> ShareRefrigeInfo.builder()
+                        .shareId((long) shareRefrige.getShareId())
+                        .createUserNickname(shareRefrige.getCreateUserId().getUserNickname())
+                        .requestUserNickname(shareRefrige.getRequestUserId().getUserNickname())
+                        .refrigeName(shareRefrige.getRefrigeList().getRefrigeName())
+                        .status(shareRefrige.isStatus())
+                        .build())
+                .collect(Collectors.toList());
+        return new GetShareListResponseDto(pendingRequests, receivedRequests, acceptedRequests);
     }
 }

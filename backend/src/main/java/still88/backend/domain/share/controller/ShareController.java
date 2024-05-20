@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import still88.backend.domain.share.service.ShareService;
 import still88.backend.dto.refrige.CreateRefrigeRequestDto;
 import still88.backend.dto.share.AcceptRequestDto;
+import still88.backend.dto.share.GetShareListResponseDto;
 import still88.backend.dto.share.InviteRequestDto;
 
 @Controller
@@ -36,6 +37,14 @@ public class ShareController {
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+
+    // 냉장고 공유 요청 현황 조회
+    @GetMapping("/get/shareList/{userid}")
+    public ResponseEntity<?> getShareList(@PathVariable int userid) {
+        GetShareListResponseDto getShareListResponseDto = shareService.getShareList(userid);
+        return ResponseEntity.ok(getShareListResponseDto);
     }
 
 }
