@@ -65,7 +65,12 @@ public class User{
         this.userFavorite = userFavorite;
     }
 
+    public void registerAllergy(String userAllergy) {
+        this.userAllergy = userAllergy;
+    }
+
     // 생성자 + Builder로 일관성 유지
+
     @Builder
     public User(String userNickname, int userAge, Boolean userGender){
         this.userNickname = userNickname;

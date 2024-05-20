@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import still88.backend.dto.refrige.GetRefrigeListResponseDto;
 import still88.backend.dto.refrige.RefrigeInfoDto;
 import still88.backend.dto.user.GetUserDetailResponseDto;
+import still88.backend.dto.user.RegisterAllergyRequestDto;
 import still88.backend.dto.user.RegisterFavoriteRequestDto;
 import still88.backend.dto.user.UpdateUserDetailRequestDto;
 import still88.backend.entity.IdPassword;
@@ -81,10 +82,27 @@ public class UserServiceImpl implements UserService {
             try {
                 String favoritesJson = objectMapper.writeValueAsString(favorites);
                 user.registerFavorite(favoritesJson);
-                System.out.println(favoritesJson);
                 userRepository.save(user);
             } catch (Exception e) {
                 throw new RuntimeException("Failed to convert favorites to JSON", e);
+            }
+        } else {
+            throw new IllegalArgumentException("존재하지 않는 사용자입니다!");
+        }
+    }
+
+    public void registerAllergy(int userId, RegisterAllergyRequestDto registerAllergyRequestDto) {
+        Optional<User> userO = userRepository.findById((long) userId);
+        if (userO.isPresent()) {
+            User user = userO.get();
+            List<String> allergies = List.of(registerAllergyRequestDto.getAllergies());
+
+            try {
+                String allergyJson = objectMapper.writeValueAsString(allergies);
+                user.registerAllergy(allergyJson);
+                userRepository.save(user);
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to convert allergies to JSON", e);
             }
         } else {
             throw new IllegalArgumentException("존재하지 않는 사용자입니다!");

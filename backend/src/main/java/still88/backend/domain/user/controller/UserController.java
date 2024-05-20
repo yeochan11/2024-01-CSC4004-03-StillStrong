@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import still88.backend.domain.user.service.UserService;
+import still88.backend.dto.user.RegisterAllergyRequestDto;
 import still88.backend.dto.user.RegisterFavoriteRequestDto;
 import still88.backend.dto.user.UpdateUserDetailRequestDto;
 
@@ -29,10 +30,21 @@ public class UserController {
 
     // 취향 등록
     @PatchMapping("/register/favorite")
-    public ResponseEntity<?> updateUserFavorites(@CookieValue int userId, @RequestBody RegisterFavoriteRequestDto registerFavoriteRequestDto) {
+    public ResponseEntity<?> registerUserFavorites(@CookieValue int userId, @RequestBody RegisterFavoriteRequestDto registerFavoriteRequestDto) {
         try {
             userService.registerFavorite(userId, registerFavoriteRequestDto);
             return ResponseEntity.ok("취향 등록 완료");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // 알러지 등록
+    @PatchMapping("/register/allergy")
+    public ResponseEntity<?> registerUserAllergies(@CookieValue int userId, @RequestBody RegisterAllergyRequestDto registerAllergyRequestDto) {
+        try {
+            userService.registerAllergy(userId, registerAllergyRequestDto);
+            return ResponseEntity.ok("알러지 등록 완료");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
