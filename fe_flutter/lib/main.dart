@@ -5,7 +5,7 @@ import 'login/login.dart';
 import 'login/join.dart';
 import 'register/category.dart';
 import 'register/allergy.dart';
-import 'ingredientRegister.dart';
+import 'ingredientRegister/ingredientRegister.dart';
 import 'mainPage.dart';
 
 void main() {
