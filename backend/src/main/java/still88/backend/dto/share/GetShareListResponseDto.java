@@ -3,8 +3,6 @@ package still88.backend.dto.share;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import still88.backend.entity.ShareRefrige;
 
 import java.util.List;
 
