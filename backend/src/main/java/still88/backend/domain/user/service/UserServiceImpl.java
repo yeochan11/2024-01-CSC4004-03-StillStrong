@@ -1,10 +1,12 @@
 package still88.backend.domain.user.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import still88.backend.dto.refrige.GetRefrigeListResponseDto;
 import still88.backend.dto.refrige.RefrigeInfoDto;
 import still88.backend.dto.user.GetUserDetailResponseDto;
+import still88.backend.dto.user.RegisterFavoriteRequestDto;
 import still88.backend.dto.user.UpdateUserDetailRequestDto;
 import still88.backend.entity.IdPassword;
 import still88.backend.entity.RefrigeList;
@@ -13,6 +15,7 @@ import still88.backend.repository.IdPasswordRepository;
 import still88.backend.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final IdPasswordRepository idPasswordRepository;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public GetUserDetailResponseDto getUserDetail(int userId) {
         User user = userRepository.findById((long) userId)
@@ -66,5 +70,24 @@ public class UserServiceImpl implements UserService {
                 .secretEmail(updatedIdPassword.getSecretEmail())
                 .build();
 
+    }
+
+    public void registerFavorite(int userId, RegisterFavoriteRequestDto registerFavoriteRequestDto) {
+        Optional<User> userO = userRepository.findById((long) userId);
+        if (userO.isPresent()) {
+            User user = userO.get();
+            List<String> favorites = List.of(registerFavoriteRequestDto.getFavorites());
+
+            try {
+                String favoritesJson = objectMapper.writeValueAsString(favorites);
+                user.registerFavorite(favoritesJson);
+                System.out.println(favoritesJson);
+                userRepository.save(user);
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to convert favorites to JSON", e);
+            }
+        } else {
+            throw new IllegalArgumentException("존재하지 않는 사용자입니다!");
+        }
     }
 }

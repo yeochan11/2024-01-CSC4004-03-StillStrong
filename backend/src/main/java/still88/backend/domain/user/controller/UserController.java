@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import still88.backend.domain.user.service.UserService;
+import still88.backend.dto.user.RegisterFavoriteRequestDto;
 import still88.backend.dto.user.UpdateUserDetailRequestDto;
 
 @Controller
@@ -24,5 +25,16 @@ public class UserController {
     @PatchMapping("/update/{userId}")
     public ResponseEntity<?> updateUserDetail(@PathVariable int userId, @RequestBody UpdateUserDetailRequestDto updateUserDetailRequestDto) {
         return ResponseEntity.ok(userService.updateUserDetail(userId, updateUserDetailRequestDto));
+    }
+
+    // 취향 등록
+    @PatchMapping("/register/favorite")
+    public ResponseEntity<?> updateUserFavorites(@CookieValue int userId, @RequestBody RegisterFavoriteRequestDto registerFavoriteRequestDto) {
+        try {
+            userService.registerFavorite(userId, registerFavoriteRequestDto);
+            return ResponseEntity.ok("취향 등록 완료");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
