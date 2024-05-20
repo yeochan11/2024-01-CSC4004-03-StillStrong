@@ -19,20 +19,16 @@ public class User{
 
     // 연관 관계 매핑
     @OneToMany(mappedBy = "user")
-    private List<ShareRefrige> shareRefriges = new ArrayList<>();
-
-    // 연관 관계 매핑
-    @OneToMany(mappedBy = "user")
     private List<Refrige> refriges = new ArrayList<>();
 
     // 연관 관계 매핑
     @OneToMany(mappedBy = "user")
     private List<RefrigeList> refrigeLists = new ArrayList<>();
 
-    @OneToMany(mappedBy = "createUser")
+    @OneToMany(mappedBy = "createUserId")
     private List<ShareRefrige> createdShareRefriges = new ArrayList<>();
 
-    @OneToMany(mappedBy = "requestUser")
+    @OneToMany(mappedBy = "requestUserId")
     private List<ShareRefrige> requestedShareRefriges = new ArrayList<>();
 
     @Column(nullable = false, length=10)

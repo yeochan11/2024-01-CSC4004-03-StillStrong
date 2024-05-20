@@ -22,12 +22,14 @@ public class ShareRefrige {
     private RefrigeList refrigeList;
 
     // 냉장고를 만든 사용자 아이디
-    @Column(name = "createUserId", nullable = false)
-    private int createUserId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "createUserId", nullable = false)
+    private User createUserId;
 
     // 공유 요청한 사용자 아이디
-    @Column(name = "requestUserId", nullable = false)
-    private int requestUserId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "requestUserId", nullable = false)
+    private User requestUserId;
 
     @Column(nullable = false)
     private boolean status;
