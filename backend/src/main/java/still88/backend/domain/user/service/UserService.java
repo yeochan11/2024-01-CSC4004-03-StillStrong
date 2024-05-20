@@ -1,9 +1,6 @@
 package still88.backend.domain.user.service;
 
-import still88.backend.dto.user.GetUserDetailResponseDto;
-import still88.backend.dto.user.RegisterAllergyRequestDto;
-import still88.backend.dto.user.RegisterFavoriteRequestDto;
-import still88.backend.dto.user.UpdateUserDetailRequestDto;
+import still88.backend.dto.user.*;
 
 public interface UserService {
     GetUserDetailResponseDto getUserDetail(int userId);
@@ -13,4 +10,6 @@ public interface UserService {
     void registerFavorite(int userId, RegisterFavoriteRequestDto registerFavoriteRequestDto);
 
     void registerAllergy(int userId, RegisterAllergyRequestDto registerAllergyRequestDto);
+
+    GetAllergyResponseDto getUserAllergry(int userId);
 }

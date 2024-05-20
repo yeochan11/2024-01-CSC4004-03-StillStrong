@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import still88.backend.domain.user.service.UserService;
+import still88.backend.dto.user.GetAllergyResponseDto;
 import still88.backend.dto.user.RegisterAllergyRequestDto;
 import still88.backend.dto.user.RegisterFavoriteRequestDto;
 import still88.backend.dto.user.UpdateUserDetailRequestDto;
@@ -46,6 +47,17 @@ public class UserController {
             userService.registerAllergy(userId, registerAllergyRequestDto);
             return ResponseEntity.ok("알러지 등록 완료");
         } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // 알러지 조회
+    @GetMapping("/get/allergy")
+    public ResponseEntity<?> getUserAllergy(@CookieValue int userId) {
+        try {
+            GetAllergyResponseDto getAllergyResponseDto = userService.getUserAllergry(userId);
+            return ResponseEntity.ok(getAllergyResponseDto);
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
