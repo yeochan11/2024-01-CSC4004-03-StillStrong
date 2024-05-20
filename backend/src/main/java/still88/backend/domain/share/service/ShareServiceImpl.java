@@ -50,7 +50,7 @@ public class ShareServiceImpl implements ShareService {
         }
     }
 
-    public void acceptShare(int refrigeId, AcceptRequestDto acceptRequestDto) {
+    public void shareStatusUpdate(int refrigeId, AcceptRequestDto acceptRequestDto) {
         int requestUserId = acceptRequestDto.getRequestUserId();
         boolean accept = acceptRequestDto.isAccept();
 

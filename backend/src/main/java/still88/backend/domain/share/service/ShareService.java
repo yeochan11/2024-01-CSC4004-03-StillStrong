@@ -8,7 +8,7 @@ import still88.backend.dto.share.InviteRequestDto;
 public interface ShareService {
     void inviteUser(int refrigeId, InviteRequestDto inviteRequestDto);
 
-    void acceptShare(int refrigeId, AcceptRequestDto acceptRequestDto);
+    void shareStatusUpdate(int refrigeId, AcceptRequestDto acceptRequestDto);
 
     GetShareListResponseDto getShareList(int userId);
 
