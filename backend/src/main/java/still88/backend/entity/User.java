@@ -29,6 +29,12 @@ public class User{
     @OneToMany(mappedBy = "user")
     private List<RefrigeList> refrigeLists = new ArrayList<>();
 
+    @OneToMany(mappedBy = "createUser")
+    private List<ShareRefrige> createdShareRefriges = new ArrayList<>();
+
+    @OneToMany(mappedBy = "requestUser")
+    private List<ShareRefrige> requestedShareRefriges = new ArrayList<>();
+
     @Column(nullable = false, length=10)
     private String userNickname;
 
