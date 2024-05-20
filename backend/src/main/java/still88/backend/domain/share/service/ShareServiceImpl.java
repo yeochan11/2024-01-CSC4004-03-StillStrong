@@ -3,10 +3,7 @@ package still88.backend.domain.share.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import still88.backend.dto.share.AcceptRequestDto;
-import still88.backend.dto.share.GetShareListResponseDto;
-import still88.backend.dto.share.InviteRequestDto;
-import still88.backend.dto.share.ShareRefrigeInfo;
+import still88.backend.dto.share.*;
 import still88.backend.entity.RefrigeList;
 import still88.backend.entity.ShareRefrige;
 import still88.backend.entity.User;
@@ -117,5 +114,26 @@ public class ShareServiceImpl implements ShareService {
                         .build())
                 .collect(Collectors.toList());
         return new GetShareListResponseDto(pendingRequests, receivedRequests, acceptedRequests);
+    }
+
+    public void cancelShare(int refrigeId, CancelRequestDto cancelRequestDto) {
+        Long createUserId = (long) cancelRequestDto.getCreateUserId();
+        String requestUserNickname = cancelRequestDto.getRequestUserNickname();
+
+        Optional<User> createUser = userRepository.findById(createUserId);
+        Optional<User> requestUser = Optional.ofNullable(userRepository.findUserByUserNickname(requestUserNickname));
+        Optional<RefrigeList> refrigeList = refrigeListRepository.findById((long) refrigeId);
+
+        if (createUser.isPresent() && requestUser.isPresent() && refrigeList.isPresent()) {
+            // 공유 요청 취소
+            Optional<ShareRefrige> shareRefrige = shareRefrigeRepository.findByCreateUserIdAndRequestUserIdAndRefrigeList(createUser.get(), requestUser.get(), refrigeList.get());
+            if (shareRefrige.isPresent()) {
+                shareRefrigeRepository.delete(shareRefrige.get());
+            } else {
+                throw new IllegalArgumentException("해당 요청이 존재하지 않습니다.");
+            }
+        } else {
+            throw new IllegalArgumentException("요청 데이터가 없습니다!");
+        }
     }
 }

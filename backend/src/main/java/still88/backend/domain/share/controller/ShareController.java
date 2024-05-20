@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import still88.backend.domain.share.service.ShareService;
 import still88.backend.dto.refrige.CreateRefrigeRequestDto;
 import still88.backend.dto.share.AcceptRequestDto;
+import still88.backend.dto.share.CancelRequestDto;
 import still88.backend.dto.share.GetShareListResponseDto;
 import still88.backend.dto.share.InviteRequestDto;
 
@@ -47,4 +48,14 @@ public class ShareController {
         return ResponseEntity.ok(getShareListResponseDto);
     }
 
+    // 냉장고 공유 요청 취소
+    @DeleteMapping("/cancel/{refrigeId}")
+    public ResponseEntity<?> cancelShareRequest(@PathVariable int refrigeId, @RequestBody CancelRequestDto cancelRequestDto) {
+        try{
+            shareService.cancelShare(refrigeId, cancelRequestDto);
+            return ResponseEntity.ok("공유 요청 취소 완료");
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
