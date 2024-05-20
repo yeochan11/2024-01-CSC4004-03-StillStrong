@@ -16,4 +16,5 @@ public interface ShareRefrigeRepository extends JpaRepository<ShareRefrige, Long
     List<ShareRefrige> findAllByRefrigeList(RefrigeList refrigeList);
     Optional<ShareRefrige> findByCreateUserIdAndRequestUserIdAndRefrigeList(User createUserId, User requestUserId, RefrigeList refrigeList);
 
+    Optional<ShareRefrige> findByRequestUserIdAndRefrigeList(User user, RefrigeList refrigeList);
 }

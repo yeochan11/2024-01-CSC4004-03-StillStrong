@@ -33,4 +33,8 @@ public class ShareRefrige {
 
     @Column(nullable = false)
     private boolean status;
+
+    public void updateStatus(boolean newStatus) {
+        this.status = newStatus;
+    }
 }

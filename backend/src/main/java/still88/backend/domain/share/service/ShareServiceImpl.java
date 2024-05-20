@@ -2,6 +2,8 @@ package still88.backend.domain.share.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import still88.backend.dto.share.AcceptRequestDto;
 import still88.backend.dto.share.InviteRequestDto;
 import still88.backend.entity.RefrigeList;
 import still88.backend.entity.ShareRefrige;
@@ -14,6 +16,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ShareServiceImpl implements ShareService {
     private final ShareRefrigeRepository shareRefrigeRepository;
     private final UserRepository userRepository;
@@ -43,6 +46,32 @@ public class ShareServiceImpl implements ShareService {
             shareRefrigeRepository.save(shareRefrige);
         } else {
             throw new IllegalArgumentException("요청 데이터가 없습니다!");
+        }
+    }
+
+    public void acceptShare(int refrigeId, AcceptRequestDto acceptRequestDto) {
+        int requestUserId = acceptRequestDto.getRequestUserId();
+        boolean accept = acceptRequestDto.isAccept();
+
+        Optional<RefrigeList> refrigeList = refrigeListRepository.findById((long) refrigeId);
+        Optional<User> requestUser = userRepository.findById((long) requestUserId);
+        if (refrigeList.isPresent() && requestUser.isPresent()) {
+            Optional<ShareRefrige> shareRefrige = shareRefrigeRepository.findByRequestUserIdAndRefrigeList(requestUser.get(), refrigeList.get());
+
+            if (shareRefrige.isPresent()) {
+                ShareRefrige shareRequest = shareRefrige.get();
+                if (accept) {
+                    // 요청 수락
+                    shareRequest.updateStatus(true);
+                } else {
+                    // 요청 거절
+                    shareRefrigeRepository.delete(shareRequest);
+                }
+            } else {
+                throw new IllegalArgumentException("해당 요청이 존재하지 않습니다.");
+            }
+        } else {
+            throw new IllegalArgumentException("올바르지 않은 응답입니다.");
         }
     }
 }

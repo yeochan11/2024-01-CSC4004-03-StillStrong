@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import still88.backend.domain.share.service.ShareService;
 import still88.backend.dto.refrige.CreateRefrigeRequestDto;
+import still88.backend.dto.share.AcceptRequestDto;
 import still88.backend.dto.share.InviteRequestDto;
 
 @Controller
@@ -25,4 +26,16 @@ public class ShareController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    // 냉장고 공유 수락/거절
+    @PatchMapping("/accept/{refrigeId}")
+    public ResponseEntity<?> acceptShare(@PathVariable int refrigeId, @RequestBody AcceptRequestDto acceptRequestDto) {
+        try{
+            shareService.acceptShare(refrigeId, acceptRequestDto);
+            return ResponseEntity.ok("수락/거절 완료");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }
