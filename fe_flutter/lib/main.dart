@@ -5,6 +5,7 @@ import 'login/login.dart';
 import 'login/join.dart';
 import 'register/category.dart';
 import 'register/allergy.dart';
+import 'ingredientRegister.dart';
 import 'mainPage.dart';
 
 void main() {
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         //'/Mainpage': (context) => MainPage(), //메인페이지 생기면
         '/IngredientMoreInformation': (context) => IngredientMoreInformation(),
         '/BottomMenu': (context) => BottomMenu(),
+        '/IngredReg': (context) => IngredRegPage(),
       },
     );
   }
