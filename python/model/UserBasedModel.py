@@ -61,7 +61,7 @@ class UBRM:
 
         return user_features_matrix
 
-    def predict(self, userId):
+    def recommend(self, userId):
         user_info = self.read_userInfo()
         user_info = self.normalize_age(user_info)
         user_vector = self.transformUserInfoToVector(user_info)

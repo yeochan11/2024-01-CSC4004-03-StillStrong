@@ -19,6 +19,6 @@ class IBRM:
                 embedding.append(self.word2vec.wv[word])
         return np.mean(np.array(embedding), axis=0) if embedding else np.zeros(self.word2vec.vector_size)
 
-    def score(self, ingredients):
+    def recommend(self, ingredients):
         ingredient_vector = self.embed_recipe(ingredients)
         return [self.cosine_similarity(ingredient_vector, emb_recipe) for emb_recipe in self.embedded_recipes]
