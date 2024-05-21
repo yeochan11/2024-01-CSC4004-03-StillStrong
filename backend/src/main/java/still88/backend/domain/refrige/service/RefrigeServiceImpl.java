@@ -5,14 +5,13 @@ import org.springframework.stereotype.Service;
 import still88.backend.dto.refrige.*;
 import still88.backend.entity.Refrige;
 import still88.backend.entity.RefrigeList;
+import still88.backend.entity.ShareRefrige;
 import still88.backend.entity.User;
-import still88.backend.repository.IngredientRepository;
-import still88.backend.repository.RefrigeListRepository;
-import still88.backend.repository.RefrigeRepository;
-import still88.backend.repository.UserRepository;
+import still88.backend.repository.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +22,7 @@ public class RefrigeServiceImpl implements RefrigeService {
     private final UserRepository userRepository;
     private final RefrigeRepository refrigeRepository;
     private final IngredientRepository ingredientRepository;
+    private final ShareRefrigeRepository shareRefrigeRepository;
 
     public CreateUpdateRefrigeResponseDto createRefrige(String userId, CreateRefrigeRequestDto createRefrigeRequestDto) {
         User user = userRepository.findById(Long.parseLong(userId))
@@ -58,13 +58,31 @@ public class RefrigeServiceImpl implements RefrigeService {
         User user = userRepository.findById((long) userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
 
+        // 내가 생성한 냉장고
         List<RefrigeList> refrigeLists = refrigeListRepository.findByUser(user);
         List<RefrigeInfoDto> refrigeInfoList = refrigeLists.stream()
-                .map(refrigeList -> RefrigeInfoDto.builder()
-                        .refrigeId(refrigeList.getRefrigeId())
-                        .refrigeName(refrigeList.getRefrigeName())
+                .map(refrigeList -> {
+                    boolean isShared = shareRefrigeRepository.findByRefrigeListAndStatus(refrigeList, true).size() > 0;
+                    return RefrigeInfoDto.builder()
+                            .refrigeId(refrigeList.getRefrigeId())
+                            .refrigeName(refrigeList.getRefrigeName())
+                            .share(isShared)
+                            .build();
+                })
+                .collect(Collectors.toList());
+
+        // 공유 냉장고
+        List<ShareRefrige> sharedRefriges = shareRefrigeRepository.findByRequestUserIdAndStatus(Optional.ofNullable(user), true);
+        List<RefrigeInfoDto> sharedRefrigeInfoList = sharedRefriges.stream()
+                .map(shareRefrige -> RefrigeInfoDto.builder()
+                        .refrigeId(shareRefrige.getRefrigeList().getRefrigeId())
+                        .refrigeName(shareRefrige.getRefrigeList().getRefrigeName())
+                        .share(true)
                         .build())
                 .collect(Collectors.toList());
+
+        // 모든 냉장고 합치기
+        refrigeInfoList.addAll(sharedRefrigeInfoList);
 
         return GetRefrigeListResponseDto.builder()
                 .refrigeList(refrigeInfoList)

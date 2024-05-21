@@ -27,8 +27,8 @@ public class Recipe {
     @Column(columnDefinition = "json")
     private String recipeImage;
 
-    // gTEXT 타입으로 지정
-    @Column(columnDefinition = "text")
+    // JSON 타입으로 지정
+    @Column(columnDefinition = "json")
     private String recipeIngredient;
 
     @Column

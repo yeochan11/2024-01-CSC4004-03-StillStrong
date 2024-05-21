@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import still88.backend.entity.RefrigeList;
 import still88.backend.entity.ShareRefrige;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,4 +23,6 @@ public interface ShareRefrigeRepository extends JpaRepository<ShareRefrige, Long
     List<ShareRefrige> findByRequestUserIdAndStatus(Optional<User> requestUserId, boolean status);
 
     List<ShareRefrige> findByCreateUserIdAndStatusOrRequestUserIdAndStatus(User createUserId, boolean status1, User requestUserId, boolean status2);
+
+    List<ShareRefrige> findByRefrigeListAndStatus(RefrigeList refrigeList, boolean status);
 }
