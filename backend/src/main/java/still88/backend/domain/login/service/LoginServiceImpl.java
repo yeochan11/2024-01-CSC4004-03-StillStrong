@@ -57,6 +57,8 @@ public class LoginServiceImpl implements LoginService{
         User user = User.builder().userAge(userAge).userGender(gender).userNickname(userNickname).build();
         IdPassword idPassword = IdPassword.builder().user(user)
                 .secretEmail(secretEmail).secretPassword(secretPassword).build();
+        user.registerAllergy(null);
+        user.registerFavorite(null);
 
         userRepository.save(user);
         idPasswordRepository.save(idPassword);
