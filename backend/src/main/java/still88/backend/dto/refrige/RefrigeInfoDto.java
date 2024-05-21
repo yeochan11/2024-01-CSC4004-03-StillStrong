@@ -11,4 +11,5 @@ public class RefrigeInfoDto {
 
     private int refrigeId;
     private String refrigeName;
+    private boolean share;
 }
