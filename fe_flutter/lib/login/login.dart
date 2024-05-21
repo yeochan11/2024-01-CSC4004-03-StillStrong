@@ -99,10 +99,12 @@ class _LoginPageState extends State<LoginPage> {
                           height: 30.0,
                           child: TextButton(
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
+                            /*if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
-                              Navigator.pushNamed(context, '/main');
-                            }
+                              //Navigator.pushNamed(context, '/main');
+                            }*/
+                            print("email : ${_emailController.text}");
+                            print("password : ${_passwordController.text}");
                           },
                           child: Text(
                             '로그인',
