@@ -19,15 +19,17 @@ public class User{
 
     // 연관 관계 매핑
     @OneToMany(mappedBy = "user")
-    private List<ShareRefrige> shareRefriges = new ArrayList<>();
-
-    // 연관 관계 매핑
-    @OneToMany(mappedBy = "user")
     private List<Refrige> refriges = new ArrayList<>();
 
     // 연관 관계 매핑
     @OneToMany(mappedBy = "user")
     private List<RefrigeList> refrigeLists = new ArrayList<>();
+
+    @OneToMany(mappedBy = "createUserId")
+    private List<ShareRefrige> createdShareRefriges = new ArrayList<>();
+
+    @OneToMany(mappedBy = "requestUserId")
+    private List<ShareRefrige> requestedShareRefriges = new ArrayList<>();
 
     @Column(nullable = false, length=10)
     private String userNickname;
@@ -41,10 +43,10 @@ public class User{
     @Column
     private String userImage;
 
-    @Column
+    @Column(columnDefinition = "json")
     private String userAllergy;
 
-    @Column
+    @Column(columnDefinition = "json")
     private String userFavorite;
 
     @Column
@@ -59,7 +61,16 @@ public class User{
         this.alarm = alarm;
     }
 
+    public void registerFavorite(String userFavorite) {
+        this.userFavorite = userFavorite;
+    }
+
+    public void registerAllergy(String userAllergy) {
+        this.userAllergy = userAllergy;
+    }
+
     // 생성자 + Builder로 일관성 유지
+
     @Builder
     public User(String userNickname, int userAge, Boolean userGender){
         this.userNickname = userNickname;
