@@ -28,6 +28,9 @@ class UBRM:
         cursor.close()
         conn.close()
 
+        if len(user_info_list) < 5:
+            user_info_list = []
+            
         return user_info_list
     
     def normalize_age(self, user_info):
@@ -45,7 +48,7 @@ class UBRM:
         cols = []
         data = []
         additional_features = [] 
-        recipe_count = 998  
+        recipe_count = 997
 
         for i, (age, gender, recipes) in enumerate(user_info):
             for recipe in recipes:
@@ -63,6 +66,10 @@ class UBRM:
 
     def recommend(self, userId):
         user_info = self.read_userInfo()
+
+        if not user_info:
+            return np.zeros(997)
+        
         user_info = self.normalize_age(user_info)
         user_vector = self.transformUserInfoToVector(user_info)
 
@@ -76,14 +83,14 @@ class UBRM:
         
         cursor = conn.cursor()
 
-        recipe_score_sum = np.zeros(998)
+        recipe_score_sum = np.zeros(997)
 
         for userId in most_similar_users:
             cursor.execute(f"SELECT userFavorite FROM User WHERE userId = {userId};")
             result = cursor.fetchone()
             if result:
                 favorite_recipes = [int(r) for r in result[0].split(',')]
-                user_favorite_vector = np.zeros(998)
+                user_favorite_vector = np.zeros(997)
                 user_favorite_vector[favorite_recipes] = 1
                 recipe_score_sum += user_favorite_vector
 
