@@ -1,5 +1,7 @@
 import 'package:fe_flutter/login/buildTextFormField.dart';
 import 'package:flutter/material.dart';
+import 'package:fe_flutter/service/db_server.dart';
+import 'package:fe_flutter/model/user_model.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -99,12 +101,15 @@ class _LoginPageState extends State<LoginPage> {
                           height: 30.0,
                           child: TextButton(
                           onPressed: () {
-                            /*if (_formKey.currentState!.validate()) {
+                            if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
-                              //Navigator.pushNamed(context, '/main');
-                            }*/
-                            print("email : ${_emailController.text}");
-                            print("password : ${_passwordController.text}");
+                              User user = User(
+                                secretEmail: _emailController.text,
+                                secretPassword: _passwordController.text,
+                              );
+                              login(user);
+                              Navigator.pushNamed(context, '/main');
+                            }
                           },
                           child: Text(
                             '로그인',
