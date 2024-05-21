@@ -3,7 +3,7 @@ import numpy as np
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Embedding, Flatten, Dot, Dense
 
-ingredientModelPath = "C:\\Still88ML\\2024-01-CSC4004-03-StillStrong\\python\\model\\IngredientBasedModel.pkl"
+ingredientModelPath = "C:\\Still88ML\\2024-01-CSC4004-03-StillStrong\\python\\model\\ingredient_based_recommend_model.pkl"
 
 with open(ingredientModelPath, 'r', encoding='utf-8') as file:
     ingredientModel = pickle.load(file)
