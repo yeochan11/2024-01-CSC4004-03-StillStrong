@@ -6,9 +6,10 @@ import 'login/join.dart';
 import 'register/category.dart';
 import 'register/allergy.dart';
 import 'mainPage.dart';
+import 'package:fe_flutter/MyRefrigerator/myRefrig.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MyRefrigPage());
 }
 
 class MyApp extends StatelessWidget {
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routes: {
+
         '/login': (context) => LoginPage(),
         '/join': (context) => JoinPage(),
         '/register/category': (context) => CategoryPage(),
@@ -37,6 +39,7 @@ class MyApp extends StatelessWidget {
         //'/Mainpage': (context) => MainPage(), //메인페이지 생기면
         '/IngredientMoreInformation': (context) => IngredientMoreInformation(),
         '/BottomMenu': (context) => BottomMenu(),
+
       },
     );
   }
