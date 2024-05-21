@@ -31,9 +31,9 @@ public class ShareController {
 
     // 냉장고 공유 수락/거절
     @PatchMapping("/accept/{refrigeId}")
-    public ResponseEntity<?> acceptShare(@PathVariable int refrigeId, @RequestBody AcceptRequestDto acceptRequestDto) {
+    public ResponseEntity<?> shareStatusUpdate(@PathVariable int refrigeId, @RequestBody AcceptRequestDto acceptRequestDto) {
         try{
-            shareService.acceptShare(refrigeId, acceptRequestDto);
+            shareService.shareStatusUpdate(refrigeId, acceptRequestDto);
             return ResponseEntity.ok("수락/거절 완료");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

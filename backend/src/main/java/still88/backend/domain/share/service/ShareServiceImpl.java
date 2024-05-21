@@ -50,7 +50,7 @@ public class ShareServiceImpl implements ShareService {
         }
     }
 
-    public void acceptShare(int refrigeId, AcceptRequestDto acceptRequestDto) {
+    public void shareStatusUpdate(int refrigeId, AcceptRequestDto acceptRequestDto) {
         int requestUserId = acceptRequestDto.getRequestUserId();
         boolean accept = acceptRequestDto.isAccept();
 
@@ -81,13 +81,14 @@ public class ShareServiceImpl implements ShareService {
         if (user.isEmpty()) {
             throw new IllegalArgumentException("유효하지 않은 사용자입니다.");
         }
+        // 현재 로그인 된 사용자 닉네임
+        String userNickname = user.get().getUserNickname();
 
         List<ShareRefrigeInfo> pendingRequests = shareRefrigeRepository.findByCreateUserIdAndStatus(user.get(), false)
                 .stream()
                 .map(shareRefrige -> ShareRefrigeInfo.builder()
                         .shareId((long) shareRefrige.getShareId())
-                        .createUserNickname(shareRefrige.getCreateUserId().getUserNickname())
-                        .requestUserNickname(shareRefrige.getRequestUserId().getUserNickname())
+                        .userNickname(shareRefrige.getRequestUserId().getUserNickname())
                         .refrigeName(shareRefrige.getRefrigeList().getRefrigeName())
                         .status(shareRefrige.isStatus())
                         .build())
@@ -96,8 +97,7 @@ public class ShareServiceImpl implements ShareService {
                 .stream()
                 .map(shareRefrige -> ShareRefrigeInfo.builder()
                         .shareId((long) shareRefrige.getShareId())
-                        .createUserNickname(shareRefrige.getCreateUserId().getUserNickname())
-                        .requestUserNickname(shareRefrige.getRequestUserId().getUserNickname())
+                        .userNickname(shareRefrige.getCreateUserId().getUserNickname())
                         .refrigeName(shareRefrige.getRefrigeList().getRefrigeName())
                         .status(shareRefrige.isStatus())
                         .build())
@@ -107,8 +107,8 @@ public class ShareServiceImpl implements ShareService {
                 .stream()
                 .map(shareRefrige -> ShareRefrigeInfo.builder()
                         .shareId((long) shareRefrige.getShareId())
-                        .createUserNickname(shareRefrige.getCreateUserId().getUserNickname())
-                        .requestUserNickname(shareRefrige.getRequestUserId().getUserNickname())
+                        // create와 request 중 현재 로그인한 사용자의 닉네임과 다른 닉네임 가져오기
+                        .userNickname(shareRefrige.getCreateUserId().getUserNickname().equals(userNickname) ? shareRefrige.getRequestUserId().getUserNickname() : shareRefrige.getCreateUserId().getUserNickname())
                         .refrigeName(shareRefrige.getRefrigeList().getRefrigeName())
                         .status(shareRefrige.isStatus())
                         .build())
