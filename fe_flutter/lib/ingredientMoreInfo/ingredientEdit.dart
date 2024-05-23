@@ -1,7 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class IngredientEdit extends StatefulWidget {
-  const IngredientEdit({super.key});
+  final String ingredientPlace;
+  final String ingredientName;
+  final String createdDate;
+  final String ingredientDeadLine;
+  final int ingredientNum;
+
+  const IngredientEdit({
+    required this.ingredientPlace,
+    required this.ingredientName,
+    required this.createdDate,
+    required this.ingredientDeadLine,
+    required this.ingredientNum,
+});
 
   @override
   State<IngredientEdit> createState() => _IngredientEditState();
@@ -9,14 +23,25 @@ class IngredientEdit extends StatefulWidget {
 
 class _IngredientEditState extends State<IngredientEdit> {
 //TEST
-  String ingredientPlace = "실내";
-  String ingredientName = "사과";
-  String createdDate = '2024-05-01';
-  String ingredientDeadLine = '2024-05-06';
-  int ingredientNum = 5;
+  late String ingredientPlace;
+  late String ingredientName;
+  late String createdDate;
+  late String ingredientDeadLine;
+  late int ingredientNum;
   final List<bool> _isSelected = [false, false, false];
   final List<String> _ingredientPlaceList = ["냉장","냉동","실내"];
-  
+
+
+  @override
+  void initState() {
+    super.initState();
+    ingredientPlace = widget.ingredientPlace;
+    ingredientName = widget.ingredientName;
+    createdDate = widget.createdDate;
+    ingredientDeadLine = widget.ingredientDeadLine;
+    ingredientNum = widget.ingredientNum;
+  }
+
   @override
   Widget build(BuildContext context) {
     for (int i = 0; i < 3; i++) { // 초기 보관 상태 지정하는 부분
@@ -139,9 +164,13 @@ class _IngredientEditState extends State<IngredientEdit> {
                                             padding: const EdgeInsets.all(0)
                                         ),
                                         onPressed: () {
-                                          setState(() {
-                                            ingredientNum = ingredientNum - 1;
-                                          });
+                                          if (ingredientNum - 1 == 0) {
+                                           
+                                          } else {
+                                            setState(() {
+                                              ingredientNum = ingredientNum - 1;
+                                            });
+                                          }
                                         },
                                         child: const Icon(Icons.remove, color: Colors.black, size: 20.0,)
                                     ),),
@@ -162,8 +191,6 @@ class _IngredientEditState extends State<IngredientEdit> {
                                     ),),
                                 ],
                               ),
-
-
                               const Text('수량      ' ,style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.amber),),
                             ],
                           ),
@@ -239,12 +266,20 @@ class _IngredientEditState extends State<IngredientEdit> {
                   backgroundColor: MaterialStateProperty.all(const Color(0xffFFC94A)),
                   minimumSize: MaterialStateProperty.all(const Size(350,40)),
                 ),
-                onPressed: () {
+                onPressed: () async {
+                  try {
+                    await patchData();
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Patch failed: $e'),),
+                    );
+                  }
                   // 값 변경 테스트용
-                  // debugPrint('Current Name : $ingredientName');
-                  // debugPrint('Current Number : $ingredientNum');
-                  // debugPrint('Current CreatedDate : ${createdDate.toString()}');
-                  // debugPrint('Current DeadLine : ${ingredientDeadLine.toString()}');
+                   debugPrint('Current Place : $ingredientPlace');
+                   debugPrint('Current Name : $ingredientName');
+                   debugPrint('Current Number : $ingredientNum');
+                   debugPrint('Current CreatedDate : ${createdDate.toString()}');
+                   debugPrint('Current DeadLine : ${ingredientDeadLine.toString()}');
                   Navigator.pop(context);
                 },
                 child: const Text(
@@ -258,5 +293,26 @@ class _IngredientEditState extends State<IngredientEdit> {
         ),
       ),
     );
+  }
+  Future<void> patchData() async {
+    final response = await http.patch(Uri.parse('https://jsonplaceholder.typicode.com/posts/1'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+      body: jsonEncode(<String, dynamic>{
+        // 'ingredientPlace' : ingredientPlace,
+        // 'ingredientName' : ingredientName,
+        // 'createDate' : createdDate,
+        // 'ingredientDeadline' : ingredientDeadLine,
+        // 'ingredientNum' : ingredientNum,
+        'userId' : 5
+      })
+    );
+    debugPrint('statusCode : ${response.statusCode}');
+    if (response.statusCode == 200) {
+      debugPrint('Patch successful');
+    } else {
+      throw Exception('Failed to patch data');
+    }
   }
 }

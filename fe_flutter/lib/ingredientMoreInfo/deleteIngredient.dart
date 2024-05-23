@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 void deleteIngredient(BuildContext context) {
   showDialog(
@@ -20,8 +21,14 @@ void deleteIngredient(BuildContext context) {
           ],
         ),
         actions: [
-          TextButton(onPressed: () { // 재료 삭제 메소드 추가해야 함
-            Navigator.popUntil(context , ModalRoute.withName('/BottomMenu'));
+          TextButton(onPressed: () async {
+            try {
+              await deleteData();
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Delete failed: $e')),);
+              }
+            Navigator.popUntil(context , ModalRoute.withName('/bottomMenu'));
           },
               child: const Text("확인", style: TextStyle(color: Colors.amber, fontWeight: FontWeight.bold))),
           
@@ -33,4 +40,13 @@ void deleteIngredient(BuildContext context) {
       );
     }
   );
+}
+
+Future<void> deleteData() async {
+  final response = await http.delete(Uri.parse('https://jsonplaceholder.typicode.com/posts/1'));
+  if (response.statusCode == 200) {
+    debugPrint('Delect Sucessful');
+  } else {
+    throw Exception('Failed to delete data');
+  }
 }
