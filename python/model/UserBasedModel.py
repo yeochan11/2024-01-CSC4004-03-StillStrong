@@ -13,7 +13,10 @@ class UBRM:
         self.password = ''
         self.db = 'still88'
 
-    def read_userInfo(self):
+    def __convert_boolean(self, value):
+        return 1 if value == b'\x01' else 0
+    
+    def __read_userInfo(self):
         conn = pymysql.connect(host=self.host, user=self.user
                                   ,password=self.password, db=self.db, charset='utf8')
         cursor = conn.cursor()
@@ -21,16 +24,21 @@ class UBRM:
 
         result = cursor.fetchall()
 
-        user_info_list = []
-        for row in result:
-            user_info = [row[0], row[1], row[2].split(',')]
-            user_info_list.append(user_info)
         cursor.close()
         conn.close()
 
+        user_info_list = []
+        for row in result:
+            user_info = [row[0], self.__convert_boolean(row[1]), [int(index) for index in row[2].strip('[]').replace("\"", "").split(',')]]
+            user_info_list.append(user_info)
+
+        if len(user_info_list) < 6:
+            return []
+        
         return user_info_list
+        
     
-    def normalize_age(self, user_info):
+    def __normalize_age(self, user_info):
         ages = [user[0] for user in user_info]
         normalized_ages = self.standardizer.fit_transform([[age] for age in ages])
 
@@ -40,12 +48,12 @@ class UBRM:
         return user_info
 
 
-    def transformUserInfoToVector(self, user_info):
+    def __transformUserInfoToVector(self, user_info):
         rows = []
         cols = []
         data = []
         additional_features = [] 
-        recipe_count = 998  
+        recipe_count = 997
 
         for i, (age, gender, recipes) in enumerate(user_info):
             for recipe in recipes:
@@ -62,9 +70,12 @@ class UBRM:
         return user_features_matrix
 
     def recommend(self, userId):
-        user_info = self.read_userInfo()
-        user_info = self.normalize_age(user_info)
-        user_vector = self.transformUserInfoToVector(user_info)
+        user_info = self.__read_userInfo()
+        if not user_info:
+            return np.zeros(997)
+            
+        user_info = self.__normalize_age(user_info)
+        user_vector = self.__transformUserInfoToVector(user_info)
 
         cosine_sim = cosine_similarity(user_vector)[userId]
         cosine_sim[userId] = -1
@@ -76,14 +87,14 @@ class UBRM:
         
         cursor = conn.cursor()
 
-        recipe_score_sum = np.zeros(998)
+        recipe_score_sum = np.zeros(997)
 
         for userId in most_similar_users:
             cursor.execute(f"SELECT userFavorite FROM User WHERE userId = {userId};")
             result = cursor.fetchone()
             if result:
-                favorite_recipes = [int(r) for r in result[0].split(',')]
-                user_favorite_vector = np.zeros(998)
+                favorite_recipes = [int(r) for r in result[0].strip('[]').split(',')]
+                user_favorite_vector = np.zeros(997)
                 user_favorite_vector[favorite_recipes] = 1
                 recipe_score_sum += user_favorite_vector
 

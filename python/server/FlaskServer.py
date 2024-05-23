@@ -22,13 +22,7 @@ def recipe_recommend():
 
     result = cursor.fetchall()
 
-    user_info = {
-        "userAge": result[0],
-        "userGender": result[1],
-        "userFavorite": result[2]
-    }
-
-    result = model.score(ingredientList, user_info)
+    result = model.score(ingredientList, user_id)
     return result
 
 if __name__ == '__main__':
