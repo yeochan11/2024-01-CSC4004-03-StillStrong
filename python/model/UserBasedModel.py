@@ -35,6 +35,7 @@ class UBRM:
         if len(user_info_list) < 6:
             return []
         
+
         return user_info_list
         
     
@@ -70,12 +71,14 @@ class UBRM:
         return user_features_matrix
 
     def recommend(self, userId):
+
         user_info = self.__read_userInfo()
         if not user_info:
             return np.zeros(997)
             
         user_info = self.__normalize_age(user_info)
         user_vector = self.__transformUserInfoToVector(user_info)
+
 
         cosine_sim = cosine_similarity(user_vector)[userId]
         cosine_sim[userId] = -1
@@ -94,6 +97,7 @@ class UBRM:
             result = cursor.fetchone()
             if result:
                 favorite_recipes = [int(r) for r in result[0].strip('[]').split(',')]
+
                 user_favorite_vector = np.zeros(997)
                 user_favorite_vector[favorite_recipes] = 1
                 recipe_score_sum += user_favorite_vector
