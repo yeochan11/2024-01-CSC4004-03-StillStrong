@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fe_flutter/ingredientRegister/ingredTextFormField.dart';
+import 'package:fe_flutter/screens/ingredientRegister/ingredTextFormField.dart';
 
 class IngredRegPage extends StatefulWidget {
   @override

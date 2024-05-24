@@ -1,4 +1,4 @@
-import 'package:fe_flutter/login/buildTextFormField.dart';
+import 'package:fe_flutter/screens/login/buildTextFormField.dart';
 import 'package:flutter/material.dart';
 import 'package:fe_flutter/service/db_server.dart';
 import 'package:fe_flutter/model/user_model.dart';
@@ -88,18 +88,18 @@ class _LoginPageState extends State<LoginPage> {
                         labelText: '이메일',
                         hintText: '이메일을 입력하세요',
                       ),
-                        SizedBox(height: 12.0),
-                        buildTextFormField(
-                          controller: _passwordController,
-                          labelText: '비밀번호',
-                          hintText: '비밀번호를 입력하세요',
-                          isPassword: true,
-                          ),
-                        SizedBox(height: 23.0),
-                        Container(
-                          width: 300.0,
-                          height: 30.0,
-                          child: TextButton(
+                      SizedBox(height: 12.0),
+                      buildTextFormField(
+                        controller: _passwordController,
+                        labelText: '비밀번호',
+                        hintText: '비밀번호를 입력하세요',
+                        isPassword: true,
+                      ),
+                      SizedBox(height: 23.0),
+                      Container(
+                        width: 300.0,
+                        height: 30.0,
+                        child: TextButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
@@ -144,9 +144,9 @@ class _LoginPageState extends State<LoginPage> {
                                   fontFamily: 'Pretendard',
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.bold,
-                                  ),
                                 ),
                               ),
+                            ),
                           ),
                           SizedBox(width: 58.0,),
                           Container(
@@ -154,8 +154,8 @@ class _LoginPageState extends State<LoginPage> {
                             height: 20.0,
                             child: TextButton(
                               onPressed: () {
-                                  Navigator.pushNamed(context, '/join');
-                                },
+                                Navigator.pushNamed(context, '/join');
+                              },
                               style: TextButton.styleFrom(
                                 foregroundColor: const Color(0xffF6A90A),
                                 backgroundColor: Colors.transparent,
@@ -168,11 +168,11 @@ class _LoginPageState extends State<LoginPage> {
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.bold,
                                   )
-                                ),
                               ),
+                            ),
                           )
-                          ],
-                        ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -194,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                         foregroundColor: const Color(0xffF6A90A),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(
-                            Radius.circular(7.0)
+                              Radius.circular(7.0)
                           ),
                         ),
                       ),
@@ -221,9 +221,9 @@ class _LoginPageState extends State<LoginPage> {
                         'assets/images/kakaologin.png',
                         height: 35.0,
                         width: 236.0,
-                        ),
+                      ),
                     ),
-                   ],
+                  ],
                 ),
               ],
             ),

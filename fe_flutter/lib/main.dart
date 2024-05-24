@@ -1,12 +1,12 @@
-import 'package:fe_flutter/bottomMenu.dart';
+import 'package:fe_flutter/screens/bottomMenu.dart';
 import 'package:flutter/material.dart';
-import 'ingredientMoreInfo/ingredientMoreInfo.dart';
-import 'login/login.dart';
-import 'login/join.dart';
-import 'register/category.dart';
-import 'register/allergy.dart';
-import 'ingredientRegister/ingredientRegister.dart';
-import 'mainPage.dart';
+import 'screens/ingredientMoreInfo/ingredientMoreInfo.dart';
+import 'screens/login/login.dart';
+import 'screens/login/join.dart';
+import 'screens/register/category.dart';
+import 'screens/register/allergy.dart';
+import 'screens/ingredientRegister/ingredientRegister.dart';
+import 'screens/mainPage.dart';
 
 void main() {
   runApp(MyApp());
