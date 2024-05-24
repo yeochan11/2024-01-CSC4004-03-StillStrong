@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fe_flutter/widget/customIconButton.dart';
+import 'package:fe_flutter/screens/register/customIconButton.dart';
 
 class CategoryPage extends StatefulWidget {
   @override

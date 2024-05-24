@@ -1,15 +1,15 @@
-import 'package:fe_flutter/bottomMenu.dart';
+import 'package:fe_flutter/screens/bottomMenu.dart';
 import 'package:flutter/material.dart';
-import 'ingredientMoreInfo/ingredientMoreInfo.dart';
-import 'login/login.dart';
-import 'login/join.dart';
-import 'register/category.dart';
-import 'register/allergy.dart';
-import 'mainPage.dart';
-import 'package:fe_flutter/MyRefrigerator/myRefrig.dart';
+import 'screens/ingredientMoreInfo/ingredientMoreInfo.dart';
+import 'screens/login/login.dart';
+import 'screens/login/join.dart';
+import 'screens/register/category.dart';
+import 'screens/register/allergy.dart';
+import 'screens/ingredientRegister/ingredientRegister.dart';
+import 'screens/mainPage.dart';
 
 void main() {
-  runApp(MyRefrigPage());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -19,19 +19,18 @@ class MyApp extends StatelessWidget {
       home: WelcomePage(),
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
-          toolbarHeight: 58.0,
-          backgroundColor: Color(0xffFFC94A),
-          centerTitle: true,
-          titleTextStyle: TextStyle(
-            fontFamily: 'Pretendard',
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          )
+            toolbarHeight: 58.0,
+            backgroundColor: Color(0xffFFC94A),
+            centerTitle: true,
+            titleTextStyle: TextStyle(
+              fontFamily: 'Pretendard',
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            )
         ),
       ),
       routes: {
-
         '/login': (context) => LoginPage(),
         '/join': (context) => JoinPage(),
         '/register/category': (context) => CategoryPage(),
@@ -39,7 +38,7 @@ class MyApp extends StatelessWidget {
         //'/Mainpage': (context) => MainPage(), //메인페이지 생기면
         '/IngredientMoreInformation': (context) => IngredientMoreInformation(),
         '/BottomMenu': (context) => BottomMenu(),
-
+        '/IngredReg': (context) => IngredRegPage(),
       },
     );
   }
@@ -49,7 +48,7 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/login');
+      Navigator.pushReplacementNamed(context, '/BottomMenu');
     });
     return Scaffold(
       backgroundColor: const Color(0xffFFC94A),
@@ -78,5 +77,3 @@ class WelcomePage extends StatelessWidget {
     );
   }
 }
-
-
