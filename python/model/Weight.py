@@ -33,7 +33,7 @@ class RecommendModel:
 
         self.host = 'localhost'
         self.user = 'root'
-        self.password = ''
+        self.password = 'zpalq,123098!@#'
         self.db = 'still88'
     
     def recommend(self, ingredientList, userId):
