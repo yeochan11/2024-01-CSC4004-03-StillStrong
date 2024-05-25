@@ -4,11 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import still88.backend.dto.refrige.GetRefrigeListResponseDto;
-import still88.backend.dto.refrige.RefrigeInfoDto;
 import still88.backend.dto.user.*;
 import still88.backend.entity.IdPassword;
-import still88.backend.entity.RefrigeList;
 import still88.backend.entity.User;
 import still88.backend.repository.IdPasswordRepository;
 import still88.backend.repository.UserRepository;
@@ -16,7 +13,6 @@ import still88.backend.repository.UserRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

@@ -41,12 +41,12 @@ public class IngredientController {
         }
     }
 
-    @GetMapping("/{refrigeId}/{ingredientId}")
+    @GetMapping("/{refrigeId}")
     public ResponseEntity<?> showIngredientDetail(@PathVariable("refrigeId") int refrigeId,
-                                                  @PathVariable("ingredientId") int ingredientId,
+                                                  @RequestParam("ingredientName") String ingredientName,
                                                   @CookieValue String userId) {
         try{
-            return ResponseEntity.ok(ingredientService.ingredientDetail(refrigeId, ingredientId,userId));
+            return ResponseEntity.ok(ingredientService.ingredientDetail(refrigeId, ingredientName, userId));
         }catch(Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

@@ -70,24 +70,20 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public IngredientDetailResponseDTO ingredientDetail(int refrigeId, int ingredientId, String userId) {
-        Ingredient ingredient = ingredientRepository.findIngredientByIngredientId(ingredientId);
+    public IngredientDetailResponseDTO ingredientDetail(int refrigeId, String ingredientName, String userId) {
+        Ingredient ingredient = ingredientRepository.findIngredientByIngredientName(ingredientName);
         RefrigeList refrigeList = refrigeListRepository.findByRefrigeId(refrigeId);
         User user = userRepository.findUserByUserId(Integer.parseInt(userId));
 
         Refrige refrige = refrigeRepository.findRefrigeByRefrigeListAndIngredientAndUser(refrigeList, ingredient, user);
 
         String ingredientPlace = refrige.getIngredientPlace();
-        String ingredientName = ingredient.getIngredientName();
         LocalDate createdDate = refrige.getCreatedDate();
         LocalDate ingredientDeadline = refrige.getIngredientDeadline();
         int ingredientNum = refrige.getIngredientNum();
         String ingredientMemo = refrige.getIngredientMemo();
 
-        IngredientDetailResponseDTO ingredientDetail = new IngredientDetailResponseDTO(ingredientPlace, ingredientName,
-                createdDate, ingredientDeadline, ingredientNum, ingredientMemo);
-
-        return ingredientDetail;
+        return new IngredientDetailResponseDTO(ingredientPlace, ingredientName, createdDate, ingredientDeadline, ingredientNum, ingredientMemo, ingredient.getIngredientId());
     }
 
     @Override
