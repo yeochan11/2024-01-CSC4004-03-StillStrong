@@ -6,19 +6,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import still88.backend.dto.user.*;
 import still88.backend.entity.IdPassword;
+import still88.backend.entity.Recipe;
 import still88.backend.entity.User;
 import still88.backend.repository.IdPasswordRepository;
+import still88.backend.repository.RecipeRepository;
 import still88.backend.repository.UserRepository;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final IdPasswordRepository idPasswordRepository;
+    private final RecipeRepository recipeRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public GetUserDetailResponseDto getUserDetail(int userId) {
@@ -73,9 +75,17 @@ public class UserServiceImpl implements UserService {
         if (userO.isPresent()) {
             User user = userO.get();
             List<String> favorites = List.of(registerFavoriteRequestDto.getFavorites());
+            List<Integer> recipeIds = new ArrayList<>();
+
+            // Fetch recipe IDs for each category
+            for (String category : favorites) {
+                List<Recipe> recipes = recipeRepository.findRecipeIdByRecipeCategory(category);
+                List<Integer> categoryRecipeIds = recipes.stream().map(Recipe::getRecipeId).collect(Collectors.toList()).reversed();
+                recipeIds.addAll(categoryRecipeIds);
+            }
 
             try {
-                String favoritesJson = objectMapper.writeValueAsString(favorites);
+                String favoritesJson = objectMapper.writeValueAsString(recipeIds);
                 user.registerFavorite(favoritesJson);
                 userRepository.save(user);
             } catch (Exception e) {

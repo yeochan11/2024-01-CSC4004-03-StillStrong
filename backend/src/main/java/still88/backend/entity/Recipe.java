@@ -31,9 +31,6 @@ public class Recipe {
     @Column(columnDefinition = "json")
     private String recipeIngredient;
 
-    @Column
-    private int likeNum;
-
     // 생성자 + Builder로 일관성 유지
     @Builder
     public Recipe(String recipeName, String recipeCategory, String recipeDescription,
@@ -43,6 +40,5 @@ public class Recipe {
         this.recipeDescription = recipeDescription;
         this.recipeImage = recipeImage;
         this.recipeIngredient = recipeIngredient;
-        this.likeNum = likeNum;
     }
 }
