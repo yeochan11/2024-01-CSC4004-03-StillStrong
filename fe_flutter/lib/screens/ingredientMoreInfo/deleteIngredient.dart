@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import '../../service/db_server.dart';
 
 void deleteIngredient(BuildContext context) {
   showDialog(
@@ -23,7 +23,7 @@ void deleteIngredient(BuildContext context) {
         actions: [
           TextButton(onPressed: () async {
             try {
-              await deleteData();
+              await deleteIngredientInfo();
             } catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Delete failed: $e')),);
@@ -42,11 +42,3 @@ void deleteIngredient(BuildContext context) {
   );
 }
 
-Future<void> deleteData() async {
-  final response = await http.delete(Uri.parse('https://jsonplaceholder.typicode.com/posts/1'));
-  if (response.statusCode == 200) {
-    debugPrint('Delect Sucessful');
-  } else {
-    throw Exception('Failed to delete data');
-  }
-}
