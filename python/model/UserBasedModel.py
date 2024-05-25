@@ -4,13 +4,14 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics.pairwise import cosine_similarity
 from scipy.sparse import csr_matrix
 import pymysql
+import json
 
 class UBRM:
     def __init__(self):
         self.standardizer =  StandardScaler()
         self.host = 'localhost'
         self.user = 'root'
-        self.password = ''
+        self.password = 'zpalq,123098!@#'
         self.db = 'still88'
 
     def __convert_boolean(self, value):
@@ -29,13 +30,12 @@ class UBRM:
 
         user_info_list = []
         for row in result:
-            user_info = [row[0], self.__convert_boolean(row[1]), [int(index) for index in row[2].strip('[]').replace("\"", "").split(',')]]
+            user_info = [row[0], self.__convert_boolean(row[1]), json.loads(row[2])]
             user_info_list.append(user_info)
 
         if len(user_info_list) < 6:
             return []
         
-
         return user_info_list
         
     
@@ -53,13 +53,13 @@ class UBRM:
         rows = []
         cols = []
         data = []
-        additional_features = [] 
-        recipe_count = 997
+        additional_features = []
+        recipe_count = 998 
 
         for i, (age, gender, recipes) in enumerate(user_info):
             for recipe in recipes:
                 rows.append(i)
-                cols.append(recipe) 
+                cols.append(recipe)
                 data.append(1)
             additional_features.append([age, 1 if gender == True else 0])
 
@@ -70,8 +70,8 @@ class UBRM:
 
         return user_features_matrix
 
-    def recommend(self, userId):
 
+    def recommend(self, userId):
         user_info = self.__read_userInfo()
         if not user_info:
             return np.zeros(997)
@@ -96,8 +96,8 @@ class UBRM:
             cursor.execute(f"SELECT userFavorite FROM User WHERE userId = {userId};")
             result = cursor.fetchone()
             if result:
-                favorite_recipes = [int(r) for r in result[0].strip('[]').split(',')]
-
+                favorite_recipes = json.loads(result[0])
+                favorite_recipes = [x - 1 for x in favorite_recipes]
                 user_favorite_vector = np.zeros(997)
                 user_favorite_vector[favorite_recipes] = 1
                 recipe_score_sum += user_favorite_vector
