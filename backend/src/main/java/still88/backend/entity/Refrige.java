@@ -59,7 +59,6 @@ public class Refrige {
 
     // 생성자 + Builder로 일관성 유지
     @Builder
-
     public Refrige(RefrigeList refrigeList, Ingredient ingredient, User user, LocalDate createdDate, int ingredientNum, String ingredientPlace, LocalDate ingredientDeadline, String ingredientMemo) {
         this.refrigeList = refrigeList;
         this.ingredient = ingredient;

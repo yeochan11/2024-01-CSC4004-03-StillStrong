@@ -27,34 +27,45 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public void registerIngredient(int refrigeId, RegisterIngredientDTO request, String userId) {
-
         try {
-            RefrigeList refirigeList = refrigeListRepository.findByRefrigeId(refrigeId);
-            Ingredient ingredient = ingredientRepository.findIngredientByIngredientName(request.getIngredientName());
+            RefrigeList refrigeList = refrigeListRepository.findByRefrigeId(refrigeId);
+            String ingredientName = request.getIngredientName();
+            Ingredient ingredient = ingredientRepository.findIngredientByIngredientName(ingredientName);
             User user = userRepository.findUserByUserId(Integer.parseInt(userId));
             LocalDate createdDate = request.getCreatedDate();
             int ingredientNum = request.getIngredientNum();
             String ingredientPlace = request.getIngredientPlace();
-            LocalDate ingredientDeadline = request.getCreatedDate().plusDays(14);
+            LocalDate ingredientDeadline = createdDate.plusDays(14);
             String ingredientMemo = request.getIngredientMemo();
 
-            Refrige refrige = Refrige.builder()
-                    .refrigeList(refirigeList)
-                    .ingredient(ingredient)
-                    .user(user)
-                    .createdDate(createdDate)
-                    .ingredientNum(ingredientNum)
-                    .ingredientPlace(ingredientPlace)
-                    .ingredientDeadline(ingredientDeadline)
-                    .ingredientMemo(ingredientMemo)
-                    .build();
+            Refrige existingRefrige = refrigeRepository.findByRefrigeListAndIngredient_IngredientName(refrigeList, ingredientName);
 
-            refrigeRepository.save(refrige);
-        }catch (Exception e){
-            log.info("error={}", e);
-            throw new RuntimeException(e);
+            if (existingRefrige != null) {
+                // 이미 등록된 재료가 있는 경우
+                int totalIngredientNum = existingRefrige.getIngredientNum() + ingredientNum;
+                existingRefrige.updateInfo(createdDate, ingredientDeadline, totalIngredientNum, ingredientPlace, ingredientMemo);
+                refrigeRepository.save(existingRefrige);
+            } else {
+                // 새로운 재료를 등록하는 경우
+                Refrige newRefrige = Refrige.builder()
+                        .refrigeList(refrigeList)
+                        .ingredient(ingredient)
+                        .user(user)
+                        .createdDate(createdDate)
+                        .ingredientNum(ingredientNum)
+                        .ingredientPlace(ingredientPlace)
+                        .ingredientDeadline(ingredientDeadline)
+                        .ingredientMemo(ingredientMemo)
+                        .build();
+                refrigeRepository.save(newRefrige);
+            }
+
+        } catch (Exception e) {
+            log.error("Error occurred while registering ingredient: {}", e.getMessage());
+            throw new RuntimeException("Failed to register ingredient", e);
         }
     }
+
 
     @Override
     @Transactional
