@@ -1,4 +1,7 @@
+.DS_Store
 application.yml
+application.properties
+data.sql
 
 HELP.md
 .gradle
