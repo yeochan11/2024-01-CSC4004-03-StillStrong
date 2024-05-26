@@ -1,24 +1,30 @@
 import numpy as np
 import json
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Input
 import pymysql
 
 class RecommendModel:
-    def __init__(self, ingredientModel, userModel):
-        self.NeuralNetwork = Sequential([
-            Input(shape=(3,)), 
-            Dense(100, activation='relu'),
-            Dense(100, activation='relu'),
-            Dense(100, activation='relu'),
-            Dense(1, activation='sigmoid') 
-        ])
-        self.NeuralNetwork.compile(
-            optimizer='adam',
-            loss=tf.keras.losses.MeanSquaredError(),
-            metrics=['accuracy']
-        )
+    def __init__(self, ingredientModel, userModel, NeuralNetwork=None):
+        if NeuralNetwork is None:
+            self.NeuralNetwork = Sequential([
+                Input(shape=(3,)), 
+                Dense(100, activation='relu'),
+                Dense(100, activation='relu'),
+                Dense(100, activation='relu'),
+                Dense(1, activation='sigmoid')
+            ])
+            self.NeuralNetwork.compile(
+                optimizer='adam',
+                loss=tf.keras.losses.MeanSquaredError(),
+                metrics=['accuracy']
+            )
+        else:
+            self.NeuralNetwork = NeuralNetwork
+        
         self.ingredientModel = ingredientModel
         self.userModel = userModel
         self.ageWeight = np.zeros(997, dtype=np.float32)
@@ -27,18 +33,19 @@ class RecommendModel:
         self.user = 'root'
         self.password = 'zpalq,123098!@#'
         self.db = 'still88'
-    
+
     def recommend(self, ingredientList, userId):
         ingredientScore = np.array(self.ingredientModel.recommend(ingredientList)).reshape(997,1)
         userScore = np.array(self.userModel.recommend(userId)).reshape(997, 1)
 
         input_data = np.hstack([userScore, ingredientScore, self.ageWeight.reshape(997, 1)])
-        result = self.NeuralNetwork.predict(input_data)
+        result = self.NeuralNetwork.predict(input_data, verbose=0)
+        result_flat = result.flatten()
+        final_score = np.argsort(result_flat)[::-1]
 
         allergy_index = self.__excludeAllergy(userId)
-        final_score = np.argsort(result)[::-1]
         recommend_id = []
-        
+
         for id in final_score:
             if len(recommend_id) >= 5:
                 break
@@ -46,17 +53,19 @@ class RecommendModel:
             if id not in allergy_index:
                 recommend_id.append(int(id) + 1)
 
-        print(final_score.shape)
         self.__updateAge(recommend_id)
         return input_data, result, recommend_id
     
     def updateParameter(self, X, y, recommend_id, feedback):
         if feedback:
             y[recommend_id] += 0.1
-            self.NeuralNetwork.fit(X, y)
+            self.NeuralNetwork.fit(X, y, verbose=0)
         else:
             y[recommend_id] -= 0.2
-            self.NeuralNetwork.fit(X, y)
+            self.NeuralNetwork.fit(X, y, verbose=0)
+
+    def save(self, path):
+        self.NeuralNetwork.save(path)
 
     def __updateAge(self, recommend_index):
         for i in range(997):
@@ -107,4 +116,4 @@ class RecommendModel:
         return not_safe
 
     def __init_fit(self, X, y):
-        self.NeuralNetwork.fit(X, y)
+        self.NeuralNetwork.fit(X, y, verbose=0)
