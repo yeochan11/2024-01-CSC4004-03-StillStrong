@@ -1,5 +1,5 @@
-import 'package:fe_flutter/ingredientMoreinfo/deleteIngredient.dart';
-import 'package:fe_flutter/ingredientMoreInfo/ingredientEdit.dart';
+import 'package:fe_flutter/screens/ingredientMoreinfo/deleteIngredient.dart';
+import 'package:fe_flutter/screens/ingredientMoreInfo/ingredientEdit.dart';
 import 'package:flutter/material.dart';
 
 class IngredientMoreInformation extends StatefulWidget {
