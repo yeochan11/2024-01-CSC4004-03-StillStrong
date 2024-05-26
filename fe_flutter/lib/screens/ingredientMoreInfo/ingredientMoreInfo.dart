@@ -5,13 +5,27 @@ import 'package:flutter/material.dart';
 import '../../service/db_server.dart';
 
 class IngredientMoreInformation extends StatefulWidget {
-  const IngredientMoreInformation({super.key});
+  final int refrigeId;
+  final String ingredientName;
+  IngredientMoreInformation({required this.refrigeId, required this.ingredientName});
 
   @override
   State<IngredientMoreInformation> createState() => _IngredientMoreInformationState();
 }
 
 class _IngredientMoreInformationState extends State<IngredientMoreInformation> {
+
+  late int refrigeId;
+  late String ingredientName;
+
+  @override
+  void initState() {
+    super.initState();
+      refrigeId = widget.refrigeId;
+      ingredientName = widget.ingredientName;
+      //선택한 식재료의 정보가 제대로 나오는지 테스트, 에뮬레이터 화면말고 print로 출력되는 값 확인해주세요.
+      print('MoreInfo Page Test : ${refrigeId}   ${ingredientName}');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +42,7 @@ class _IngredientMoreInformationState extends State<IngredientMoreInformation> {
       body:
       Center(
           child: FutureBuilder(
-              future: fetchIngredientsInfo(),
+              future: fetchIngredientsInfo(refrigeId, ingredientName),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -62,7 +76,7 @@ class _IngredientMoreInformationState extends State<IngredientMoreInformation> {
                                 ),
                                 Column(
                                   children: [
-                                    printIngredientPlace(info.ingredientName),
+                                    printIngredientPlace(info.ingredientPlace),
                                     const SizedBox(height: 20,),
                                     Text(
                                       info.ingredientName,
@@ -152,7 +166,39 @@ class _IngredientMoreInformationState extends State<IngredientMoreInformation> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 200),
+                      const SizedBox(height: 20),
+                      Container(
+                        width: 350,
+                        height: 200,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 2),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 14.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              '메모',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                                fontSize: 20,
+                              ),
+                            ),
+                            const SizedBox(height: 5,),
+                            Text(
+                              info.ingredientMemo,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 20),
                       ElevatedButton(
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(
@@ -164,11 +210,11 @@ class _IngredientMoreInformationState extends State<IngredientMoreInformation> {
                             await Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) =>
-                                    IngredientEdit(info: info))
+                                    IngredientEdit(info: info, refrigeId: refrigeId))
                             );
                             // debugPrint("TEST AWAIT");
                             setState(() {
-                              fetchIngredientsInfo();
+                              fetchIngredientsInfo(refrigeId, ingredientName);
                             });
                           },
                           child: const Text(
@@ -185,7 +231,7 @@ class _IngredientMoreInformationState extends State<IngredientMoreInformation> {
                                 const Size(350, 40)),
                           ),
                           onPressed: () {
-                            deleteIngredient(context);
+                            deleteIngredient(context, refrigeId, info.ingredientId);
                           },
                           child: const Text(
                               '재료 삭제',
