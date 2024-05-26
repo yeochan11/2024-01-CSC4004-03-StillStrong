@@ -1,4 +1,6 @@
+import 'package:fe_flutter/service/refrigeServer.dart';
 import 'package:flutter/material.dart';
+import 'package:fe_flutter/model/refrigeModel.dart';
 
 class DropdownRefrige extends StatefulWidget {
   @override
@@ -7,7 +9,8 @@ class DropdownRefrige extends StatefulWidget {
 
 class DropdownRefrigeState extends State<DropdownRefrige> {
   // 드랍다운 리스트에 들어갈 항목들
-  static List<String> items = ['기본 냉장고', '스마트 냉장고', '미니 냉장고', '양문형 냉장고', '상업용 냉장고'];
+  static Future<RefrigeList> item = getRefrigeList();
+  static List<String> items = ["기본 냉장고", "삼성"];
   // 선택된 항목을 저장할 변수 (기본값으로 '기본 냉장고'를 설정합니다)
   static String selectedItem = '기본 냉장고';
 
@@ -45,14 +48,14 @@ class DropdownRefrigeState extends State<DropdownRefrige> {
                   selectedItem = newValue!;
                 });
               },
+                isExpanded: true,
+                underline: SizedBox(),
               items: items.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
                 );
               }).toList(),
-              isExpanded: true,
-              underline: SizedBox(),
             ),
           ),
         ),
@@ -83,7 +86,10 @@ void _displayTextInputDialog(BuildContext context) async {
             TextButton(
               child: Text('확인'),
               onPressed: () {
-                // DropdownRefrigeState.items[ = _textFieldController.text;
+                RefrigeList refrige = RefrigeList(
+                  refrigeName: _textFieldController.text,
+                );
+                updateRefrigeName(refrige);
                 print('입력한 텍스트: ${_textFieldController.text}');
                 Navigator.pop(context);
               },
