@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../service/db_server.dart';
 
-void deleteIngredient(BuildContext context) {
+void deleteIngredient(BuildContext context, int refrigeId, int ingredientId) {
   showDialog(
     context: context,
     barrierDismissible: true,
@@ -23,7 +23,7 @@ void deleteIngredient(BuildContext context) {
         actions: [
           TextButton(onPressed: () async {
             try {
-              await deleteIngredientInfo();
+              await deleteIngredientInfo(refrigeId, ingredientId);
             } catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Delete failed: $e')),);

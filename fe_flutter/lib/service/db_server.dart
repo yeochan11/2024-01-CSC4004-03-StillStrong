@@ -23,9 +23,10 @@ Future<void> login(User user) async {
   }
 }
 
-Future<Map<String,dynamic>> fetchIngredientsInfo() async {
-  final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts/1')); //테스트 주소
-
+Future<Map<String,dynamic>> fetchIngredientsInfo(int refrigeId, String ingredientName) async {
+  String uri = 'https://jsonplaceholder.typicode.com/posts/1'; // 테스트 주소
+  //String uri = 'https://~~/refrige/ingredient/{refrigeId}?ingredientName={ingredientName}' //TODO: API 테스트시 이 주소를 이용해주세요.
+  final response = await http.get(Uri.parse(uri));
   if (response.statusCode == 200) {
     final Map<String,dynamic> data = json.decode(response.body);
     return data;
@@ -34,8 +35,10 @@ Future<Map<String,dynamic>> fetchIngredientsInfo() async {
   }
 }
 
-Future<void> deleteIngredientInfo() async {
-  final response = await http.delete(Uri.parse('https://jsonplaceholder.typicode.com/posts/1')); // 테스트 주소
+Future<void> deleteIngredientInfo(int refrigeId, int ingredientId) async {
+  String uri = 'https://jsonplaceholder.typicode.com/posts/1'; // 테스트 주소
+  //String uri = 'https://~~/refrige/ingredient/delete/{refrigeId}/{ingredientId}' //TODO: API 테스트시 이 주소를 이용해주세요.
+  final response = await http.delete(Uri.parse(uri));
   if (response.statusCode == 200) {
     print('Delect Sucessful');
   } else {
@@ -43,21 +46,15 @@ Future<void> deleteIngredientInfo() async {
   }
 }
 
-Future<void> patchIngredient(IngredientMoreInfoModel info) async {
-  final response = await http.patch(Uri.parse('https://jsonplaceholder.typicode.com/posts/1'), //테스트 주소
+Future<void> patchIngredient(IngredientMoreInfoModel info, int refrigeId) async {
+  String uri = 'https://jsonplaceholder.typicode.com/posts/1'; // 테스트 주소
+  print('${info.ingredientId}        ${refrigeId}');
+  //String uri = 'https://~~/refrige/ingredient/{info.refrigeId}/{info.ingredientId}/edit'; //TODO: API 테스트시 이 주소를 이용해주세요.
+  final response = await http.patch(Uri.parse(uri),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-      }, // TODO: API 주소 연결했으면 밑에 주석 해제,
-      // body: jsonEncode(<String, dynamic>{
-      //   // 'ingredientPlace' : ingredientPlace,
-      //   // 'ingredientName' : ingredientName,
-      //   // 'createDate' : createdDate,
-      //   // 'ingredientDeadline' : ingredientDeadLine,
-      //   // 'ingredientNum' : ingredientNum,
-      //   'userId' : 5
-      // })
-      // TODO: 이건 주석 처리해주세요.
-    body: jsonEncode(info.toJson())
+      },
+      body: jsonEncode(info.toJson())
   );
   print('statusCode : ${response.statusCode}');
   if (response.statusCode == 200) {
