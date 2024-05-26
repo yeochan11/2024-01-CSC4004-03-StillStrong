@@ -1,7 +1,9 @@
 import 'package:fe_flutter/screens/login/buildTextFormField.dart';
 import 'package:flutter/material.dart';
-import 'package:fe_flutter/service/db_server.dart';
-import 'package:fe_flutter/model/user_model.dart';
+import 'package:provider/provider.dart';
+import 'package:fe_flutter/service/userServer.dart';
+import 'package:fe_flutter/model/userModel.dart';
+import 'package:fe_flutter/provider/userProvider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -102,12 +104,15 @@ class _LoginPageState extends State<LoginPage> {
                         child: TextButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              _formKey.currentState!.save();
+                              _formKey.currentState!.save(); // 입력값 가져오기
+                              // 유저 인스턴스 생성
                               User user = User(
                                 secretEmail: _emailController.text,
                                 secretPassword: _passwordController.text,
                               );
-                              login(user);
+                              login(user); // 로그인 api 호출
+                              Provider.of<UserProvider>(context, listen: false).setUser(user); // 유저 정보 provider에 설정
+                              print('id : ${user.secretEmail}\npw : ${user.secretPassword}'); // 유저 정보 콘솔 출력 (확인용)
                               Navigator.pushNamed(context, '/Mainpage');
                             }
                           },
