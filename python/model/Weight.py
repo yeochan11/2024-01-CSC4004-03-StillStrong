@@ -61,13 +61,14 @@ class RecommendModel:
             y[recommend_id] += 0.1
             self.NeuralNetwork.fit(X, y, verbose=0)
         else:
-            y[recommend_id] -= 0.2
+            y[recommend_id] -= 0.1
             self.NeuralNetwork.fit(X, y, verbose=0)
 
     def save(self, path):
         self.NeuralNetwork.save(path)
 
     def __updateAge(self, recommend_index):
+        self.ageWeight[recommend_index] = 0.
         for i in range(997):
             if not i in recommend_index:
                 self.ageWeight[i] += 0.001
@@ -78,7 +79,7 @@ class RecommendModel:
         cursor = conn.cursor()
         cursor.execute(f"SELECT userAllergy from User where userId = {userId};")
         allergy_list = cursor.fetchone()
-        if allergy_list != None:
+        if allergy_list is not None and allergy_list[0] is not None:
             allergy_list = json.loads(allergy_list[0])
         else:
             allergy_list = []
