@@ -39,7 +39,7 @@ class _IngredIconButtonState extends State<IngredIconButton> {
           buttonStates[widget.buttonText] = isPressed;
         });
         widget.onPressed(isPressed, widget.buttonText);
-        //print(selectedButtons);
+        print(selectedButtons);
       },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 2, horizontal: 3),

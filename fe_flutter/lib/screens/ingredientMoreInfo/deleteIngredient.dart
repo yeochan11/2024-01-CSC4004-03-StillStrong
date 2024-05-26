@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../service/db_server.dart';
 
-void deleteIngredient(BuildContext context) {
+void deleteIngredient(BuildContext context, int refrigeId, int ingredientId) {
   showDialog(
     context: context,
     barrierDismissible: true,
@@ -20,7 +21,13 @@ void deleteIngredient(BuildContext context) {
           ],
         ),
         actions: [
-          TextButton(onPressed: () { // 재료 삭제 메소드 추가해야 함
+          TextButton(onPressed: () async {
+            try {
+              await deleteIngredientInfo(refrigeId, ingredientId);
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Delete failed: $e')),);
+              }
             Navigator.popUntil(context , ModalRoute.withName('/BottomMenu'));
           },
               child: const Text("확인", style: TextStyle(color: Colors.amber, fontWeight: FontWeight.bold))),
@@ -34,3 +41,4 @@ void deleteIngredient(BuildContext context) {
     }
   );
 }
+

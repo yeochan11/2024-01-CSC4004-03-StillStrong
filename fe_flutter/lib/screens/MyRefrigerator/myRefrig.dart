@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../ingredientMoreInfo/ingredientMoreInfo.dart';
 import 'myRefrigeratorDropdown.dart';
 import 'ingredientSearch.dart';
 import 'ingredientSelect.dart';
@@ -9,6 +10,26 @@ class MyRefrigPage extends StatefulWidget {
 }
 
 class _MyRefrigPageState extends State<MyRefrigPage> {
+
+  //API로 냉장고 목록 가져왔다고 가정.
+  Map<String, Map<String, dynamic>> refrigeList = {
+    'refrige1' : {
+      'refrigeId' : 1,
+      'refrigeName' : '냉장고1',
+      'share' : false,
+      'ingredientNames' : {"식빵", "사과", "오이"},
+    },
+    'refrige2' : {
+      'refrigeId' : 2,
+      'refrigeName' : '냉장고2',
+      'share' : false,
+      'ingredientNames' : {"방울토마토", "오이"},
+    }
+  };
+
+  //TODO: 현재 선택 중인 냉장고 인덱스, 냉장고 드롭다운이랑 연결해서 값을 받을 수 있도록 수정 부탁드립니다.
+  int currentRefrigeId = 1;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,25 +60,38 @@ class _MyRefrigPageState extends State<MyRefrigPage> {
                     width: 340,
                     child: Column(
                       children: [
-                        Row(
+                        Row( //TODO: API로 냉장고 리스트 받아오면 currentRefrigeId를 읽고 재료만큼 버튼이 생성되게 수정 부탁드립니다.
                           children: [
                             IngredIconButton(
                                 buttonText: '식빵',
                                 expDate: 16,
                                 icon: Image.asset('assets/images/ingredient.png'),
-                                onPressed: (isPressed, buttonText) {},
+                              //재료 상세 정보 페이지로 넘어가기.
+                                onPressed: (isIngredientSelect, isPressed, buttonText) {
+                                  if (!isIngredientSelect) {
+                                    showInfo(currentRefrigeId, buttonText);
+                                  }
+                                },
                             ),
                             IngredIconButton(
-                              buttonText: '식빵',
+                              buttonText: '사과',
                               expDate: 16,
                               icon: Image.asset('assets/images/ingredient.png'),
-                              onPressed: (isPressed, buttonText) {},
+                              onPressed: (isIngredientSelect, isPressed, buttonText) {
+                                if (!isIngredientSelect) {
+                                  showInfo(currentRefrigeId, buttonText);
+                                }
+                              },
                             ),
                             IngredIconButton(
-                              buttonText: '식빵',
+                              buttonText: '오이',
                               expDate: 16,
                               icon: Image.asset('assets/images/ingredient.png'),
-                              onPressed: (isPressed, buttonText) {},
+                              onPressed: (isIngredientSelect, isPressed, buttonText) {
+                                if (!isIngredientSelect) {
+                                  showInfo(currentRefrigeId, buttonText);
+                                }
+                              },
                             ),
                           ],
                         )
@@ -116,6 +150,14 @@ class _MyRefrigPageState extends State<MyRefrigPage> {
             ),
 
         ),
+    );
+  }
+  void showInfo(int refrigeId, String ingredientName) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => IngredientMoreInformation(
+          refrigeId: refrigeId,
+          ingredientName: ingredientName,
+        ))
     );
   }
  }

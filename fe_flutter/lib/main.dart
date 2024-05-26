@@ -32,16 +32,17 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routes: {
-
         '/login': (context) => LoginPage(),
         '/join': (context) => JoinPage(),
         '/category': (context) => CategoryPage(),
         '/allergy': (context) => AllergyPage(),
-        '/Mainpage': (context) => MainPage(), //메인페이지 생기면
-        '/IngredientMoreInformation': (context) => IngredientMoreInformation(),
         '/BottomMenu': (context) => BottomMenu(),
         '/IngredReg': (context) => IngredRegPage(),
         '/MyRefirg': (context) => MyRefrigPage(),
+        '/register/category': (context) => CategoryPage(),
+        '/register/allergy': (context) => AllergyPage(),
+        //'/Mainpage': (context) => MainPage(), //메인페이지 생기면
+        //'/IngredientMoreInformation': (context) => IngredientMoreInformation(),
       },
     );
   }
@@ -51,7 +52,7 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/login');
+      Navigator.pushReplacementNamed(context, '/BottomMenu');
     });
     return Scaffold(
       backgroundColor: const Color(0xffFFC94A),

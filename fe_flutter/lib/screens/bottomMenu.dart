@@ -2,6 +2,7 @@ import 'package:fe_flutter/screens/mainPage.dart';
 import 'package:fe_flutter/screens/myPage.dart';
 import 'package:fe_flutter/screens/myRefrigerator.dart';
 import 'package:flutter/material.dart';
+import 'MyRefrigerator/myRefrig.dart';
 
 class BottomMenu extends StatefulWidget {
   const BottomMenu({super.key});
@@ -14,7 +15,8 @@ class BottomMenuState extends State<BottomMenu> {
   int _selectedIndex = 1;
 
   final List<Widget> _navIndex = [ //하단 바에서 선택할 페이지
-    MyRefrigerator(),
+    MyRefrigPage(),
+    //MyRefrigerator(),
     MainPage(),
     MyPage(),
   ];
@@ -24,7 +26,6 @@ class BottomMenuState extends State<BottomMenu> {
       _selectedIndex = index;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {

@@ -18,7 +18,10 @@ class MyRefrigerator extends StatelessWidget {
               TextButton(onPressed: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const IngredientMoreInformation())
+                  MaterialPageRoute(builder: (context) => IngredientMoreInformation(
+                    refrigeId: 1,
+                    ingredientName: 'TEST',
+                  ))
                 );
               },
                   child: const Text('재료')), // 재료 선택 페이지에서 재료를 클릭했을 경우.
