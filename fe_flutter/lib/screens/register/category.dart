@@ -185,7 +185,7 @@ class _CategoryPageState extends State<CategoryPage> {
                           child: TextButton(
                             onPressed: () {
                               selectedButtons.clear();
-                              Navigator.pushNamed(context, '/register/allergy');
+                              Navigator.pushNamed(context, '/allergy');
                             },
                               child: Row(
                                 children: [

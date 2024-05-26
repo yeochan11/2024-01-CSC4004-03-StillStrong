@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                                 secretPassword: _passwordController.text,
                               );
                               login(user);
-                              Navigator.pushNamed(context, '/main');
+                              Navigator.pushNamed(context, '/Mainpage');
                             }
                           },
                           child: Text(
