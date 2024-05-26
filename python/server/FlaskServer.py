@@ -6,6 +6,7 @@ import numpy as np
 sys.path.insert(0, 'python\\model')
 from Weight import RecommendModel
 import tensorflow as tf
+import atexit
 
 NeuralNetwork = tf.keras.models.load_model('python\\pickle\\recommend_model_NeuralNetwork.h5')
 NeuralNetwork.compile(
@@ -81,6 +82,12 @@ def provide_feedback():
     recommend_result = None
 
     return jsonify({'status': 'success'})
+
+def saveModel():
+    model.save("python\\pickle\\recommend_model_NeuralNetwork.h5")
+    print("모델 저장 후 서버를 종료합니다.")
+
+atexit.register(saveModel)
 
 if __name__ == '__main__':
     app.run(debug=False,host="localhost", port=5000)
