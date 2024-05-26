@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         '/register/category': (context) => CategoryPage(),
         '/register/allergy': (context) => AllergyPage(),
         //'/Mainpage': (context) => MainPage(), //메인페이지 생기면
-        '/IngredientMoreInformation': (context) => IngredientMoreInformation(),
+        //'/IngredientMoreInformation': (context) => IngredientMoreInformation(),
         '/BottomMenu': (context) => BottomMenu(),
         '/IngredReg': (context) => IngredRegPage(),
       },
