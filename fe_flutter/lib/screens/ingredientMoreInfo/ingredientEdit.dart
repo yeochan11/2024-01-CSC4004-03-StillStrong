@@ -1,6 +1,6 @@
 import 'package:fe_flutter/model/ingredientMoreInfoModel.dart';
 import 'package:flutter/material.dart';
-import '../../service/db_server.dart';
+import '../../service/ingredInfoServer.dart';
 
 class IngredientEdit extends StatefulWidget {
   final IngredientMoreInfoModel info;
