@@ -18,6 +18,7 @@ X = np.hstack([user_result, ingredient_result, age])
 y = user_result * 0.3 + ingredient_result * 0.5 + age * 0.2
 
 model._RecommendModel__init_fit(X, y)
+
 input_data, result, id = model.recommend(ingredientList=[] , userId=2)
 
 model.updateParameter(X, y, np.array(id) - 1, False)

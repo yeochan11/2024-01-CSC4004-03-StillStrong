@@ -5,14 +5,6 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Input
 import pymysql
 
-'''
-외부 그래픽카드가 있는 사람만 사용하세요.
-CUDA, cuDNN, tensorflow-gpu 가 필요합니다!!
-
-import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-'''
-
 class RecommendModel:
     def __init__(self, ingredientModel, userModel):
         self.NeuralNetwork = Sequential([
@@ -33,7 +25,7 @@ class RecommendModel:
 
         self.host = 'localhost'
         self.user = 'root'
-        self.password = ''
+        self.password = 'zpalq,123098!@#'
         self.db = 'still88'
     
     def recommend(self, ingredientList, userId):
@@ -77,7 +69,7 @@ class RecommendModel:
         cursor = conn.cursor()
         cursor.execute(f"SELECT userAllergy from User where userId = {userId};")
         allergy_list = cursor.fetchone()
-        if allergy_list[0] != None:
+        if allergy_list != None:
             allergy_list = json.loads(allergy_list[0])
         else:
             allergy_list = []
