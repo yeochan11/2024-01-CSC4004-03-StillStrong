@@ -7,9 +7,10 @@ import 'screens/register/category.dart';
 import 'screens/register/allergy.dart';
 import 'screens/ingredientRegister/ingredientRegister.dart';
 import 'screens/mainPage.dart';
+import 'package:fe_flutter/MyRefrigerator/myRefrig.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MyRefrigPage());
 }
 
 class MyApp extends StatelessWidget {
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routes: {
+
         '/login': (context) => LoginPage(),
         '/join': (context) => JoinPage(),
         '/register/category': (context) => CategoryPage(),
