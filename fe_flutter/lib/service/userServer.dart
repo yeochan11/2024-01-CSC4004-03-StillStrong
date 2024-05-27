@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fe_flutter/model/userModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // 로그인
 Future<void> login(User user) async {
@@ -13,13 +14,17 @@ Future<void> login(User user) async {
       body: jsonEncode(user.toJson()),
     );
     if (response.statusCode == 200) {
+      final SharedPreferences pref = await SharedPreferences.getInstance();
       Map<String, dynamic> responseData = jsonDecode(response.body); // response body JSON으로 디코딩
 
       // 받은 데이터 저장
       int userId = responseData['userId'];
       String cookieValue = responseData['cookieValue'];
+      pref.setInt("userId", userId);
 
-      print('Received userId: $userId');
+      var object = pref.get("userId");
+
+      print('Received userId: $object');
       print('Received cookieValue: $cookieValue');
     } else {
       throw Exception("Failed to send data");

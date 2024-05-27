@@ -2,17 +2,28 @@ import 'package:fe_flutter/model/ingredientMoreInfoModel.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-Future<Map<String,dynamic>> fetchIngredientsInfo(int refrigeId, String ingredientName) async {
-  String uri = 'https://jsonplaceholder.typicode.com/posts/1'; // 테스트 주소
-  //String uri = 'https://~~/refrige/ingredient/{refrigeId}?ingredientName={ingredientName}' //TODO: API 테스트시 이 주소를 이용해주세요.
+import 'package:shared_preferences/shared_preferences.dart';
+
+
+Future<Map<String, dynamic>> fetchIngredientsInfo(int refrigeId, String ingredientName) async {
+  final SharedPreferences pref = await SharedPreferences.getInstance();
+  var userId = pref.getInt("userId") ?? 0; // 기본값을 설정
+
+  String uri = 'http://localhost:8080/refrige/ingredient/$refrigeId?ingredientName=콩나물&userId=$userId';
+  print(userId);
+
   final response = await http.get(Uri.parse(uri));
   if (response.statusCode == 200) {
-    final Map<String,dynamic> data = json.decode(response.body);
+    final Map<String, dynamic> data = json.decode(response.body);
+    // ingredientNum 값이 null이 아닌 경우에만 사용
+    int ingredientNum = data['ingredientNum'] ?? 0; // 기본값 0 설정
+    data['ingredientNum'] = ingredientNum;
     return data;
   } else {
-    throw Exception('Failed to load data');
+    throw Exception('Failed to load data: ${response.statusCode}');
   }
 }
+
 
 Future<void> deleteIngredientInfo(int refrigeId, int ingredientId) async {
   String uri = 'https://jsonplaceholder.typicode.com/posts/1'; // 테스트 주소
