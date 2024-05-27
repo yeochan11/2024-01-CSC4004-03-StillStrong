@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import 'package:flutter/material.dart';
 
 void main() {
@@ -32,10 +33,55 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
+=======
+import 'package:fe_flutter/screens/bottomMenu.dart';
+import 'package:flutter/material.dart';
+import 'screens/ingredientMoreInfo/ingredientMoreInfo.dart';
+import 'screens/login/login.dart';
+import 'screens/login/join.dart';
+import 'screens/register/category.dart';
+import 'screens/register/allergy.dart';
+import 'screens/ingredientRegister/ingredientRegister.dart';
+import 'screens/mainPage.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: WelcomePage(),
+      theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+            toolbarHeight: 58.0,
+            backgroundColor: Color(0xffFFC94A),
+            centerTitle: true,
+            titleTextStyle: TextStyle(
+              fontFamily: 'Pretendard',
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            )
+        ),
+      ),
+      routes: {
+        '/login': (context) => LoginPage(),
+        '/join': (context) => JoinPage(),
+        '/register/category': (context) => CategoryPage(),
+        '/register/allergy': (context) => AllergyPage(),
+        //'/Mainpage': (context) => MainPage(), //메인페이지 생기면
+        //'/IngredientMoreInformation': (context) => IngredientMoreInformation(),
+        '/BottomMenu': (context) => BottomMenu(),
+        '/IngredReg': (context) => IngredRegPage(),
+      },
+>>>>>>> b31cabdf4623428649ef3b5ae47a8523d07cc639
     );
   }
 }
 
+<<<<<<< HEAD
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -111,10 +157,39 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
+=======
+class WelcomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    Future.delayed(Duration(seconds: 2), () {
+      Navigator.pushReplacementNamed(context, '/BottomMenu');
+    });
+    return Scaffold(
+      backgroundColor: const Color(0xffFFC94A),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image.asset('assets/images/welcomelogo.png'),
+                SizedBox(height: 20),
+                Text("냉장고를 털고 싶을 땐?",
+                    style: TextStyle(
+                        fontFamily: 'Pretendard',
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
+                SizedBox(height: 3),
+                Image.asset('assets/images/yorijori.png'),
+              ],
+>>>>>>> b31cabdf4623428649ef3b5ae47a8523d07cc639
             ),
           ],
         ),
       ),
+<<<<<<< HEAD
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
@@ -123,3 +198,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+=======
+    );
+  }
+}
+>>>>>>> b31cabdf4623428649ef3b5ae47a8523d07cc639
