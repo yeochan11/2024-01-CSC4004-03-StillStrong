@@ -6,10 +6,11 @@ class mainPageModel {
   List<String> SubRecipeName = ["김치찌개", "초밥", "짜장면", "파스타", "라멘"];
 
   mainPageModel(Map<String, dynamic>? data) {
+    // TODO: API 주소 설정했으면 밑에 주석 해제.
     // MainRecipeImage = data?['MainRecipeImage'];
     // SubRecipeImage = data?['SubRecipeImage'];
     // SubRecipeCategory = data?['SubRecipeCategory'];
     // SubRecipeName = data?['SubRecipeName'];
-    MainRecipeImage = data?['body'];
+    MainRecipeImage = data?['body']; // TODO: 이건 주석 처리해주세요.
   }
 }
