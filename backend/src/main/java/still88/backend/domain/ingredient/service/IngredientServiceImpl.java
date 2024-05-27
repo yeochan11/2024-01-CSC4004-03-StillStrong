@@ -28,10 +28,10 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     public void registerIngredient(int refrigeId, RegisterIngredientDTO request, String userId) {
         try {
-            RefrigeList refrigeList = refrigeListRepository.findByRefrigeId(refrigeId);
+            User user = userRepository.findUserByUserId(Integer.parseInt(userId));
+            RefrigeList refrigeList = refrigeListRepository.findByRefrigeIdAndUser(refrigeId, user);
             String ingredientName = request.getIngredientName();
             Ingredient ingredient = ingredientRepository.findIngredientByIngredientName(ingredientName);
-            User user = userRepository.findUserByUserId(Integer.parseInt(userId));
             LocalDate createdDate = request.getCreatedDate();
             int ingredientNum = request.getIngredientNum();
             String ingredientPlace = request.getIngredientPlace();
@@ -85,6 +85,9 @@ public class IngredientServiceImpl implements IngredientService {
         Ingredient ingredient = ingredientRepository.findIngredientByIngredientName(ingredientName);
         RefrigeList refrigeList = refrigeListRepository.findByRefrigeId(refrigeId);
         User user = userRepository.findUserByUserId(Integer.parseInt(userId));
+        log.info("ingredient = {}", ingredient);
+        log.info("refrigeList = {}", refrigeList);
+        log.info("user = {}", user);
 
         Refrige refrige = refrigeRepository.findRefrigeByRefrigeListAndIngredientAndUser(refrigeList, ingredient, user);
 

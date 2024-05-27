@@ -1,6 +1,8 @@
 package still88.backend.domain.ingredient.controller;
 
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,10 +46,34 @@ public class IngredientController {
     @GetMapping("/{refrigeId}")
     public ResponseEntity<?> showIngredientDetail(@PathVariable("refrigeId") int refrigeId,
                                                   @RequestParam("ingredientName") String ingredientName,
-                                                  @CookieValue String userId) {
-        try{
+                                                  HttpServletRequest request) {
+        try {
+            String userId = null;
+
+            // 요청에서 쿠키 배열을 가져옵니다.
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                // 쿠키 배열을 반복하여 'userId' 쿠키를 찾습니다.
+                for (Cookie cookie : cookies) {
+                    if ("userId".equals(cookie.getName())) {
+                        // 'userId' 쿠키를 찾으면 값을 가져옵니다.
+                        userId = cookie.getValue();
+                        break;
+                    }
+                }
+            }
+
+            log.info("userId = {}", userId);
+            // userId가 없을 경우에 대한 처리
+            if (userId == null) {
+                return ResponseEntity.badRequest().body("Required cookie 'userId' is not present");
+            }
+
+            // userId가 있을 경우 요청을 처리합니다.
+            log.info("조회 시도, refrigeId = {}. userId = {}", refrigeId, userId);
             return ResponseEntity.ok(ingredientService.ingredientDetail(refrigeId, ingredientName, userId));
-        }catch(Exception e){
+
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

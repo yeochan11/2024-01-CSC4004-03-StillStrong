@@ -79,5 +79,6 @@ public class User{
         this.userImage = "";
         this.userAllergy = "";
         this.userFavorite = "";
+        this.alarm = true;
     }
 }

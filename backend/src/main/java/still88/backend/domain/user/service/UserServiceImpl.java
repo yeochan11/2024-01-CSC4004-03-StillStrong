@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
             // Fetch recipe IDs for each category
             for (String category : favorites) {
                 List<Recipe> recipes = recipeRepository.findRecipeIdByRecipeCategory(category);
-                List<Integer> categoryRecipeIds = recipes.stream().map(Recipe::getRecipeId).collect(Collectors.toList()).reversed();
+                List<Integer> categoryRecipeIds = recipes.stream().map(Recipe::getRecipeId).collect(Collectors.toList());
                 recipeIds.addAll(categoryRecipeIds);
             }
 
