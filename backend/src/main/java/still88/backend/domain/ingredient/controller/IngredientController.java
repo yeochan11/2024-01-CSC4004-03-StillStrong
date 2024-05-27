@@ -22,7 +22,7 @@ public class IngredientController {
     @PostMapping("/register/{refrigeId}")
     public ResponseEntity<?> registerIngredient(@PathVariable("refrigeId") int refrigeId,
                                                 @RequestBody RegisterIngredientDTO request,
-                                                @CookieValue String userId){
+                                                @RequestParam("userId") String userId){
         try{
             ingredientService.registerIngredient(refrigeId, request, userId);
             return ResponseEntity.ok("재료 등록 완료");
@@ -33,10 +33,9 @@ public class IngredientController {
 
     @DeleteMapping("/delete/{refrigeId}/{ingredientId}")
     public ResponseEntity<?> deleteIngredient(@PathVariable("refrigeId") int refrigeId,
-                                              @PathVariable("ingredientId") int ingredientId,
-                                              @CookieValue String userId) {
+                                              @PathVariable("ingredientId") int ingredientId) {
         try{
-            ingredientService.deleteIngredient(refrigeId, ingredientId, userId);
+            ingredientService.deleteIngredient(refrigeId, ingredientId);
             return ResponseEntity.ok("재료 삭제 완료");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -45,33 +44,10 @@ public class IngredientController {
 
     @GetMapping("/{refrigeId}")
     public ResponseEntity<?> showIngredientDetail(@PathVariable("refrigeId") int refrigeId,
-                                                  @RequestParam("ingredientName") String ingredientName,
-                                                  HttpServletRequest request) {
+                                                  @RequestParam("ingredientName") String ingredientName) {
         try {
-            String userId = null;
-
-            // 요청에서 쿠키 배열을 가져옵니다.
-            Cookie[] cookies = request.getCookies();
-            if (cookies != null) {
-                // 쿠키 배열을 반복하여 'userId' 쿠키를 찾습니다.
-                for (Cookie cookie : cookies) {
-                    if ("userId".equals(cookie.getName())) {
-                        // 'userId' 쿠키를 찾으면 값을 가져옵니다.
-                        userId = cookie.getValue();
-                        break;
-                    }
-                }
-            }
-
-            log.info("userId = {}", userId);
-            // userId가 없을 경우에 대한 처리
-            if (userId == null) {
-                return ResponseEntity.badRequest().body("Required cookie 'userId' is not present");
-            }
-
-            // userId가 있을 경우 요청을 처리합니다.
-            log.info("조회 시도, refrigeId = {}. userId = {}", refrigeId, userId);
-            return ResponseEntity.ok(ingredientService.ingredientDetail(refrigeId, ingredientName, userId));
+            log.info("조회 시도, refrigeId = {}", refrigeId);
+            return ResponseEntity.ok(ingredientService.ingredientDetail(refrigeId, ingredientName));
 
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -80,10 +56,14 @@ public class IngredientController {
     @PatchMapping("/{refrigeId}/{ingredientId}/edit")
     public ResponseEntity<?> editIngredient(@PathVariable("refrigeId") int refrigeId,
                                             @PathVariable("ingredientId") int ingredientId,
-                                            @RequestBody EditIngredientRequestDTO request,
-                                            @CookieValue String userId) {
+                                            @RequestBody EditIngredientRequestDTO request) {
         try{
-            ingredientService.editIngredient(refrigeId, ingredientId, request, userId);
+            log.info("Number = {}", request.getIngredientNum());
+            log.info("Place = {}", request.getIngredientPlace());
+            log.info("Memo = {}", request.getIngredientMemo());
+            log.info("deadline = {}", request.getIngredientDeadline());
+            log.info("created date = {}", request.getCreatedDate());
+            ingredientService.editIngredient(refrigeId, ingredientId, request);
             return ResponseEntity.ok("수정완료");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
