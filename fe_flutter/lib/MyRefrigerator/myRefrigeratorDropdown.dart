@@ -44,9 +44,14 @@ class DropdownRefrigeState extends State<DropdownRefrige> {
             child: DropdownButton<String>(
               value: selectedItem,
               onChanged: (String? newValue) {
-                setState(() {
-                  selectedItem = newValue!;
-                });
+                if(newValue == 'addRefrige'){
+                  _showAddRefrigeDialog(context);
+                }else {
+                  setState(() {
+                    selectedItem = newValue!;
+                  });
+                }
+
               },
                 isExpanded: true,
                 underline: SizedBox(),
@@ -55,13 +60,54 @@ class DropdownRefrigeState extends State<DropdownRefrige> {
                   value: value,
                   child: Text(value),
                 );
-              }).toList(),
+              }).toList()
+                ..add(
+                  DropdownMenuItem<String>(
+                    value: 'addRefrige',
+                    child: Text('+ 냉장고 추가'),
+                  )
+                )
             ),
           ),
         ),
       ],
     );
   }
+}
+
+void _showAddRefrigeDialog(BuildContext context) {
+  TextEditingController _newRefrigeController = TextEditingController();
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('냉장고 추가'),
+        content: TextField(
+          controller: _newRefrigeController,
+          decoration: InputDecoration(hintText: '새로운 냉장고의 이름을 입력해주세요'),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('취소'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: Text('확인'),
+            onPressed: () {
+              RefrigeList refrige = RefrigeList(
+                refrigeName: _newRefrigeController.text,
+              );
+              createRefrige(refrige);
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
 
 void _displayTextInputDialog(BuildContext context) async {
