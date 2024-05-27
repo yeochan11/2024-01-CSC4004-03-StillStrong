@@ -3,6 +3,9 @@ import '../ingredientMoreInfo/ingredientMoreInfo.dart';
 import 'myRefrigeratorDropdown.dart';
 import 'ingredientSearch.dart';
 import 'ingredientSelect.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyRefrigPage extends StatefulWidget {
   @override
@@ -11,24 +14,40 @@ class MyRefrigPage extends StatefulWidget {
 
 class _MyRefrigPageState extends State<MyRefrigPage> {
 
-  //API로 냉장고 목록 가져왔다고 가정.
-  Map<String, Map<String, dynamic>> refrigeList = {
-    'refrige1' : {
-      'refrigeId' : 1,
-      'refrigeName' : '냉장고1',
-      'share' : false,
-      'ingredientNames' : {"식빵", "사과", "오이"},
-    },
-    'refrige2' : {
-      'refrigeId' : 2,
-      'refrigeName' : '냉장고2',
-      'share' : false,
-      'ingredientNames' : {"방울토마토", "오이"},
-    }
-  };
-
-  //TODO: 현재 선택 중인 냉장고 인덱스, 냉장고 드롭다운이랑 연결해서 값을 받을 수 있도록 수정 부탁드립니다.
+  List<Map<String, dynamic>> refrigeList = [];
+//TODO: 현재 선택 중인 냉장고 인덱스, 냉장고 드롭다운이랑 연결해서 값을 받을 수 있도록 수정 부탁드립니다.
   int currentRefrigeId = 1;
+  @override
+  void initState() {
+    super.initState();
+    fetchRefrigeList();
+  }
+
+  Future<void> fetchRefrigeList() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    int? userId = pref.getInt("userId");
+    final url = 'http://localhost:8080/refrige/get/refrigeWithIngredients?userId=$userId';
+    try {
+      final response = await http.get(Uri.parse(url), headers: {"Accept": "application/json; charset=utf-8"});
+      if (response.statusCode == 200) {
+        final responseBody = utf8.decode(response.bodyBytes);
+        final data = json.decode(responseBody);
+        setState(() {
+          refrigeList = List<Map<String, dynamic>>.from(data['refrigeList'].map((item) => Map<String, dynamic>.from(item)));
+          currentRefrigeId = data['currentRefrigeId'];
+        });
+        print(refrigeList);
+        print(currentRefrigeId);
+      } else {
+        print('Failed to load refrige list');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
