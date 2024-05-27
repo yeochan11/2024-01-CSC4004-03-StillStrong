@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:fe_flutter/screens/login/buildTextFormField.dart';
+import 'package:fe_flutter/service/userServer.dart';
+import 'package:fe_flutter/model/userModel.dart';
+import 'package:fe_flutter/provider/userProvider.dart';
 
 class JoinPage extends StatefulWidget {
   @override
@@ -9,19 +13,13 @@ class JoinPage extends StatefulWidget {
 class _JoinPageState extends State<JoinPage> {
   final _formKey = GlobalKey<FormState>();
   final _nicknameController = TextEditingController();
-  String? _selectedSex;
+  bool? _selectedSex;
   final _ageController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _passwordcheckController = TextEditingController();
   String password = "";
   String password_check = "";
-
-  @override
-  void initState() {
-    super.initState();
-    _selectedSex = null;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +81,7 @@ class _JoinPageState extends State<JoinPage> {
                               value: _selectedSex,
                               items: ['남자', '여자']
                                 .map((e) => DropdownMenuItem(
-                                value: e,
+                                value: e == '남자',
                                 child: SizedBox(
                                   width: 300.0,
                                   //height: 46.0,
@@ -126,7 +124,7 @@ class _JoinPageState extends State<JoinPage> {
                                 });
                               },
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
+                                if (value == null) {
                                   return '성별을 선택해주세요.';
                                 }
                                 return null;
@@ -186,11 +184,23 @@ class _JoinPageState extends State<JoinPage> {
                             child: TextButton(
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
-                                  _formKey.currentState!.save();
+                                  _formKey.currentState!.save(); // 입력값 가져오기
+                                  int userAge = int.parse(_ageController.text); // 나이값 int로 변환
+                                  // 유저 인스턴스 생성
+                                  User user = User(
+                                    secretEmail: _emailController.text,
+                                    gender: _selectedSex,
+                                    userNickname: _nicknameController.text,
+                                    secretPassword: _passwordController.text,
+                                    userAge: userAge,
+                                  );
+                                  join(user); // 회원가입 api 호출
+                                  Provider.of<UserProvider>(context, listen: false).setUser(user); // 유저 정보 provider에 설정 (자동로그인)
+                                  print('id : ${user.secretEmail}\npw : ${user.secretPassword}'); // 유저 정보 콘솔 출력 (확인용)
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       backgroundColor: const Color(0xffF6A90A),
-                                      content: Text('회원가입이 완료되었습니다.',
+                                      content: Text('회원가입이 완료되었습니다. 자동 로그인됩니다.',
                                       style: TextStyle(
                                         fontFamily: 'Pretendard',
                                         fontSize: 13.0,
@@ -200,7 +210,7 @@ class _JoinPageState extends State<JoinPage> {
                                     ),
                                   );
                                   Future.delayed(Duration(seconds: 1), () {
-                                    Navigator.pushReplacementNamed(context, '/register/category');
+                                    Navigator.pushReplacementNamed(context, '/category');
                                   });
                                 }
                               },

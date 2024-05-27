@@ -206,7 +206,7 @@ class _AllergyPageState extends State<AllergyPage> {
                         onPressed: () {
                           setState(() {
                             _selectedAllergy.clear();
-                            Navigator.pushReplacementNamed(context, '/main');
+                            Navigator.pushReplacementNamed(context, '/Mainpage');
                           });
                         },
                         child: Row(

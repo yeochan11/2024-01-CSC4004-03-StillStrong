@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../service/db_server.dart';
+import '../../service/ingredInfoServer.dart';
 
 void deleteIngredient(BuildContext context, int refrigeId, int ingredientId) {
   showDialog(

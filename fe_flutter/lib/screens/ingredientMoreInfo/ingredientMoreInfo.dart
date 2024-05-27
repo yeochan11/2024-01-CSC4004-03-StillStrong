@@ -2,7 +2,7 @@ import 'package:fe_flutter/model/ingredientMoreInfoModel.dart';
 import 'package:fe_flutter/screens/ingredientMoreInfo/deleteIngredient.dart';
 import 'package:fe_flutter/screens/ingredientMoreInfo/ingredientEdit.dart';
 import 'package:flutter/material.dart';
-import '../../service/db_server.dart';
+import '../../service/ingredInfoServer.dart';
 
 class IngredientMoreInformation extends StatefulWidget {
   final int refrigeId;
