@@ -27,15 +27,9 @@ public class RefrigeController {
         return ResponseEntity.ok(refrigeService.updateRefrige(refrigeId, updateRefrigeRequestDto));
     }
 
-    // 냉장고 목록 조회
-    @GetMapping("/get/refrigeList")
-    public ResponseEntity<?> getRefrigeList(@CookieValue int userId) {
-        return ResponseEntity.ok(refrigeService.getRefrigeList(userId));
-    }
-
-    // 냉장고 안 재료 조회
-    @GetMapping("/get/{refrigeId}")
-    public ResponseEntity<?> getRefrigeIngredient(@PathVariable int refrigeId) {
-        return ResponseEntity.ok(refrigeService.getRefrigeIngredient(refrigeId));
+    // 냉장고 목록 및 재료 조회
+    @GetMapping("/get/refrigeWithIngredients")
+    public ResponseEntity<?> getRefrigeWithIngredients(@CookieValue int userId) {
+        return ResponseEntity.ok(refrigeService.getRefrigeWithIngredients(userId));
     }
 }

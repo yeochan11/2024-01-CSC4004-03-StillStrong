@@ -32,17 +32,17 @@ public class Recipe {
     private String recipeIngredient;
 
     @Column
-    private int likeNum;
+    private String recipeMainImage;
 
     // 생성자 + Builder로 일관성 유지
     @Builder
     public Recipe(String recipeName, String recipeCategory, String recipeDescription,
-                  String recipeImage, String recipeIngredient, int likeNum) {
+                  String recipeImage, String recipeIngredient, String recipeMainImage) {
         this.recipeName = recipeName;
         this.recipeCategory = recipeCategory;
         this.recipeDescription = recipeDescription;
         this.recipeImage = recipeImage;
         this.recipeIngredient = recipeIngredient;
-        this.likeNum = likeNum;
+        this.recipeMainImage = recipeMainImage;
     }
 }

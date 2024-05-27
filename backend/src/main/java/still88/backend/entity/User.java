@@ -49,7 +49,6 @@ public class User{
     @Column(columnDefinition = "json")
     private String userFavorite;
 
-
     @Column
     @ColumnDefault("true")
     private Boolean alarm;
@@ -80,5 +79,6 @@ public class User{
         this.userImage = "";
         this.userAllergy = "";
         this.userFavorite = "";
+        this.alarm = true;
     }
 }

@@ -11,7 +11,7 @@ public interface IngredientService {
 
     void deleteIngredient(int refrigeId, int ingredientId, String userId);
 
-    IngredientDetailResponseDTO ingredientDetail(int refrigeId, int ingredientId, String userId);
+    IngredientDetailResponseDTO ingredientDetail(int refrigeId, String ingredientName, String userId);
 
     void editIngredient(int refrigeId, int ingredientId, EditIngredientRequestDTO request, String userId);
 }
