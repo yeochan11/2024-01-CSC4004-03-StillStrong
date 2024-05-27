@@ -23,12 +23,15 @@ Future<void> login(User user) async {
   }
 }
 
-Future<Map<String,dynamic>> fetchIngredientsInfo(int refrigeId, String ingredientName) async {
-  String uri = 'https://jsonplaceholder.typicode.com/posts/1'; // 테스트 주소
-  //String uri = 'https://~~/refrige/ingredient/{refrigeId}?ingredientName={ingredientName}' //TODO: API 테스트시 이 주소를 이용해주세요.
+Future<Map<String, dynamic>> fetchIngredientsInfo(int refrigeId, String ingredientName) async {
+  User user = User(secretEmail: 'qwer', secretPassword: 'qwer');
+  await login(user);
+
+  String uri = 'http://localhost:8080/refrige/ingredient/$refrigeId?ingredientName=$ingredientName';
   final response = await http.get(Uri.parse(uri));
+
   if (response.statusCode == 200) {
-    final Map<String,dynamic> data = json.decode(response.body);
+    final Map<String, dynamic> data = json.decode(response.body);
     return data;
   } else {
     throw Exception('Failed to load data');
