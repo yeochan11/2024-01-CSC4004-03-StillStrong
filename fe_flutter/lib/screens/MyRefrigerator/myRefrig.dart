@@ -14,7 +14,7 @@ class MyRefrigPage extends StatefulWidget {
 
 class _MyRefrigPageState extends State<MyRefrigPage> {
 
-  Map<String, Map<String, dynamic>> refrigeList = {};
+  List<Map<String, dynamic>> refrigeList = [];
 //TODO: 현재 선택 중인 냉장고 인덱스, 냉장고 드롭다운이랑 연결해서 값을 받을 수 있도록 수정 부탁드립니다.
   int currentRefrigeId = 1;
   @override
@@ -28,12 +28,13 @@ class _MyRefrigPageState extends State<MyRefrigPage> {
     int? userId = pref.getInt("userId");
     final url = 'http://localhost:8080/refrige/get/refrigeWithIngredients?userId=$userId';
     try {
-      final response = await http.get(Uri.parse(url));
+      final response = await http.get(Uri.parse(url), headers: {"Accept": "application/json; charset=utf-8"});
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
+        final responseBody = utf8.decode(response.bodyBytes);
+        final data = json.decode(responseBody);
         setState(() {
-          refrigeList = Map<String, Map<String, dynamic>>.from(data?['refrigeList']);
-          currentRefrigeId = jsonDecode(data['currentRefrigeId']);
+          refrigeList = List<Map<String, dynamic>>.from(data['refrigeList'].map((item) => Map<String, dynamic>.from(item)));
+          currentRefrigeId = data['currentRefrigeId'];
         });
         print(refrigeList);
         print(currentRefrigeId);
@@ -44,6 +45,7 @@ class _MyRefrigPageState extends State<MyRefrigPage> {
       print(e.toString());
     }
   }
+
 
 
 
