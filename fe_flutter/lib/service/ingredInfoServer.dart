@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<Map<String, dynamic>> fetchIngredientsInfo(int refrigeId, String ingredientName) async {
-  String uri = 'http://localhost:8080/refrige/ingredient/$refrigeId?ingredientName=콩나물';
+  String uri = 'http://localhost:8080/refrige/ingredient/$refrigeId?ingredientName=$ingredientName';
 
   final response = await http.get(Uri.parse(uri));
   if (response.statusCode == 200) {
