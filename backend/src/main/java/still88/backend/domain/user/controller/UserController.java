@@ -53,11 +53,21 @@ public class UserController {
 
     // 알러지 조회
     @GetMapping("/get/allergy")
-    public ResponseEntity<?> getUserAllergy(@CookieValue int userId) {
+    public ResponseEntity<?> getUserAllergy(@RequestParam int userId) {
         try {
             GetAllergyResponseDto getAllergyResponseDto = userService.getUserAllergry(userId);
             return ResponseEntity.ok(getAllergyResponseDto);
         } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    //알러지 전체 조회
+    @GetMapping("/get/allergyList")
+    public ResponseEntity<?> getAllergy(){
+        try{
+            return ResponseEntity.ok(userService.getAllergyList());
+        }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

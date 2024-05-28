@@ -13,4 +13,7 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
 
     @Query("SELECT i.ingredientName FROM Ingredient i WHERE i.ingredientId IN :ingredientIds")
     List<String> findIngredientNamesByIngredientIds(List<Integer> ingredientIds);
+
+    @Query("SELECT distinct ingredientCategory FROM Ingredient")
+    List<String> getAllAllergyInfo();
 }
