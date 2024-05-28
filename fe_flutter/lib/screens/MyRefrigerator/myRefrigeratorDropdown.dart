@@ -100,7 +100,7 @@ void _showAddRefrigeDialog(BuildContext context) {
               Refrige refrige = Refrige(
                 refrigeName: _newRefrigeController.text,
               );
-              print("$_newRefrigeController");
+              //print("$_newRefrigeController");
               createRefrige(refrige);
               Navigator.of(context).pop();
             },
@@ -136,7 +136,7 @@ void _displayTextInputDialog(BuildContext context) async {
                 Refrige refrige = Refrige(
                   refrigeName: _textFieldController.text,
                 );
-                updateRefrigeName(refrige);
+                updateRefrigeName(refrige, 1);
                 print('입력한 텍스트: ${_textFieldController.text}');
                 Navigator.pop(context);
               },

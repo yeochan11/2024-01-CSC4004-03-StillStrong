@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<RefrigeList> getRefrigeList() async {
   try {
     final response = await http.get(
-      Uri.parse('http://127.0.0.1:8080/refrige/get/refrigeList'),
+      Uri.parse('http://localhost:8080/refrige/get/refrigeList'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },
@@ -28,7 +28,7 @@ Future<void> createRefrige(Refrige refrige) async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     int? userId = pref.getInt("userId");
     final response = await http.post(
-      Uri.parse('http://127.0.0.1:8088/refrige/create?userId=$userId'),
+      Uri.parse('http://localhost:8080/refrige/create?userId=$userId'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },
@@ -36,7 +36,6 @@ Future<void> createRefrige(Refrige refrige) async {
     );
     if (response.statusCode == 200) {
       Map<String, dynamic> responseData = jsonDecode(response.body);
-
       int refrigeId = responseData['refrigeId'];
       String refrigeName = responseData['refrigeName'];
       print("regrigeId : $refrigeId");
@@ -54,7 +53,7 @@ Future<void> updateRefrigeName(Refrige refrige, int refrigeId) async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     int? userId = pref.getInt("userId");
     final response = await http.patch(
-        Uri.parse('http://127.0.0.1:8088/refrige/update/$refrigeId?userId=$userId'),
+        Uri.parse('http://localhost:8080/refrige/update/$refrigeId?userId=$userId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=utf-8',
         },
