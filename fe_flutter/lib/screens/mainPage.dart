@@ -72,9 +72,9 @@ class MainPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20.0),
                             child: Image.network(
                               //TODO: API 주소 설정하면 이 값을 이용
-                              //info.MainRecipeImage,
+                              info.MainRecipeImage,
                               //TODO: 임시 이미지입니다. API 주소 설정 후 주석 처리 해주세요.
-                              'https://recipe1.ezmember.co.kr/cache/recipe/2022/09/30/8e7eb8e3019532a8dc6d39a9a325aad41.jpg',
+                              // 'https://recipe1.ezmember.co.kr/cache/recipe/2022/09/30/8e7eb8e3019532a8dc6d39a9a325aad41.jpg',
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -185,9 +185,9 @@ class MainPage extends StatelessWidget {
             children: [
               Image.network(
                 //TODO: API 주소 설정하면 이 값을 이용
-                //subRecipeImage,
+                subRecipeImage,
                 //TODO: 임시 이미지입니다. API 주소 설정 후 주석 처리 해주세요.
-                'https://recipe1.ezmember.co.kr/cache/recipe/2022/09/30/8e7eb8e3019532a8dc6d39a9a325aad41.jpg',
+                // 'https://recipe1.ezmember.co.kr/cache/recipe/2022/09/30/8e7eb8e3019532a8dc6d39a9a325aad41.jpg',
                 width: 230,
                 height: 200,
                 fit: BoxFit.cover,

@@ -5,8 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<Map<String, dynamic>> fetchIngredientsInfo(int refrigeId, String ingredientName) async {
   String uri = 'http://localhost:8080/refrige/ingredient/$refrigeId?ingredientName=$ingredientName';
-
   final response = await http.get(Uri.parse(uri));
+  print(response.body);
   if (response.statusCode == 200) {
     final decodeData = utf8.decode(response.bodyBytes);
     final Map<String, dynamic> data = json.decode(decodeData);
