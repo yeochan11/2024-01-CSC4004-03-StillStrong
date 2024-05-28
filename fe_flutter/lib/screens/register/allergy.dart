@@ -139,10 +139,10 @@ class _AllergyPageState extends State<AllergyPage> {
                     child: TextButton(
                       onPressed: () {
                         if (_selectedAllergy.isNotEmpty) {
-                          final user = Provider.of<UserProvider>(context, listen: false).user!; // user 정보 불러오기
-                          patchAllergies(user); // 취향 등록 api
-                          user.userFavorites = _selectedAllergy; // 선택한 취향 유저 정보에 삽입
-                          print('userAllergies : ${user.userAllergies}'); // 선택한 취향 콘솔 출력 (확인용)
+                          Map<String, dynamic> allergy = {};
+                          allergy['allergies'] = _selectedAllergy;
+                          patchAllergies(allergy); // 취향 등록 api
+                          print('userAllergies : $_selectedAllergy'); // 선택한 취향 콘솔 출력 (확인용)
                           Navigator.pushReplacementNamed(context, '/BottomMenu');
                         } else {
                           showDialog(

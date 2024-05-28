@@ -46,11 +46,12 @@ Future<void> join(User user) async {
     );
     if (response.statusCode == 200) {
       Map<String, dynamic> responseData = jsonDecode(response.body); // response body JSON으로 디코딩
-
+      final SharedPreferences pref = await SharedPreferences.getInstance();
       // 받은 데이터 저장
       int userId = responseData['userId'];
       String userNickname = responseData['userNickname'];
       String cookieValue = responseData['cookieValue'];
+      pref.setInt("userId", userId);
 
       print('Received userId: $userId');
       print('Received userNickname: $userNickname');
@@ -64,14 +65,16 @@ Future<void> join(User user) async {
 }
 
 // 취향 등록
-Future<void> patchFavorites(User user) async {
+Future<void> patchFavorites(Map<String, dynamic> favorite) async {
   try {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    int? userId = pref.getInt("userId");
     final response = await http.patch(
-      Uri.parse('http://localhost:8080/user/register/favorite'),
+      Uri.parse('http://localhost:8080/user/register/favorite?userId=$userId'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },
-      body: jsonEncode({user.toJson()}),
+      body: json.encode(favorite),
     );
 
     if (response.statusCode == 200) {
@@ -87,10 +90,10 @@ Future<void> patchFavorites(User user) async {
 // 알러지 목록 get
 Future<List<String>> getAllergies() async {
   try {
-    final response = await http.get(Uri.parse('http://localhost:8080/user/register/favorite'));
-
+    final response = await http.get(Uri.parse('http://localhost:8080/user/get/allergyList'));
     if (response.statusCode == 200) {
-      final Map<String, dynamic> data = jsonDecode(response.body);
+      final decodeData = utf8.decode(response.bodyBytes);
+      final Map<String, dynamic> data = jsonDecode(decodeData);
       final List<String> allergies = List<String>.from(data['allergies']);
       return allergies;
     } else {
@@ -102,14 +105,16 @@ Future<List<String>> getAllergies() async {
 }
 
 // 알러지 등록
-Future<void> patchAllergies(User user) async {
+Future<void> patchAllergies(Map<String, dynamic> allergy) async {
   try {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    int? userId = pref.getInt("userId");
     final response = await http.patch(
-      Uri.parse('http://localhost:8080/user/register/allergy'),
+      Uri.parse('http://localhost:8080/user/register/allergy?userId=$userId'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },
-      body: jsonEncode({user.toJson()}),
+      body: json.encode(allergy),
     );
 
     if (response.statusCode == 200) {
