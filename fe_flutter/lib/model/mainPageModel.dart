@@ -1,6 +1,7 @@
 
 class mainPageModel {
   String MainRecipeImage = "http//~/";
+  String MainRecipeName = "스파게티";
   List<String> SubRecipeImage = ["http//~/1", "http//~/2", "http//~/3", "http//~/4", "http//~/5"];
   List<String> SubRecipeCategory = ["한식", "일식", "중식", "양식", "일식"];
   List<String> SubRecipeName = ["김치찌개", "초밥", "짜장면", "파스타", "라멘"];
@@ -8,6 +9,7 @@ class mainPageModel {
   mainPageModel(Map<String, dynamic>? data) {
     // TODO: API 주소 설정했으면 밑에 주석 해제.
     // MainRecipeImage = data?['MainRecipeImage'];
+    // MainRecipeName = data?['MainRecipeName'];
     // SubRecipeImage = data?['SubRecipeImage'];
     // SubRecipeCategory = data?['SubRecipeCategory'];
     // SubRecipeName = data?['SubRecipeName'];
