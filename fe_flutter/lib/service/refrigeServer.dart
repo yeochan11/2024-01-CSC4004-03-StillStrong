@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fe_flutter/model/refrigeModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<RefrigeList> getRefrigeList() async {
   try {
@@ -24,8 +25,10 @@ Future<RefrigeList> getRefrigeList() async {
 
 Future<void> createRefrige(Refrige refrige) async {
   try{
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    int? userId = pref.getInt("userId");
     final response = await http.post(
-      Uri.parse('http://127.0.0.1:8088/refrige/create'),
+      Uri.parse('http://127.0.0.1:8088/refrige/create?userId=$userId'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },
@@ -46,10 +49,12 @@ Future<void> createRefrige(Refrige refrige) async {
   }
 }
 
-Future<void> updateRefrigeName(Refrige refrige) async {
+Future<void> updateRefrigeName(Refrige refrige, int refrigeId) async {
   try{
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    int? userId = pref.getInt("userId");
     final response = await http.patch(
-        Uri.parse('http://127.0.0.1:8088/refrige/update/${refrige.refrigeId}'),
+        Uri.parse('http://127.0.0.1:8088/refrige/update/$refrigeId?userId=$userId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=utf-8',
         },

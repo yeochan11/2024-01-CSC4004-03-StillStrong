@@ -100,6 +100,7 @@ void _showAddRefrigeDialog(BuildContext context) {
               Refrige refrige = Refrige(
                 refrigeName: _newRefrigeController.text,
               );
+              print("$_newRefrigeController");
               createRefrige(refrige);
               Navigator.of(context).pop();
             },
