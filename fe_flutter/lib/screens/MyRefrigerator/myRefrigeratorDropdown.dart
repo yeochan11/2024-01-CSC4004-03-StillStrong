@@ -97,7 +97,7 @@ void _showAddRefrigeDialog(BuildContext context) {
           TextButton(
             child: Text('확인'),
             onPressed: () {
-              RefrigeList refrige = RefrigeList(
+              Refrige refrige = Refrige(
                 refrigeName: _newRefrigeController.text,
               );
               createRefrige(refrige);
@@ -132,7 +132,7 @@ void _displayTextInputDialog(BuildContext context) async {
             TextButton(
               child: Text('확인'),
               onPressed: () {
-                RefrigeList refrige = RefrigeList(
+                Refrige refrige = Refrige(
                   refrigeName: _textFieldController.text,
                 );
                 updateRefrigeName(refrige);

@@ -1,13 +1,13 @@
-class Refrige {
-  List<RefrigeList>? refrigeList;
+class RefrigeList {
+  List<Refrige>? refrigeList;
 
-  Refrige({this.refrigeList});
+  RefrigeList({this.refrigeList});
 
-  Refrige.fromJson(Map<String, dynamic> json) {
+  RefrigeList.fromJson(Map<String, dynamic> json) {
     if (json['refrigeList'] != null) {
-      refrigeList = <RefrigeList>[];
+      refrigeList = <Refrige>[];
       json['refrigeList'].forEach((v) {
-        refrigeList!.add(new RefrigeList.fromJson(v));
+        refrigeList!.add(new Refrige.fromJson(v));
       });
     }
   }
@@ -23,15 +23,15 @@ class Refrige {
 
 }
 
-class RefrigeList {
+class Refrige {
   int? refrigeId;
   String? refrigeName;
   bool? share;
   List<String>? ingredientNames;
 
-  RefrigeList({this.refrigeId, this.refrigeName, this.share});
+  Refrige({this.refrigeId, this.refrigeName, this.share});
 
-  RefrigeList.fromJson(Map<String, dynamic> json) {
+  Refrige.fromJson(Map<String, dynamic> json) {
     refrigeId = json['refrigeId'];
     refrigeName = json['refrigeName'];
     share = json['share'];

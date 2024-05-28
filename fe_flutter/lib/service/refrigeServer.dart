@@ -22,7 +22,7 @@ Future<RefrigeList> getRefrigeList() async {
   }
 }
 
-Future<void> createRefrige(RefrigeList refrige) async {
+Future<void> createRefrige(Refrige refrige) async {
   try{
     final response = await http.post(
       Uri.parse('http://127.0.0.1:8088/refrige/create'),
@@ -46,7 +46,7 @@ Future<void> createRefrige(RefrigeList refrige) async {
   }
 }
 
-Future<void> updateRefrigeName(RefrigeList refrige) async {
+Future<void> updateRefrigeName(Refrige refrige) async {
   try{
     final response = await http.patch(
         Uri.parse('http://127.0.0.1:8088/refrige/update/${refrige.refrigeId}'),
