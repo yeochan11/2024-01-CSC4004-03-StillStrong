@@ -1,6 +1,7 @@
 import 'package:fe_flutter/provider/userProvider.dart';
 import 'package:fe_flutter/widget/bottomMenu.dart';
 import 'package:flutter/material.dart';
+import 'package:fe_flutter/screens/MyRefrigerator/myRefrig.dart';
 import 'package:provider/provider.dart';
 import 'screens/ingredientMoreInfo/ingredientMoreInfo.dart';
 import 'screens/login/login.dart';

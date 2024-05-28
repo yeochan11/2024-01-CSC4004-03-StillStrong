@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../ingredientMoreInfo/ingredientMoreInfo.dart';
 import 'myRefrigeratorDropdown.dart';
 import 'ingredientSearch.dart';
 import 'ingredientSelect.dart';
+import '../ingredientMoreInfo/ingredientMoreInfo.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -45,8 +45,6 @@ class _MyRefrigPageState extends State<MyRefrigPage> {
       print(e.toString());
     }
   }
-
-
 
 
   @override

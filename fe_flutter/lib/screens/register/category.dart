@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:fe_flutter/screens/register/customIconButton.dart';
+import 'package:fe_flutter/service/userServer.dart';
+import 'package:fe_flutter/provider/userProvider.dart';
 
 class CategoryPage extends StatefulWidget {
   @override
@@ -118,7 +121,11 @@ class _CategoryPageState extends State<CategoryPage> {
                         child: TextButton(
                           onPressed: () {
                             if (selectedButtons.isNotEmpty) {
-                              Navigator.pushNamed(context, '/register/allergy');
+                              Map<String, dynamic> favorite = {};
+                              print('userFavorites : $selectedButtons'); // 선택한 취향 콘솔 출력 (확인용)
+                              favorite["favorites"] = selectedButtons;
+                              patchFavorites(favorite); // 취향 등록 api
+                              Navigator.pushNamed(context, '/allergy');
                             }
                             else {
                               showDialog(
