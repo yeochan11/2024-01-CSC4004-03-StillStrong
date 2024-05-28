@@ -1,5 +1,5 @@
-import 'package:fe_flutter/mainPage.dart';
-import 'package:fe_flutter/myPage.dart';
+import 'package:fe_flutter/screens/mainPage.dart';
+import 'package:fe_flutter/screens/myPage.dart';
 import 'package:fe_flutter/myRefrigerator.dart';
 import 'package:flutter/material.dart';
 

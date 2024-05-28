@@ -5,8 +5,8 @@ import 'login/login.dart';
 import 'login/join.dart';
 import 'register/category.dart';
 import 'register/allergy.dart';
-import 'mainPage.dart';
-import 'package:fe_flutter/MyRefrigerator/myRefrig.dart';
+import 'screens/mainPage.dart';
+import 'package:fe_flutter/screens/MyRefrigerator/myRefrig.dart';
 
 void main() {
   runApp(MyRefrigPage());
