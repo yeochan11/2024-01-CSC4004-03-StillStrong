@@ -5,6 +5,7 @@ class User {
   String? secretPassword;
   int? userAge;
   List<String>? userFavorites;
+  List<String>? userAllergies;
 
   User(
       {this.secretEmail,
@@ -12,7 +13,8 @@ class User {
         this.userNickname,
         this.secretPassword,
         this.userAge,
-        this.userFavorites});
+        this.userFavorites,
+        this.userAllergies});
 
   // json 데이터로 유저 정보 생성
   User.fromJson(Map<String, dynamic> json) {
@@ -22,6 +24,7 @@ class User {
     secretPassword = json['secretPassword'];
     userAge = json['userAge'];
     userFavorites = json['favorites'] != null ? List<String>.from(json['favorites']) : null;
+    userAllergies = json['allergies'] != null ? List<String>.from(json['allergies']) : null;
   }
 
   // 유저 정보 json 형식으로 변환
@@ -33,6 +36,7 @@ class User {
     data['secretPassword'] = this.secretPassword;
     data['userAge'] = this.userAge;
     data['favorites'] = this.userFavorites;
+    data['allergies'] = this.userAllergies;
     return data;
   }
 }

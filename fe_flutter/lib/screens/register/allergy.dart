@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:fe_flutter/service/userServer.dart';
+import 'package:fe_flutter/provider/userProvider.dart';
 
-List<Allergy> _selectedAllergy = [];
+List<String> _selectedAllergy = [];
 
 class AllergyPage extends StatefulWidget {
   @override
   _AllergyPageState createState() => _AllergyPageState();
 }
 
-class Allergy {
-  final int id;
-  final String name;
-
-  Allergy({
-    this.id = 0,
-    this.name = '',
-  });
-}
-
 class _AllergyPageState extends State<AllergyPage> {
-  static List<Allergy> _allergy = [
-    Allergy(id: 1, name: "난류"),
-    Allergy(id: 2, name: "갑각류"),
-    Allergy(id: 3, name: "돼지고기"),
-    Allergy(id: 4, name: "땅콩"),
-  ];
-  final _items = _allergy
-      .map((allergy) => MultiSelectItem<Allergy>(allergy, allergy.name))
-      .toList();
+  static List<String> _allergies = [];
+  final List<MultiSelectItem<String>> _items = _allergies.map((String item) => MultiSelectItem(item, item)).toList();
 
+
+  @override
+  void initState() {
+    super.initState();
+    getAllergyList();
+  }
+
+  // 알러지 목록 가져오는 함수
+  void getAllergyList() async {
+      List<String> allergies = await getAllergies();
+      setState(() {
+        _allergies = allergies;
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +71,7 @@ class _AllergyPageState extends State<AllergyPage> {
                     child: MultiSelectDialogField(
                       items: _items,
                       onConfirm: (results) {
-                        _selectedAllergy = results.cast<Allergy>();
+                        _selectedAllergy = results.cast<String>();
                       },
                       itemsTextStyle: TextStyle(
                         fontFamily: 'Pretendard',
@@ -139,7 +139,11 @@ class _AllergyPageState extends State<AllergyPage> {
                     child: TextButton(
                       onPressed: () {
                         if (_selectedAllergy.isNotEmpty) {
-                          Navigator.pushReplacementNamed(context, '/main');
+                          final user = Provider.of<UserProvider>(context, listen: false).user!; // user 정보 불러오기
+                          patchAllergies(user); // 취향 등록 api
+                          user.userFavorites = _selectedAllergy; // 선택한 취향 유저 정보에 삽입
+                          print('userAllergies : ${user.userAllergies}'); // 선택한 취향 콘솔 출력 (확인용)
+                          Navigator.pushReplacementNamed(context, '/BottomMenu');
                         } else {
                           showDialog(
                             context: context,
