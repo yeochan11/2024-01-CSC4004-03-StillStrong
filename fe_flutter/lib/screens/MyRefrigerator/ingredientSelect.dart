@@ -62,10 +62,10 @@ class IngredIconButton extends StatefulWidget {
   final String buttonText;
   final int expDate;
   final Widget icon;
-  final Function(bool, String) onPressed;
+  final Function(bool, bool, String) onPressed;
 
   IngredIconButton({
-    required this.buttonText,
+    required this.buttonText, //재료 이름
     required this.expDate,
     required this.icon,
     required this.onPressed
@@ -77,12 +77,14 @@ class IngredIconButton extends StatefulWidget {
 
 class _IngredIconButtonState extends State<IngredIconButton> {
   bool isPressed = false;
+  bool isIngredientSelect = false;
   final Map<String, bool> buttonStates = {};
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        isIngredientSelect = _IngredientSelectState.isIngredientSelect;
         setState(() {
           if(_IngredientSelectState.isIngredientSelect) {
             isPressed = !isPressed;
@@ -96,7 +98,7 @@ class _IngredIconButtonState extends State<IngredIconButton> {
           }
           buttonStates[widget.buttonText] = isPressed;
         });
-        widget.onPressed(isPressed, widget.buttonText);
+        widget.onPressed(isIngredientSelect, isPressed, widget.buttonText);
         //print(selectedButtons);
       },
       child: Container(
