@@ -31,7 +31,7 @@ public class UserController {
 
     // 취향 등록
     @PatchMapping("/register/favorite")
-    public ResponseEntity<?> registerUserFavorites(@CookieValue int userId, @RequestBody RegisterFavoriteRequestDto registerFavoriteRequestDto) {
+    public ResponseEntity<?> registerUserFavorites(@RequestParam int userId, @RequestBody RegisterFavoriteRequestDto registerFavoriteRequestDto) {
         try {
             userService.registerFavorite(userId, registerFavoriteRequestDto);
             return ResponseEntity.ok("취향 등록 완료");
@@ -42,7 +42,7 @@ public class UserController {
 
     // 알러지 등록
     @PatchMapping("/register/allergy")
-    public ResponseEntity<?> registerUserAllergies(@CookieValue int userId, @RequestBody RegisterAllergyRequestDto registerAllergyRequestDto) {
+    public ResponseEntity<?> registerUserAllergies(@RequestParam int userId, @RequestBody RegisterAllergyRequestDto registerAllergyRequestDto) {
         try {
             userService.registerAllergy(userId, registerAllergyRequestDto);
             return ResponseEntity.ok("알러지 등록 완료");
