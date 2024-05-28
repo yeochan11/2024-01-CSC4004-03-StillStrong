@@ -59,13 +59,12 @@ Future<void> join(User user) async {
 }
 
 // 취향 등록
-Future<void> registerFavorites(User user, String cookievalue) async {
+Future<void> patchFavorites(User user) async {
   try {
     final response = await http.patch(
       Uri.parse('http://localhost:8080/user/register/favorite'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
-        'cookievalue': cookievalue,
       },
       body: jsonEncode({user.toJson()}),
     );
@@ -80,4 +79,40 @@ Future<void> registerFavorites(User user, String cookievalue) async {
   }
 }
 
+// 알러지 목록 get
+Future<List<String>> getAllergies() async {
+  try {
+    final response = await http.get(Uri.parse('http://localhost:8080/user/register/favorite'));
 
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      final List<String> allergies = List<String>.from(data['allergies']);
+      return allergies;
+    } else {
+      throw Exception('Failed to get allergies : ${response.statusCode}');
+    }
+  } catch (e) {
+    throw Exception('Failed to get allergies: $e');
+  }
+}
+
+// 알러지 등록
+Future<void> patchAllergies(User user) async {
+  try {
+    final response = await http.patch(
+      Uri.parse('http://localhost:8080/user/register/allergy'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      body: jsonEncode({user.toJson()}),
+    );
+
+    if (response.statusCode == 200) {
+      print('Allergies updated successfully.');
+    } else {
+      print('Failed to update allergies: ${response.reasonPhrase}');
+    }
+  } catch (e) {
+    print('Failed to update allergies: $e');
+  }
+}

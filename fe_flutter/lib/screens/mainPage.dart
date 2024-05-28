@@ -18,7 +18,11 @@ class MainPage extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text('메인 페이지\nEmail : ${user.secretEmail}\nPw : ${user.secretPassword}'), // 유저 정보 출력 (확인용)
+                Text('메인 페이지\n'
+                    'Email : ${user.secretEmail}\n'
+                    'Pw : ${user.secretPassword}\n'
+                    'Favorites : ${user.userFavorites}\n'
+                    'Allergies: ${user.userAllergies}'), // 유저 정보 출력 (확인용)
               ],
             )
               : null,
