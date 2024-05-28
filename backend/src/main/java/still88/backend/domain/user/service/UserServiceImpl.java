@@ -9,6 +9,7 @@ import still88.backend.entity.IdPassword;
 import still88.backend.entity.Recipe;
 import still88.backend.entity.User;
 import still88.backend.repository.IdPasswordRepository;
+import still88.backend.repository.IngredientRepository;
 import still88.backend.repository.RecipeRepository;
 import still88.backend.repository.UserRepository;
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final IngredientRepository ingredientRepository;
     private final IdPasswordRepository idPasswordRepository;
     private final RecipeRepository recipeRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -114,6 +116,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public GetAllergyListResponseDTO getAllergyList() {
+        return GetAllergyListResponseDTO.builder()
+                .allergies(ingredientRepository.getAllAllergyInfo())
+                .build();
+    }
+
     public GetAllergyResponseDto getUserAllergry(int userId) {
         Optional<User> userO = userRepository.findById((long) userId);
         if (userO.isPresent()) {
@@ -133,5 +142,6 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new IllegalArgumentException("존재하지 않는 사용자입니다!");
         }
+
     }
 }
