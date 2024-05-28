@@ -45,10 +45,7 @@ class _MyRefrigPageState extends State<MyRefrigPage> {
       print(e.toString());
     }
   }
-
-
-
-
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -82,13 +79,13 @@ class _MyRefrigPageState extends State<MyRefrigPage> {
                     Row( //TODO: API로 냉장고 리스트 받아오면 currentRefrigeId를 읽고 재료만큼 버튼이 생성되게 수정 부탁드립니다.
                       children: [
                         IngredIconButton(
-                          buttonText: '식빵',
+                          buttonText: '간장',
                           expDate: 16,
                           icon: Image.asset('assets/images/ingredient.png'),
                           //재료 상세 정보 페이지로 넘어가기.
                           onPressed: (isIngredientSelect, isPressed, buttonText) {
                             if (!isIngredientSelect) {
-                              showInfo(currentRefrigeId, buttonText);
+                              showInfo(1, buttonText);
                             }
                           },
                         ),
