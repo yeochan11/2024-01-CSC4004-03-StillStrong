@@ -31,6 +31,14 @@ public class IngredientController {
         }
     }
 
+    @GetMapping("/register")
+    public ResponseEntity<?> showIngredientList(){
+        try {
+            return ResponseEntity.ok(ingredientService.ingredientList());
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
     @DeleteMapping("/delete/{refrigeId}/{ingredientId}")
     public ResponseEntity<?> deleteIngredient(@PathVariable("refrigeId") int refrigeId,
                                               @PathVariable("ingredientId") int ingredientId) {
