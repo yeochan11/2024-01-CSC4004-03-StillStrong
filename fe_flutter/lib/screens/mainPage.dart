@@ -83,20 +83,34 @@ class MainPage extends StatelessWidget {
                           bottom: 0,
                           left: 0,
                           child: Container(
-                            width: 393,
-                            height: 80,
+                            width: 400,
+                            height: 100,
                             decoration: const BoxDecoration(
                               borderRadius: BorderRadius.vertical(bottom: Radius.circular(20.0)),
                               color: Color(0x99000000),
                             ),
                             padding: const EdgeInsets.all(20.0),
-                            child: const Text(
-                              '오늘의 추천요리',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                             children: [
+                               const Text(
+                                 '오늘의 추천요리',
+                                 style: TextStyle(
+                                   fontSize: 20,
+                                   fontWeight: FontWeight.bold,
+                                   color: Colors.white,
+                                 ),
+                               ),
+                               Text(
+                                 info.MainRecipeName,
+                                 style: TextStyle(
+                                   fontSize: 20,
+                                   fontWeight: FontWeight.bold,
+                                   color: Colors.white,
+                                 ),
+                               )
+                             ],
                             ),
                           ),
                         )
@@ -125,7 +139,7 @@ class MainPage extends StatelessWidget {
                         child: Row(
                           children: [
                             for (int i = 0; i < 5; ++i)
-                              makeSubRecipeBox(
+                              _makeSubRecipeBox(
                                   info.SubRecipeImage.elementAt(i),
                                   info.SubRecipeCategory.elementAt(i),
                                   info.SubRecipeName.elementAt(i)
@@ -147,7 +161,7 @@ class MainPage extends StatelessWidget {
   }
 
   // 서브 레시피 생성 함수
-  Widget makeSubRecipeBox(String subRecipeImage, String subRecipeCategory, String subRecipeName) {
+  Widget _makeSubRecipeBox(String subRecipeImage, String subRecipeCategory, String subRecipeName) {
     return Row(
       children: [
 
