@@ -126,3 +126,49 @@ Future<void> patchAllergies(Map<String, dynamic> allergy) async {
     print('Failed to update allergies: $e');
   }
 }
+
+// 비밀번호 찾기
+Future<void> findPw(User user) async {
+  try {
+    final response = await http.post(
+      Uri.parse('http://localhost:8080/find-pw'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(user.toJson()),
+    );
+    if (response.statusCode == 200) {
+      print('Data posted successfully');
+    } else {
+      print('Failed to post data: ${response.reasonPhrase}');
+    }
+  } catch (e) {
+    print('Failed to post data: $e');
+  }
+}
+
+Future<void> updatePw(String updatePassword, String confirmPassword) async {
+  try {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    int? userId = pref.getInt("userId");
+    final Map<String, String> requestBody = {
+      'updatePassword': updatePassword,
+      'confirmPassword': confirmPassword,
+    };
+
+    final response = await http.post(
+      Uri.parse('http://localhost:8080/update-pw?userId=$userId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(requestBody),
+    );
+    if (response.statusCode == 200) {
+      print('Password updated successfully.');
+    } else {
+      print('Failed to update password: ${response.reasonPhrase}');
+    }
+  } catch (e) {
+    print('Failed to update password: $e');
+  }
+}

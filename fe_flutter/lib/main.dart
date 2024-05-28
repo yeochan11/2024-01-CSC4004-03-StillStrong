@@ -5,11 +5,15 @@ import 'package:provider/provider.dart';
 import 'screens/ingredientMoreInfo/ingredientMoreInfo.dart';
 import 'screens/login/login.dart';
 import 'screens/login/join.dart';
+import 'screens/login/findPw.dart';
+import 'screens/login/updatePw.dart';
 import 'screens/register/category.dart';
 import 'screens/register/allergy.dart';
 import 'screens/ingredientRegister/ingredientRegister.dart';
 import 'screens/mainPage.dart';
 import 'screens/MyRefrigerator/myRefrig.dart';
+
+
 
 void main() {
   runApp(MyApp());
@@ -38,6 +42,8 @@ class MyApp extends StatelessWidget {
         routes: {
           '/login': (context) => LoginPage(),
           '/join': (context) => JoinPage(),
+          '/findpw': (context) => FindPwPage(),
+          '/updatepw': (context) => UpdatePwPage(),
           '/category': (context) => CategoryPage(),
           '/allergy': (context) => AllergyPage(),
           '/BottomMenu': (context) => BottomMenu(),
