@@ -13,12 +13,11 @@ class IngredientMoreInfoModel {
     // TODO: API 주소 설정했으면 밑에 주석 해제.
     ingredientPlace = data?['ingredientPlace'];
     ingredientName = data?['ingredientName'];
-    createdDate = data?['createdDate'];
-    ingredientDeadLine = data?['ingredientDeadLine'];
+    createdDate = data?['createdDate'] ?? '2024-05-27';
+    ingredientDeadLine = data?['ingredientDeadLine'] ?? '2024-05-30';
     ingredientNum = data?['ingredientNum'];
     ingredientMemo = data?['ingredientMemo'];
     ingredientId = data?['ingredientId'];
-    //ingredientNum = data?['id']; // TODO: 이건 주석 처리해주세요.
   }
 
   IngredientMoreInfoModel.fromJson(Map<String, dynamic> json) {
@@ -36,7 +35,7 @@ class IngredientMoreInfoModel {
     data['ingredientPlace'] = ingredientPlace;
     data['ingredientName'] = ingredientName;
     data['createdDate'] = createdDate;
-    data['ingredientDeadLine'] = ingredientDeadLine;
+    data['ingredientDeadline'] = ingredientDeadLine;
     data['ingredientNum'] = ingredientNum;
     data['ingredientMemo'] = ingredientMemo;
     data['ingredientId'] = ingredientId;

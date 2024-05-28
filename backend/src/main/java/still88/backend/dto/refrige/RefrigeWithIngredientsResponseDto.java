@@ -11,5 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 public class RefrigeWithIngredientsResponseDto {
     private List<RefrigeInfoDto> refrigeList;
-
+    private int currentRefrigeId;
 }
