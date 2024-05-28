@@ -9,10 +9,10 @@ import still88.backend.entity.Ingredient;
 public interface IngredientService {
     void registerIngredient(int refrigeId, RegisterIngredientDTO registerIngredientDTO, String userId);
 
-    void deleteIngredient(int refrigeId, int ingredientId, String userId);
+    void deleteIngredient(int refrigeId, int ingredientId);
 
-    IngredientDetailResponseDTO ingredientDetail(int refrigeId, String ingredientName, String userId);
+    IngredientDetailResponseDTO ingredientDetail(int refrigeId, String ingredientName);
 
-    void editIngredient(int refrigeId, int ingredientId, EditIngredientRequestDTO request, String userId);
+    void editIngredient(int refrigeId, int ingredientId, EditIngredientRequestDTO request);
 }
 

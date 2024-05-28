@@ -55,9 +55,9 @@ public class RefrigeServiceImpl implements RefrigeService {
     public RefrigeWithIngredientsResponseDto getRefrigeWithIngredients(int userId) {
         User user = userRepository.findById((long) userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
-
         // 내가 생성한 냉장고
         List<RefrigeList> refrigeLists = refrigeListRepository.findByUser(user);
+        int currentRefrigeId = refrigeLists.get(0).getRefrigeId();
         List<RefrigeInfoDto> refrigeInfoList = refrigeLists.stream()
                 .map(refrigeList -> {
                     boolean isShared = shareRefrigeRepository.findByRefrigeListAndStatus(refrigeList, true).size() > 0;
@@ -91,6 +91,7 @@ public class RefrigeServiceImpl implements RefrigeService {
 
         return RefrigeWithIngredientsResponseDto.builder()
                 .refrigeList(refrigeInfoList)
+                .currentRefrigeId(currentRefrigeId)
                 .build();
     }
 
