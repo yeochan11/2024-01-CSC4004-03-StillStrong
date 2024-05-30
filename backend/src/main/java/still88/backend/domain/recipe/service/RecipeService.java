@@ -9,4 +9,6 @@ public interface RecipeService {
     MainPageResponseDTO getRandomRecipes(int recipeNum);
 
     SearchResponseDTO serachRecipe(String seraching) throws JsonProcessingException;
+
+    RecipeDetailResponseDTO getRecipeDetail(String reicpeName) throws JsonProcessingException;
 }

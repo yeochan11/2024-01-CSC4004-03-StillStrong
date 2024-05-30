@@ -26,11 +26,23 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/search")
-    public ResponseEntity<?> getRecipeDetail(@RequestParam String searching){
+    public ResponseEntity<?> getSearchResult(@RequestParam String searching){
         try {
             log.info("{} 에 대해 검색 시작합니다", searching);
             return ResponseEntity.ok(recipeService.serachRecipe(searching));
         }catch (Exception e){
+            log.info("Search Error = {}", e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/recipe/get/detail")
+    public ResponseEntity<?> getRecipeDetail(@RequestParam String recipeName){
+        try{
+            log.info("{} 레시피조회", recipeName);
+            return ResponseEntity.ok(recipeService.getRecipeDetail(recipeName));
+        }catch (Exception e){
+            log.info("recipe Detail Error = {}", e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

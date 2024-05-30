@@ -13,6 +13,6 @@ public class RecipeDetailResponseDTO {
     String recipeMainImage;
     List<String> recipeIngredients;
     List<String> recipeDescriptions;
-    List<List<String>> recipeImage;
+    List<String> recipeImage;
 
 }

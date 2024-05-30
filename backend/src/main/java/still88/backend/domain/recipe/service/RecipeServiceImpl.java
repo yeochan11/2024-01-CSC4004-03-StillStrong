@@ -75,6 +75,21 @@ public class RecipeServiceImpl implements RecipeService {
         return objectMapper.readValue(json.replace(", ", ","), new TypeReference<List<String>>() {});
     }
 
+    @Override
+    public RecipeDetailResponseDTO getRecipeDetail(String reicpeName) throws JsonProcessingException {
+        Recipe recipe = recipeRepository.findByRecipeName(reicpeName);
+        if (recipe == null)
+            throw new IllegalArgumentException("레시피를 찾을수 없습니다");
+
+        return RecipeDetailResponseDTO.builder()
+                .recipeName(recipe.getRecipeName())
+                .recipeCategory(recipe.getRecipeCategory())
+                .recipeMainImage(recipe.getRecipeMainImage())
+                .recipeImage(jsonToArray(recipe.getRecipeImage()))
+                .recipeDescriptions(jsonToArray(recipe.getRecipeDescription()))
+                .recipeIngredients(jsonToArray(recipe.getRecipeIngredient())).build();
+    }
+
     // 997까지의 레시피 ID 중 랜덤으로 선택하는 메서드
     private int getRandomRecipeId() {
         int totalRecipes = 997;
