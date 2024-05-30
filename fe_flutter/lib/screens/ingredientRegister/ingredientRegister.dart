@@ -1,5 +1,9 @@
+import 'package:fe_flutter/service/ingredRegServer.dart';
 import 'package:flutter/material.dart';
 import 'package:fe_flutter/screens/ingredientRegister/ingredTextFormField.dart';
+import 'package:dropdown_search/dropdown_search.dart';
+
+List <String> _selectedIngred = [];
 
 class IngredRegPage extends StatefulWidget {
   @override
@@ -7,6 +11,8 @@ class IngredRegPage extends StatefulWidget {
 }
 
 class _IngredRegPageState extends State<IngredRegPage> {
+  static List<String> _ingredients = [];
+  //final List<MultiSelectItem<String>> _items = _ingredients.map((String item) => MultiSelectItem(item, item)).toList();
   int selectedButtonIndex = 0;
   final _formKey = GlobalKey<FormState>();
   final _ingredNameController = TextEditingController();
@@ -14,11 +20,21 @@ class _IngredRegPageState extends State<IngredRegPage> {
   final _ingredCreateDateController = TextEditingController();
   final _ingredExpDateController = TextEditingController();
   final _ingredMemoController = TextEditingController();
-  String? _ingredName;
 
-  List <String> _items = [
-    '돼지고기', '양파', '계란', '사과'
-  ];
+  @override
+  void initState() {
+    super.initState();
+    IngredientList();
+  }
+
+  // 재료 목록 가져오는 함수
+void IngredientList() async {
+    List<String> ingredients = await getIngredientList();
+    print('Ingredient list : $ingredients');
+    setState(() {
+      _ingredients = ingredients;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,10 +108,10 @@ class _IngredRegPageState extends State<IngredRegPage> {
                             child: Column(
                               children: [
                                 ingredTextFormField(
-                                    controller: _ingredNameController,
-                                    labelText: '상품명',
-                                    hintText: '상품명 입력',
-                                    inputType: InputType.text,
+                                  controller: _ingredNameController,
+                                  labelText: '상품명',
+                                  hintText: '상품명 입력',
+                                  inputType: InputType.text,
                                 ),
                                 SizedBox(height: 12,),
                                 ingredTextFormField(
