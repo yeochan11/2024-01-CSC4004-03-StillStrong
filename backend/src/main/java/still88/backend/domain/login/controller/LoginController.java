@@ -30,18 +30,6 @@ public class LoginController {
 
             session.setAttribute("userId", response.getCookieValue());
             session.setMaxInactiveInterval(1800);
-
-//            ResponseCookie cookie = ResponseCookie.from("userId", response.getCookieValue())
-//                    .path("/")
-//                    .httpOnly(true)
-//                    .secure(true)
-//                    .sameSite("Strict")
-//                    .build();
-//
-//            // 헤더에 쿠키 추가
-//            HttpHeaders headers = new HttpHeaders();
-//            headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
-
             log.info("로그인성공");
             return ResponseEntity.ok().body(response);
         }catch (Exception e)
