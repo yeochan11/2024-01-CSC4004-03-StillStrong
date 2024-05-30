@@ -13,8 +13,8 @@ class IngredientMoreInfoModel {
     // TODO: API 주소 설정했으면 밑에 주석 해제.
     ingredientPlace = data?['ingredientPlace'];
     ingredientName = data?['ingredientName'];
-    createdDate = data?['createdDate'] ?? '2024-05-27';
-    ingredientDeadLine = data?['ingredientDeadLine'] ?? '2024-05-30';
+    createdDate = data?['createdDate'];
+    ingredientDeadLine = data?['ingredientDeadline'];
     ingredientNum = data?['ingredientNum'];
     ingredientMemo = data?['ingredientMemo'];
     ingredientId = data?['ingredientId'];
@@ -24,7 +24,7 @@ class IngredientMoreInfoModel {
     ingredientPlace = json['ingredientPlace'];
     ingredientName = json['ingredientName'];
     createdDate = json['createdDate'];
-    ingredientDeadLine = json['ingredientDeadLine'];
+    ingredientDeadLine = json['ingredientDeadline'];
     ingredientNum = json['ingredientNum'];
     ingredientMemo = json['ingredientMemo'];
     ingredientId = json['ingredientId'];

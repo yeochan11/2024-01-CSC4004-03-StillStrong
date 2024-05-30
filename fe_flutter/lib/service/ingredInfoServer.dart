@@ -1,13 +1,12 @@
 import 'package:fe_flutter/model/ingredientMoreInfoModel.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<Map<String, dynamic>> fetchIngredientsInfo(int refrigeId, String ingredientName) async {
   String uri = 'http://localhost:8080/refrige/ingredient/$refrigeId?ingredientName=$ingredientName';
-
   final response = await http.get(Uri.parse(uri));
+  print(response.body);
   if (response.statusCode == 200) {
     final decodeData = utf8.decode(response.bodyBytes);
     final Map<String, dynamic> data = json.decode(decodeData);
@@ -35,7 +34,7 @@ Future<void> patchIngredient(IngredientMoreInfoModel info, int refrigeId) async 
   final request = await http.patch(
     Uri.parse(uri),
     headers: <String, String>{
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json; charset=UTF-8'
     },
     body: jsonEncode(info.toJson()),
   );
