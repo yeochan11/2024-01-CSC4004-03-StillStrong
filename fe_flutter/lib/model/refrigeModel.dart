@@ -1,3 +1,20 @@
+class RefrigeData {
+  final List<Refrige> refrigeList;
+  final String currentRefrigeName;
+
+  RefrigeData({required this.refrigeList, required this.currentRefrigeName});
+
+  factory RefrigeData.fromJson(Map<String, dynamic> json) {
+    var list = json['refrigeList'] as List;
+    List<Refrige> refrigeList = list.map((i) => Refrige.fromJson(i)).toList();
+
+    return RefrigeData(
+      refrigeList: refrigeList,
+      currentRefrigeName: json['currentRefrigeName'],
+    );
+  }
+}
+
 class RefrigeList {
   List<Refrige>? refrigeList;
 

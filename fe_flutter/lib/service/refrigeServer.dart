@@ -3,25 +3,33 @@ import 'dart:convert';
 import 'package:fe_flutter/model/refrigeModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<RefrigeList> getRefrigeList() async {
+List<Map<String, dynamic>> refrigeList = [];
+// int currentRefrigeId = 1;
+// List<String> newItems = ["기본 냉장고"]; // 기본값으로 초기화합니다.
+
+Future<RefrigeData> getRefrigeList() async {
   try {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    int? userId = pref.getInt("userId");
     final response = await http.get(
-      Uri.parse('http://localhost:8080/refrige/get/refrigeList'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-    );
-    if (response.statusCode != 200) {
-      throw Exception("Failed to send data");
+        Uri.parse('http://localhost:8080/refrige/get/refrigeWithIngredients?userId=$userId'),
+        headers: {"Accept": "application/json; charset=utf-8"});
+    if (response.statusCode == 200) {
+      final responseBody = utf8.decode(response.bodyBytes);
+      final data = json.decode(responseBody);
+      RefrigeData refrigeData = RefrigeData.fromJson(data);
+      return refrigeData;
     } else {
-      return RefrigeList.fromJson(json.decode(response.body)['refrigeList']);
+      print('냉장고 목록을 불러오는 데 실패했습니다');
+      throw Exception("Failed to send data");
     }
-  } catch(e, stackTrace) {
+  } catch (e, stackTrace) {
     print("Failed to send user data: $e");
     print(stackTrace);
     throw Exception('Failed to load refrige list');
   }
 }
+
 
 Future<void> createRefrige(Refrige refrige) async {
   try{

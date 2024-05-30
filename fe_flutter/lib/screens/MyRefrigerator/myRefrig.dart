@@ -9,43 +9,51 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class MyRefrigPage extends StatefulWidget {
   @override
-  _MyRefrigPageState createState() => _MyRefrigPageState();
+  MyRefrigPageState createState() => MyRefrigPageState();
 }
 
-class _MyRefrigPageState extends State<MyRefrigPage> {
-
+class MyRefrigPageState extends State<MyRefrigPage> {
   List<Map<String, dynamic>> refrigeList = [];
-//TODO: 현재 선택 중인 냉장고 인덱스, 냉장고 드롭다운이랑 연결해서 값을 받을 수 있도록 수정 부탁드립니다.
   int currentRefrigeId = 1;
+  List<String> newItems = ["기본 냉장고"]; // 기본값으로 초기화합니다.
+
   @override
   void initState() {
     super.initState();
-    fetchRefrigeList();
+    //fetchRefrigeList();
   }
 
-  Future<void> fetchRefrigeList() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    int? userId = pref.getInt("userId");
-    final url = 'http://localhost:8080/refrige/get/refrigeWithIngredients?userId=$userId';
-    try {
-      final response = await http.get(Uri.parse(url), headers: {"Accept": "application/json; charset=utf-8"});
-      if (response.statusCode == 200) {
-        final responseBody = utf8.decode(response.bodyBytes);
-        final data = json.decode(responseBody);
-        setState(() {
-          refrigeList = List<Map<String, dynamic>>.from(data['refrigeList'].map((item) => Map<String, dynamic>.from(item)));
-          currentRefrigeId = data['currentRefrigeId'];
-        });
-        print(refrigeList);
-        print(currentRefrigeId);
-      } else {
-        print('Failed to load refrige list');
-      }
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
+  // Future<void> fetchRefrigeList() async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   int? userId = pref.getInt("userId");
+  //   final url =
+  //       'http://localhost:8080/refrige/get/refrigeWithIngredients?userId=$userId';
+  //   try {
+  //     final response = await http.get(Uri.parse(url),
+  //         headers: {"Accept": "application/json; charset=utf-8"});
+  //     if (response.statusCode == 200) {
+  //       final responseBody = utf8.decode(response.bodyBytes);
+  //       final data = json.decode(responseBody);
+  //       setState(() {
+  //         refrigeList = List<Map<String, dynamic>>.from(
+  //             data['refrigeList'].map((item) => Map<String, dynamic>.from(item)));
+  //         currentRefrigeId = data['currentRefrigeId'];
+  //         // 냉장고 이름으로 드롭다운 목록 항목을 채웁니다.
+  //         newItems = refrigeList.map<String>((refrige) => refrige['refrigeName'] as String).toList();
+  //         // DropdownRefrigeState의 인스턴스를 얻어와서 items를 업데이트합니다.
+  //         DropdownRefrigeState dropdownRefrigeState = context.findAncestorStateOfType<DropdownRefrigeState>()!;
+  //         dropdownRefrigeState.updateItems(newItems);
+  //         print(newItems);
+  //       });
+  //       print(refrigeList);
+  //       print(currentRefrigeId);
+  //     } else {
+  //       print('냉장고 목록을 불러오는 데 실패했습니다');
+  //     }
+  //   } catch (e) {
+  //     print(e.toString());
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
