@@ -1,3 +1,4 @@
+import 'package:fe_flutter/service/refrigeServer.dart';
 import 'package:flutter/material.dart';
 import 'myRefrigeratorDropdown.dart';
 import 'ingredientSearch.dart';
@@ -57,6 +58,8 @@ class MyRefrigPageState extends State<MyRefrigPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<dynamic> ingredients = refrigeList.map<String>((refrige) => refrige['ingredientNames'] as String).toList();
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -86,39 +89,19 @@ class MyRefrigPageState extends State<MyRefrigPage> {
                 child: Column(
                   children: [
                     Row( //TODO: API로 냉장고 리스트 받아오면 currentRefrigeId를 읽고 재료만큼 버튼이 생성되게 수정 부탁드립니다.
-                      children: [
-                        IngredIconButton(
-                          buttonText: '식빵',
-                          expDate: 16,
-                          icon: Image.asset('assets/images/ingredient.png'),
-                          //재료 상세 정보 페이지로 넘어가기.
-                          onPressed: (isIngredientSelect, isPressed, buttonText) {
-                            if (!isIngredientSelect) {
-                              showInfo(currentRefrigeId, buttonText);
-                            }
-                          },
-                        ),
-                        IngredIconButton(
-                          buttonText: '사과',
-                          expDate: 16,
-                          icon: Image.asset('assets/images/ingredient.png'),
-                          onPressed: (isIngredientSelect, isPressed, buttonText) {
-                            if (!isIngredientSelect) {
-                              showInfo(currentRefrigeId, buttonText);
-                            }
-                          },
-                        ),
-                        IngredIconButton(
-                          buttonText: '오이',
-                          expDate: 16,
-                          icon: Image.asset('assets/images/ingredient.png'),
-                          onPressed: (isIngredientSelect, isPressed, buttonText) {
-                            if (!isIngredientSelect) {
-                              showInfo(currentRefrigeId, buttonText);
-                            }
-                          },
-                        ),
-                      ],
+                      children:
+                        ingredients.map((ingredient){
+                          return IngredIconButton(
+                              buttonText: ingredient['ingredientNames'],
+                              expDate: 16,
+                              icon: Image.asset('assets/images/ingredient.png'),
+                              onPressed: (isIngredientSelect, isPressed, buttonText) {
+                                if (!isIngredientSelect) {
+                                  showInfo(currentRefrigeId, buttonText);
+                                }
+                              },
+                            );
+                          }).toList(),
                     )
                   ],
                 ),
