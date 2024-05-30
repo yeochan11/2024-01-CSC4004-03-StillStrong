@@ -7,11 +7,11 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user; // 유저 정보 불러오기
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Image.asset('assets/images/yorijori.png', scale: 1.5),
+
       ),
       body: Center(
           child: user != null ? // 유저값이 null이 아닐 경우 내용 표시
