@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CookieValue;
 import still88.backend.dto.ingredient.EditIngredientRequestDTO;
 import still88.backend.dto.ingredient.IngredientDetailResponseDTO;
+import still88.backend.dto.ingredient.IngredientNamesResponseDTO;
 import still88.backend.repository.*;
 import still88.backend.dto.ingredient.RegisterIngredientDTO;
 import still88.backend.entity.*;
 import still88.backend.repository.IngredientRepository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -66,6 +68,10 @@ public class IngredientServiceImpl implements IngredientService {
         }
     }
 
+    @Override
+    public IngredientNamesResponseDTO ingredientList() {
+        return IngredientNamesResponseDTO.builder().ingredientList(ingredientRepository.findAllNames()).build();
+    }
 
     @Override
     @Transactional
