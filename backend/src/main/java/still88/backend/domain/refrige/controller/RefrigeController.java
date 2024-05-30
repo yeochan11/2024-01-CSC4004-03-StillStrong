@@ -19,7 +19,7 @@ public class RefrigeController {
 
     // 냉장고 생성하기
     @PostMapping("/create")
-    public ResponseEntity<?> createRefrige(@CookieValue String userId, @RequestBody CreateRefrigeRequestDto createRefrigeRequestDto) {
+    public ResponseEntity<?> createRefrige(@RequestParam String userId, @RequestBody CreateRefrigeRequestDto createRefrigeRequestDto) {
         return ResponseEntity.ok(refrigeService.createRefrige(userId, createRefrigeRequestDto));
     }
 

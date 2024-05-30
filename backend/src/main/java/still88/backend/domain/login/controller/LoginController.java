@@ -91,7 +91,7 @@ public class LoginController {
 
     @PostMapping("/update-pw")
     public ResponseEntity<?> update_pw(@RequestBody UpdatePasswordRequestDTO request,
-                                       @CookieValue String userId){
+                                       @RequestParam String userId){
         try {
             loginService.updatePassword(request, userId);
             return ResponseEntity.ok("비밀번호 업데이트 완료");
