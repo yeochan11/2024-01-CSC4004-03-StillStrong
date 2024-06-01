@@ -1,17 +1,16 @@
+import 'package:fe_flutter/screens/recipeSearch/recipeSearchPage.dart';
 import 'package:fe_flutter/service/mainPageServer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fe_flutter/provider/userProvider.dart';
-
 import '../model/mainPageModel.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     //final user = Provider.of<UserProvider>(context).user; // 유저 정보 불러오기
-    String searchRecipe = 'Initial Value';
+    String searchRecipe = '';
 
     //API로 값을 가져왔다고 가정
 
@@ -30,7 +29,7 @@ class MainPage extends StatelessWidget {
               mainPageModel info = mainPageModel(snapshot.data); // API로 받은 데이터
               return SingleChildScrollView(
                 scrollDirection: Axis.vertical,
-                child:  Column(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -41,8 +40,16 @@ class MainPage extends StatelessWidget {
                         trailing: [
                           IconButton(
                             onPressed: () {
-                              //TODO: 레시피 검색 페이지 구현 후 수정하겠습니다.
-                              print(searchRecipe);},
+                              if (searchRecipe.isEmpty) {
+                                print('NULL TEXT');
+                              } else {
+                                print(searchRecipe);
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) =>
+                                        RecipeSearchPage(search: searchRecipe))
+                                );
+                              }
+                              },
                             icon: const Icon(Icons.search),)
                         ],
                         shape: MaterialStateProperty.all(ContinuousRectangleBorder(
@@ -55,10 +62,20 @@ class MainPage extends StatelessWidget {
                         hintText: '레시피 검색',
                         constraints: const BoxConstraints(maxHeight: 50, maxWidth: 330),
                         elevation: const MaterialStatePropertyAll(0),
-                        onSubmitted: (value) {
-                          //TODO: 레시피 검색 페이지 구현 후 수정하겠습니다.
+                        onChanged: (value) {
                           searchRecipe = value;
-                          print(value);
+                        },
+                        onSubmitted: (value) {
+                          searchRecipe = value;
+                          if (searchRecipe.isEmpty) {
+                            print('NULL TEXT');
+                          } else {
+                            print(searchRecipe);
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) =>
+                                    RecipeSearchPage(search: searchRecipe))
+                            );
+                          }
                         },
                       ),
                     ),
@@ -74,7 +91,7 @@ class MainPage extends StatelessWidget {
                               //TODO: API 주소 설정하면 이 값을 이용
                               info.MainRecipeImage,
                               //TODO: 임시 이미지입니다. API 주소 설정 후 주석 처리 해주세요.
-                              // 'https://recipe1.ezmember.co.kr/cache/recipe/2022/09/30/8e7eb8e3019532a8dc6d39a9a325aad41.jpg',
+                               //'https://recipe1.ezmember.co.kr/cache/recipe/2022/09/30/8e7eb8e3019532a8dc6d39a9a325aad41.jpg',
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -164,7 +181,6 @@ class MainPage extends StatelessWidget {
   Widget _makeSubRecipeBox(String subRecipeImage, String subRecipeCategory, String subRecipeName) {
     return Row(
       children: [
-
         const SizedBox(width: 20,),
         Container(
           width: 230,
@@ -187,7 +203,7 @@ class MainPage extends StatelessWidget {
                 //TODO: API 주소 설정하면 이 값을 이용
                 subRecipeImage,
                 //TODO: 임시 이미지입니다. API 주소 설정 후 주석 처리 해주세요.
-                // 'https://recipe1.ezmember.co.kr/cache/recipe/2022/09/30/8e7eb8e3019532a8dc6d39a9a325aad41.jpg',
+                 //'https://recipe1.ezmember.co.kr/cache/recipe/2022/09/30/8e7eb8e3019532a8dc6d39a9a325aad41.jpg',
                 width: 230,
                 height: 200,
                 fit: BoxFit.cover,
