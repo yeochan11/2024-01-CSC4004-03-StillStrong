@@ -1,10 +1,10 @@
-import 'package:fe_flutter/service/ingredRegServer.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:fe_flutter/screens/ingredientRegister/ingredTextFormField.dart';
 import 'package:fe_flutter/screens/MyRefrigerator/myRefrigeratorDropdown.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-
-List <String> _selectedIngred = [];
+import 'package:fe_flutter/service/ingredRegServer.dart';
+import 'package:fe_flutter/model/ingredRegModel.dart';
 
 class IngredRegPage extends StatefulWidget {
   @override
@@ -13,8 +13,8 @@ class IngredRegPage extends StatefulWidget {
 
 class _IngredRegPageState extends State<IngredRegPage> {
   static List<String> _ingredients = [];
-  //final List<MultiSelectItem<String>> _items = _ingredients.map((String item) => MultiSelectItem(item, item)).toList();
   int selectedButtonIndex = 0;
+  String _ingredPlace = '냉장';
   final _formKey = GlobalKey<FormState>();
   final _ingredNameController = TextEditingController();
   final _ingredNumController = TextEditingController();
@@ -29,12 +29,22 @@ class _IngredRegPageState extends State<IngredRegPage> {
   }
 
   // 재료 목록 가져오는 함수
-void IngredientList() async {
-    List<String> ingredients = await getIngredientList();
-    print('Ingredient list : $ingredients');
-    setState(() {
-      _ingredients = ingredients;
-    });
+  void IngredientList() async {
+      List<String> ingredients = await getIngredientList();
+      print('Ingredient list : $ingredients');
+      setState(() {
+        _ingredients = ingredients;
+      });
+    }
+
+  @override
+  void dispose() {
+    _ingredNameController.dispose();
+    _ingredNumController.dispose();
+    _ingredCreateDateController.dispose();
+    _ingredExpDateController.dispose();
+    _ingredMemoController.dispose();
+    super.dispose();
   }
 
   @override
@@ -60,11 +70,7 @@ void IngredientList() async {
             },
           ),
         ),
-        body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
-          child: Center(
+        body: Center(
               child: Column(
                 children: <Widget> [
                   SizedBox(height: 32,),
@@ -101,50 +107,155 @@ void IngredientList() async {
                           ],
                         ),
                         SizedBox(height: 18,),
-                        /*SearchableListView(
-                          items: _items,
-                        ),*/
-                        Form(
-                          key: _formKey,
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                ingredTextFormField(
-                                  controller: _ingredNameController,
-                                  labelText: '상품명',
-                                  hintText: '상품명 입력',
-                                  inputType: InputType.text,
-                                ),
-                                SizedBox(height: 12,),
-                                ingredTextFormField(
+                        SingleChildScrollView(
+                          child: Form(
+                            key: _formKey,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 280.0,
+                                    height: 36.0,
+                                    child: DropdownSearch<String>(
+                                      validator: (String? selectedItem) {
+                                        if (selectedItem == null || selectedItem.isEmpty) {
+                                          return '상품명을 입력해주세요.';
+                                        }
+                                      },
+                                      popupProps: PopupProps.menu(
+                                        showSearchBox: true,
+                                        showSelectedItems: true,
+                                        searchDelay: const Duration(seconds: 0),
+                                        searchFieldProps: TextFieldProps(
+                                          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                                          style: TextStyle(
+                                            fontFamily: 'Pretendard',
+                                            fontSize: 13.0,
+                                            fontWeight: FontWeight.w500,
+                                            color: const Color(0xff98A3B3),
+                                          ),
+                                          decoration: InputDecoration(
+                                            hintText: '상품명 검색',
+                                            hintStyle: TextStyle(
+                                              fontFamily: 'Pretendard',
+                                              fontSize: 13.0,
+                                              fontWeight: FontWeight.w500,
+                                              color: const Color(0xff98A3B3),
+                                            ),
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(4.0),
+                                              borderSide: BorderSide(color: const Color(0xffEEEEEE), width: 2),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(4.0),
+                                              borderSide: BorderSide(color: const Color(0xffEEEEEE), width: 2),
+                                            ),
+                                            floatingLabelBehavior: FloatingLabelBehavior.never,
+                                            contentPadding: EdgeInsets.symmetric(horizontal: 19.0),
+                                          ),
+                                        ),
+                                      ),
+                                      items: _ingredients,
+                                      dropdownDecoratorProps: DropDownDecoratorProps(
+                                        dropdownSearchDecoration: InputDecoration(
+                                          labelText: "상품명",
+                                          labelStyle: TextStyle(
+                                            fontFamily: 'Pretendard',
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w500,
+                                            color: const Color(0xff98A3B3),
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(4.0),
+                                            borderSide: BorderSide(color: const Color(0xffEEEEEE), width: 2),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(4.0),
+                                            borderSide: BorderSide(color: const Color(0xffEEEEEE), width: 2),
+                                          ),
+                                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                                          contentPadding: EdgeInsets.symmetric(horizontal: 19.0),
+                                        ),
+                                      ),
+                                      onChanged: (String? selectedItem) {
+                                        _ingredNameController.text = selectedItem ?? '';
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(height: 12,),
+                                  ingredTextFormField(
                                     controller: _ingredNumController,
                                     labelText: '수량',
                                     hintText: '수량 입력',
                                     inputType: InputType.number,
-                                ),
-                                SizedBox(height: 12,),
-                                ingredTextFormField(
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return '수량을 입력해주세요.';
+                                      }
+                                      else {
+                                        try {
+                                          int.parse(value);
+                                          return null;
+                                        } catch (e) {
+                                          return '숫자 형식으로 입력해주세요.';
+                                        }
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(height: 12,),
+                                  ingredTextFormField(
                                     controller: _ingredCreateDateController,
                                     labelText: '구매일',
                                     hintText: '구매일 입력',
                                     inputType: InputType.date,
-                                ),
-                                SizedBox(height: 12,),
-                                ingredTextFormField(
+                                    readOnly: true,
+                                    onTap: () async {
+                                      final DateTime? selectedDate = await showDatePicker(
+                                          context: context,
+                                          initialDate: DateTime.now(),
+                                          firstDate: DateTime(2020),
+                                          lastDate: DateTime.now()
+                                      );
+                                      if (selectedDate != null) {
+                                        final formatter = DateFormat('yyyy-MM-dd');
+                                        final formattedDate = formatter.format(selectedDate);
+                                        setState(() {
+                                          _ingredCreateDateController.text = formattedDate;
+                                        });
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(height: 12,),
+                                  ingredTextFormField(
                                     controller: _ingredExpDateController,
                                     labelText: '유통기한',
                                     hintText: '유통기한 입력',
                                     inputType: InputType.date,
-                                ),
-                                SizedBox(height: 12,),
-                                ingredTextFormField(
-                                    controller: _ingredMemoController,
-                                    labelText: '메모',
-                                    hintText: '메모 입력',
-                                  inputType: InputType.text,
-                                ),
-                              ],
-                            ),
+                                    readOnly: true,
+                                    onTap: () async {
+                                      final DateTime? selectedDate = await showDatePicker(
+                                          context: context,
+                                          initialDate: DateTime.now(),
+                                          firstDate: DateTime(2020),
+                                          lastDate: DateTime(2025)
+                                      );
+                                      if (selectedDate != null) {
+                                        final formatter = DateFormat('yyyy-MM-dd');
+                                        final formattedDate = formatter.format(selectedDate);
+                                        setState(() {
+                                          _ingredExpDateController.text = formattedDate;
+                                        });
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(height: 12,),
+                                  ingredTextFormField(
+                                      controller: _ingredMemoController,
+                                      labelText: '메모',
+                                      hintText: '메모 입력',
+                                    inputType: InputType.text,
+                                  ),
+                                ],
+                              ),
                           ),
                         ),
                       ],
@@ -157,7 +268,23 @@ void IngredientList() async {
                     child: TextButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
+                          _formKey.currentState!.save(); // 입력값 가져오기
+                          // 재료 인스턴스 생성
+                          IngredReg ingredReg = IngredReg(
+                              ingredientName: _ingredNameController.text,
+                              ingredientNum: int.parse(_ingredNumController.text),
+                              createdDate: _ingredCreateDateController.text,
+                              ingredientMemo: _ingredMemoController.text,
+                              ingredientPlace: _ingredPlace,
+                          );
+                          registerIngredient(ingredReg); // 재료 등록 api 호출
+                          // 콘솔 출력(확인용)
+                          print('name : ${ingredReg.ingredientName}\n'
+                              'num : ${ingredReg.ingredientNum}\n'
+                              'createDate : ${ingredReg.createdDate}\n'
+                              'memo : ${ingredReg.ingredientMemo}\n'
+                              'place : ${ingredReg.ingredientPlace}'
+                          );
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               backgroundColor: const Color(0xffF6A90A),
@@ -171,7 +298,7 @@ void IngredientList() async {
                             ),
                           );
                           Future.delayed(Duration(seconds: 1), () {
-                            Navigator.pushReplacementNamed(context, '/myRefrig');
+                            Navigator.pop(context);
                           });
                         }
                       },
@@ -195,7 +322,6 @@ void IngredientList() async {
                 ],
               ),
           ),
-        ),
       );
   }
   Widget buildTextButton(int index, String text) {
@@ -206,6 +332,17 @@ void IngredientList() async {
           setState(() {
             selectedButtonIndex = index;
           });
+          switch (selectedButtonIndex) {
+            case 0:
+              _ingredPlace = '냉장';
+              break;
+            case 1:
+              _ingredPlace = '냉동';
+              break;
+            case 2:
+              _ingredPlace = '실온';
+              break;
+          }
         },
         style: TextButton.styleFrom(
           padding: EdgeInsets.zero,

@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fe_flutter/model/ingredientMoreInfoModel.dart';
+import 'package:fe_flutter/model/ingredRegModel.dart';
 
 // 재료 목록 get
 Future<List<String>> getIngredientList() async {
@@ -23,7 +23,7 @@ Future<List<String>> getIngredientList() async {
 }
 
 // 재료 등록
-Future<void> registerIngredient(IngredientMoreInfoModel ingredInfo) async {
+Future<void> registerIngredient(IngredReg ingredReg) async {
   try {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     int? userId = pref.getInt("userId");
@@ -32,7 +32,7 @@ Future<void> registerIngredient(IngredientMoreInfoModel ingredInfo) async {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },
-      body: jsonEncode(ingredInfo.toJson()),
+      body: jsonEncode(ingredReg.toJson()),
     );
 
     if (response.statusCode == 200) {
