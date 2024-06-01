@@ -1,3 +1,4 @@
+import 'package:fe_flutter/screens/ingredientRegister/ingredientRegister.dart';
 import 'package:flutter/material.dart';
 import '../ingredientMoreInfo/ingredientMoreInfo.dart';
 import 'myRefrigeratorDropdown.dart';
@@ -54,11 +55,6 @@ class _MyRefrigPageState extends State<MyRefrigPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          leading: Icon(
-            Icons.chevron_left,
-            color: Colors.white,
-            size: 30,
-          ),
           title: Text('MY 냉장고',
             style: TextStyle(
               fontFamily: 'Pretendard',
@@ -127,6 +123,12 @@ class _MyRefrigPageState extends State<MyRefrigPage> {
             ],
           ),
         ),
+        /* floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            showPopup(context);
+          },
+          child: Icon(Icons.add),
+        ), */
         floatingActionButton: Builder(
           builder: (context) => FloatingActionButton(
             onPressed: () async {
@@ -144,19 +146,65 @@ class _MyRefrigPageState extends State<MyRefrigPage> {
                 position: position,
                 items: [
                   PopupMenuItem<int>(
-                    value: 1,
-                    child: Text('재료 등록'),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('재료 등록',
+                            style: TextStyle(
+                              fontFamily: 'Pretendard',
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Container(
+                            height: 1.0,
+                            color: Colors.grey[300],
+                          ),
+                        ],
+                      ),
+                    ),
+                    enabled: false,
                   ),
                   PopupMenuItem<int>(
                     value: 2,
-                    child: Text('영수증 인식하기'),
+                    child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 8.0),
+                        child: Column(
+                          children: [
+                            SizedBox(height: 8),
+                            Text('영수증 인식하기',
+                              style: TextStyle(
+                                fontFamily: 'Pretendard',
+                                fontSize: 13,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        )),
                   ),
                   PopupMenuItem<int>(
                     value: 3,
-                    child: Text('직접 입력하기'),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/IngredReg');
-                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 8,),
+                          Text('직접 입력하기',
+                            style: TextStyle(
+                              fontFamily: 'Pretendard',
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               );
@@ -168,6 +216,10 @@ class _MyRefrigPageState extends State<MyRefrigPage> {
                   case 2:
                     break;
                   case 3:
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => IngredRegPage()),
+                    );
                     break;
                 }
               }
@@ -180,6 +232,36 @@ class _MyRefrigPageState extends State<MyRefrigPage> {
 
       ),
     );
+  }
+  void showPopup(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('재료 등록'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ListTile(
+                  title: Text('영수증 인식'),
+                  onTap: () {
+                    // '영수증 인식'을 선택하면 다음 페이지로 이동
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: Text('직접 입력하기'),
+                  onTap: () {
+                    // '직접 입력하기'를 선택하면 다음 페이지로 이동
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/IngredReg'
+                    );
+                  },
+                ),
+              ],
+            ),
+          );
+        });
   }
   void showInfo(int refrigeId, String ingredientName) {
     Navigator.push(context,

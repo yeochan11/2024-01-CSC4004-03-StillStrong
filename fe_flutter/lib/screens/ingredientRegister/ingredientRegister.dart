@@ -41,14 +41,24 @@ void IngredientList() async {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Color(0xffFFC94A),
           title: Text('재료 등록',
             style: TextStyle(
               fontFamily: 'NotoSans',
               fontWeight: FontWeight.bold,
               fontSize: 20.0,
+              color: Colors.white,
             ),
           ),
           centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.chevron_left,
+                  color: Colors.white,
+                  size: 30,),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
         body: GestureDetector(
           onTap: () {
