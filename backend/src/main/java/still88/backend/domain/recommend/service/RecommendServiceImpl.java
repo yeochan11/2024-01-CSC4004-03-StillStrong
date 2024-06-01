@@ -1,8 +1,12 @@
 package still88.backend.domain.recommend.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import still88.backend.dto.recommend.MainPageResponseDTO;
+import org.springframework.web.client.RestTemplate;
+import still88.backend.dto.recommend.FlaskResponseDTO;
+import still88.backend.dto.recommend.RecommendFlaskDTO;
+import still88.backend.dto.recommend.RecommendResponseDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,17 +15,11 @@ import java.util.List;
 @Slf4j
 public class RecommendServiceImpl implements RecommendService{
     @Override
-    public MainPageResponseDTO mainPage() {
-        int MainRecipe_id = generateRandomNumber();
-        List<Integer> SubRecipe_id = new ArrayList<>();
-        for (int i = 0; i<5; i++){
-            SubRecipe_id.add(generateRandomNumber());
-        }
-
+    public RecommendResponseDTO recommend(int userId, List<String> ingredientList) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:5000/recommend/ingredient";
+        RecommendFlaskDTO requestBody = RecommendFlaskDTO.builder().userId(userId).ingredientList(ingredientList).build();
+        ResponseEntity<FlaskResponseDTO> Response = restTemplate.postForEntity(url, requestBody, FlaskResponseDTO.class);
         return null;
-    }
-
-    private int generateRandomNumber() {
-        return (int) (Math.random() * 997) + 1;
     }
 }
