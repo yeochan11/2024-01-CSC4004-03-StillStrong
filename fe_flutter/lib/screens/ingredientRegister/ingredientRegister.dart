@@ -1,6 +1,7 @@
 import 'package:fe_flutter/service/ingredRegServer.dart';
 import 'package:flutter/material.dart';
 import 'package:fe_flutter/screens/ingredientRegister/ingredTextFormField.dart';
+import 'package:fe_flutter/screens/MyRefrigerator/myRefrigeratorDropdown.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
 List <String> _selectedIngred = [];
@@ -57,17 +58,8 @@ void IngredientList() async {
               child: Column(
                 children: <Widget> [
                   SizedBox(height: 32,),
-                  Container(
-                    child: Text('기본 냉장고',
-                      style: TextStyle(
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
-                      ),
-                    ),
-                    // 드롭다운 생략
-                  ),
-                  SizedBox(height: 80,),
+                  DropdownRefrige(),
+                  SizedBox(height: 55,),
                   Container(
                     width: 312,
                     height: 365,
@@ -148,7 +140,7 @@ void IngredientList() async {
                       ],
                     ),
                   ),
-                  SizedBox(height: 32,),
+                  SizedBox(height: 40,),
                   Container(
                     width: 312,
                     height: 36,

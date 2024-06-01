@@ -61,6 +61,8 @@ class _MyRefrigPageState extends State<MyRefrigPage> {
           ),
           title: Text('MY 냉장고',
             style: TextStyle(
+              fontFamily: 'Pretendard',
+              fontSize: 20,
               color: Colors.white,
               fontWeight: FontWeight.w700,
             ),
@@ -68,12 +70,17 @@ class _MyRefrigPageState extends State<MyRefrigPage> {
           centerTitle: true,
           backgroundColor: Color(0Xffffc94a),
         ),
-        body: Container(
+        body: Padding(
+          padding: EdgeInsets.all(23),
           child: Column(
             children: [
+              SizedBox(height: 32),
               DropdownRefrige(),
+              SizedBox(height: 20),
               IngredientSearch(),
+              SizedBox(height: 39),
               IngredientSelect(),
+              SizedBox(height: 28),
               Container(
                 alignment: Alignment.center,
                 width: 340,
@@ -147,6 +154,9 @@ class _MyRefrigPageState extends State<MyRefrigPage> {
                   PopupMenuItem<int>(
                     value: 3,
                     child: Text('직접 입력하기'),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/IngredReg');
+                    },
                   ),
                 ],
               );
