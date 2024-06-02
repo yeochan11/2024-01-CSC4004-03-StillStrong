@@ -1,3 +1,4 @@
+import 'package:fe_flutter/screens/recipeSearch/recipeMoreInfo.dart';
 import 'package:fe_flutter/screens/recipeSearch/recipeSearchPage.dart';
 import 'package:fe_flutter/service/mainPageServer.dart';
 import 'package:flutter/material.dart';
@@ -80,58 +81,66 @@ class MainPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20,),
-                    Stack(
-                      children: [
-                        SizedBox(
-                          width: 400,
-                          height: 300,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20.0),
-                            child: Image.network(
-                              //TODO: API 주소 설정하면 이 값을 이용
-                              info.MainRecipeImage,
-                              //TODO: 임시 이미지입니다. API 주소 설정 후 주석 처리 해주세요.
-                               //'https://recipe1.ezmember.co.kr/cache/recipe/2022/09/30/8e7eb8e3019532a8dc6d39a9a325aad41.jpg',
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          left: 0,
-                          child: Container(
+                    InkWell(
+                      child: Stack(
+                        children: [
+                          SizedBox(
                             width: 400,
-                            height: 100,
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.vertical(bottom: Radius.circular(20.0)),
-                              color: Color(0x99000000),
-                            ),
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  '오늘의 추천요리',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Text(
-                                  info.MainRecipeName,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              ],
+                            height: 300,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20.0),
+                              child: Image.network(
+                                //TODO: API 주소 설정하면 이 값을 이용
+                                info.MainRecipeImage,
+                                //TODO: 임시 이미지입니다. API 주소 설정 후 주석 처리 해주세요.
+                                //'https://recipe1.ezmember.co.kr/cache/recipe/2022/09/30/8e7eb8e3019532a8dc6d39a9a325aad41.jpg',
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
-                        )
-                      ],
+                          Positioned(
+                            bottom: 0,
+                            left: 0,
+                            child: Container(
+                              width: 400,
+                              height: 100,
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.vertical(bottom: Radius.circular(20.0)),
+                                color: Color(0x99000000),
+                              ),
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    '오늘의 추천요리',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Text(
+                                    info.MainRecipeName,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) =>
+                                RecipeMoreInfo(recipeName: info.MainRecipeName))
+                        );
+                      },
                     ),
                     const SizedBox(height: 40,),
                     Row(
@@ -159,7 +168,8 @@ class MainPage extends StatelessWidget {
                               _makeSubRecipeBox(
                                   info.SubRecipeImage.elementAt(i),
                                   info.SubRecipeCategory.elementAt(i),
-                                  info.SubRecipeName.elementAt(i)
+                                  info.SubRecipeName.elementAt(i),
+                                  context
                               ),
                             const SizedBox(width: 20,)
                           ],
@@ -178,71 +188,79 @@ class MainPage extends StatelessWidget {
   }
 
   // 서브 레시피 생성 함수
-  Widget _makeSubRecipeBox(String subRecipeImage, String subRecipeCategory, String subRecipeName) {
+  Widget _makeSubRecipeBox(String subRecipeImage, String subRecipeCategory, String subRecipeName, BuildContext context) {
     return Row(
       children: [
         const SizedBox(width: 20,),
-        Container(
-          width: 230,
-          height: 320,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey.withOpacity(0.7),
-                    spreadRadius: 0,
-                    blurRadius: 5.0,
-                    offset: const Offset(0,10)
-                )
-              ]
-          ),
-          child: Column(
-            children: [
-              Image.network(
-                //TODO: API 주소 설정하면 이 값을 이용
-                subRecipeImage,
-                //TODO: 임시 이미지입니다. API 주소 설정 후 주석 처리 해주세요.
-                 //'https://recipe1.ezmember.co.kr/cache/recipe/2022/09/30/8e7eb8e3019532a8dc6d39a9a325aad41.jpg',
-                width: 230,
-                height: 200,
-                fit: BoxFit.cover,
-              ),
-              const SizedBox(height: 10,),
-              Row(
-                children: [
-                  const SizedBox(width: 10,),
-                  Container(
-                    alignment: Alignment.center,
-                    width: 80,
-                    height: 30,
-                    decoration: BoxDecoration(
-                        color: Colors.orange,
-                        borderRadius: BorderRadius.circular(20.0)
-                    ),
-                    child: Text(
-                      subRecipeCategory,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+        InkWell(
+          child: Container(
+            width: 230,
+            height: 320,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey.withOpacity(0.7),
+                      spreadRadius: 0,
+                      blurRadius: 5.0,
+                      offset: const Offset(0,10)
                   )
-                ],
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  subRecipeName,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                ]
+            ),
+            child: Column(
+              children: [
+                Image.network(
+                  //TODO: API 주소 설정하면 이 값을 이용
+                  subRecipeImage,
+                  //TODO: 임시 이미지입니다. API 주소 설정 후 주석 처리 해주세요.
+                  //'https://recipe1.ezmember.co.kr/cache/recipe/2022/09/30/8e7eb8e3019532a8dc6d39a9a325aad41.jpg',
+                  width: 230,
+                  height: 200,
+                  fit: BoxFit.cover,
                 ),
-              )
-            ],
+                const SizedBox(height: 10,),
+                Row(
+                  children: [
+                    const SizedBox(width: 10,),
+                    Container(
+                      alignment: Alignment.center,
+                      width: 80,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          color: Colors.orange,
+                          borderRadius: BorderRadius.circular(20.0)
+                      ),
+                      child: Text(
+                        subRecipeCategory,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    subRecipeName,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) =>
+                    RecipeMoreInfo(recipeName: subRecipeName))
+            );
+          },
+        )
       ],
     );
   }
