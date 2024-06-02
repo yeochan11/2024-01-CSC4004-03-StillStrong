@@ -30,9 +30,9 @@ Future<String> registerIngredient(IngredReg ingredReg) async {
     int? userId = pref.getInt("userId");
     try {
       var response = await http.post(
-        Uri.parse('/refrige/ingredient/register/$refrigeId?userId=$userId'),
+        Uri.parse('http://localhost:8080/refrige/ingredient/register/$refrigeId?userId=$userId'),
         headers: <String, String>{
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json; charset=utf-8',
         },
         body: jsonEncode(jsonData),
       );

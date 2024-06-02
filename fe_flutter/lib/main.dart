@@ -13,6 +13,7 @@ import 'screens/register/allergy.dart';
 import 'screens/ingredientRegister/ingredientRegister.dart';
 import 'screens/mainPage.dart';
 import 'screens/MyRefrigerator/myRefrig.dart';
+import 'screens/myPage/shareRefrige.dart';
 
 
 
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
           '/IngredReg': (context) => IngredRegPage(),
           '/MyRefrig': (context) => MyRefrigPage(),
           '/Mainpage': (context) => MainPage(), //메인페이지 생기면
+          '/ShareRefrige': (context) => ShareRefrigePage(),
           //'/IngredientMoreInformation': (context) => IngredientMoreInformation(),
         },
       ),
@@ -62,7 +64,7 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/login');
+      Navigator.pushReplacementNamed(context, '/BottomMenu');
     });
     return Scaffold(
       backgroundColor: const Color(0xffFFC94A),
