@@ -1,6 +1,6 @@
-import 'package:fe_flutter/service/refrigeServer.dart';
 import 'package:flutter/material.dart';
-import '../../model/refrigeModel.dart';
+import 'package:fe_flutter/service/refrigeServer.dart';
+import 'package:fe_flutter/model/refrigeModel.dart';
 import '../ingredientRegister/ingredientRegister.dart';
 import 'myRefrigeratorDropdown.dart';
 import 'ingredientSearch.dart';
@@ -26,6 +26,7 @@ class MyRefrigPageState extends State<MyRefrigPage> {
     itemsFuture.then((data) {
       RefrigeData refrigeData = RefrigeData.fromJson(data);
       setState(() {
+        refrigeList = refrigeData.refrigeList;
         newItems = refrigeData.refrigeList.map((refrige) => refrige.refrigeName).toList();
         currentRefrigeId = refrigeData.refrigeList.first.refrigeId;
         ingredients = refrigeData.refrigeList
@@ -37,117 +38,119 @@ class MyRefrigPageState extends State<MyRefrigPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          leading: Icon(
-            Icons.chevron_left,
+    return Scaffold(
+      appBar: AppBar(
+        leading: Icon(
+          Icons.chevron_left,
+          color: Colors.white,
+          size: 30,
+        ),
+        title: Text(
+          'MY 냉장고',
+          style: TextStyle(
             color: Colors.white,
-            size: 30,
+            fontWeight: FontWeight.w700,
           ),
-          title: Text(
-            'MY 냉장고',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
+        ),
+        centerTitle: true,
+        backgroundColor: Color(0Xffffc94a),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            DropdownRefrige(
+              itemsFuture: itemsFuture,
+              onChanged: (String selectedName, int selectedId) {
+                setState(() {
+                  currentRefrigeId = selectedId;
+                  ingredients = refrigeList
+                      .firstWhere((refrige) => refrige.refrigeId == currentRefrigeId)
+                      .ingredientNames;
+                  // 콘솔에 출력하여 확인
+                  print('Selected Refrigerator ID: $currentRefrigeId');
+                  print('Selected Refrigerator Name: $selectedName');
+                  print('Ingredients: $ingredients');
+                });
+              },
             ),
-          ),
-          centerTitle: true,
-          backgroundColor: Color(0Xffffc94a),
-        ),
-        body: Container(
-          child: Column(
-            children: [
-              DropdownRefrige(
-                itemsFuture: itemsFuture,
-                onChanged: (String selectedName, int selectedId) {
-                  setState(() {
-                    currentRefrigeId = selectedId;
-                    ingredients = refrigeList
-                        .firstWhere((refrige) => refrige.refrigeId == currentRefrigeId)
-                        .ingredientNames;
-                  });
-                },
-              ),
-              IngredientSearch(),
-              IngredientSelect(),
-              Container(
-                alignment: Alignment.center,
-                width: 340,
-                child: Column(
-                  children: [
-                    Wrap(
-                      spacing: 4.0,
-                      runSpacing: 4.0,
-                      children: ingredients.map<Widget>((ingredient) {
-                        return IngredIconButton(
-                          buttonText: ingredient,
-                          expDate: 16,
-                          icon: Image.asset('assets/images/ingredient.png'),
-                          onPressed: (isIngredientSelect, isPressed, buttonText) {
-                            if (!isIngredientSelect) {
-                              showInfo(currentRefrigeId, buttonText);
-                            }
-                          },
-                        );
-                      }).toList(),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton: Builder(
-          builder: (context) => FloatingActionButton(
-            onPressed: () async {
-              final RenderBox button = context.findRenderObject() as RenderBox;
-              final RenderBox overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
-              final RelativeRect position = RelativeRect.fromRect(
-                Rect.fromPoints(
-                  button.localToGlobal(Offset.zero, ancestor: overlay),
-                  button.localToGlobal(button.size.bottomRight(Offset.zero), ancestor: overlay),
-                ),
-                Offset.zero & overlay.size,
-              );
-              final selectedValue = await showMenu<int>(
-                context: context,
-                position: position,
-                items: [
-                  PopupMenuItem<int>(
-                    value: 1,
-                    child: Text('재료 등록'),
-                  ),
-                  PopupMenuItem<int>(
-                    value: 2,
-                    child: Text('영수증 인식하기'),
-                  ),
-                  PopupMenuItem<int>(
-                    value: 3,
-                    child: Text('직접 입력하기'),
+            IngredientSearch(),
+            IngredientSelect(),
+            Container(
+              alignment: Alignment.center,
+              width: 340,
+              child: Column(
+                children: [
+                  Wrap(
+                    spacing: 4.0,
+                    runSpacing: 4.0,
+                    children: ingredients.map<Widget>((ingredient) {
+                      return IngredIconButton(
+                        buttonText: ingredient,
+                        expDate: 16,
+                        icon: Image.asset('assets/images/ingredient.png'),
+                        onPressed: (isIngredientSelect, isPressed, buttonText) {
+                          if (!isIngredientSelect) {
+                            showInfo(currentRefrigeId, buttonText);
+                          }
+                        },
+                      );
+                    }).toList(),
                   ),
                 ],
-              );
+              ),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: Builder(
+        builder: (context) => FloatingActionButton(
+          onPressed: () async {
+            final RenderBox button = context.findRenderObject() as RenderBox;
+            final RenderBox overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
+            final RelativeRect position = RelativeRect.fromRect(
+              Rect.fromPoints(
+                button.localToGlobal(Offset.zero, ancestor: overlay),
+                button.localToGlobal(button.size.bottomRight(Offset.zero), ancestor: overlay),
+              ),
+              Offset.zero & overlay.size,
+            );
+            final selectedValue = await showMenu<int>(
+              context: context,
+              position: position,
+              items: [
+                PopupMenuItem<int>(
+                  value: 1,
+                  child: Text('재료 등록'),
+                ),
+                PopupMenuItem<int>(
+                  value: 2,
+                  child: Text('영수증 인식하기'),
+                ),
+                PopupMenuItem<int>(
+                  value: 3,
+                  child: Text('직접 입력하기'),
+                ),
+              ],
+            );
 
-              if (selectedValue != null) {
-                switch (selectedValue) {
-                  case 1:
-                    break;
-                  case 2:
-                    break;
-                  case 3:
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => IngredRegPage()),
-                    );
-                    break;
-                }
+            if (selectedValue != null) {
+              switch (selectedValue) {
+                case 1:
+                  break;
+                case 2:
+                  break;
+                case 3:
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => IngredRegPage()),
+                  );
+                  break;
               }
-            },
-            shape: CircleBorder(),
-            child: Icon(Icons.add),
-            backgroundColor: Color(0Xffffc94a),
-          ),
+            }
+          },
+          shape: CircleBorder(),
+          child: Icon(Icons.add),
+          backgroundColor: Color(0Xffffc94a),
         ),
       ),
     );
