@@ -10,6 +10,10 @@ class IBRM:
         dot_product = np.dot(vec1, vec2)
         norm_vec1 = np.linalg.norm(vec1)
         norm_vec2 = np.linalg.norm(vec2)
+
+        if norm_vec1 == 0 or norm_vec2 == 0:
+            return 0.0
+        
         return dot_product / (norm_vec1 * norm_vec2)
     
     def __embed_recipe(self, recipe):
@@ -23,4 +27,5 @@ class IBRM:
         if not ingredients:
             return np.zeros(997)
         ingredient_vector = self.__embed_recipe(ingredients)
+        print(np.array(self.embedded_recipes).shape)
         return [self.__cosine_similarity(ingredient_vector, emb_recipe) for emb_recipe in self.embedded_recipes]

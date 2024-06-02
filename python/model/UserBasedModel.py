@@ -30,7 +30,10 @@ class UBRM:
 
         user_info_list = []
         for row in result:
-            user_info = [row[0], self.__convert_boolean(row[1]), json.loads(row[2])]
+            if row[2] is not None:
+                user_info = [row[0], self.__convert_boolean(row[1]), json.loads(row[2])]
+            else:
+                user_info = [row[0], self.__convert_boolean(row[1]), []]
             user_info_list.append(user_info)
 
         if len(user_info_list) < 6:
@@ -96,11 +99,12 @@ class UBRM:
             cursor.execute(f"SELECT userFavorite FROM User WHERE userId = {userId};")
             result = cursor.fetchone()
             if result:
-                favorite_recipes = json.loads(result[0])
-                favorite_recipes = [x - 1 for x in favorite_recipes]
-                user_favorite_vector = np.zeros(997)
-                user_favorite_vector[favorite_recipes] = 1
-                recipe_score_sum += user_favorite_vector
+                if result[0] is not None:
+                    favorite_recipes = json.loads(result[0])
+                    favorite_recipes = [x - 1 for x in favorite_recipes]
+                    user_favorite_vector = np.zeros(997)
+                    user_favorite_vector[favorite_recipes] = 1
+                    recipe_score_sum += user_favorite_vector
 
         recipe_score_average = recipe_score_sum / 5
 

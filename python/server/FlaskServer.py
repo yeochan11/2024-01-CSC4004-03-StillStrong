@@ -39,6 +39,8 @@ def recipe_recommend():
     json_data = request.get_json()
     user_id = int(json_data.get('userId'))
     ingredientList = json_data.get('ingredientList')
+    print("userId = ", user_id)
+    print("ingredinet List = " , ingredientList)
     if isinstance(ingredientList, str):
         try:
             ingredientList = json.loads(ingredientList)
@@ -53,7 +55,7 @@ def recipe_recommend():
     feedback_y = y
     recommend_result = result
     print(f'사용자_{user_id}에게 {result} 추천 완료')
-    return jsonify({"recommend_id" : result})
+    return jsonify({"recipeId" : result})
 
 @app.route("/recommend/feedback", methods=['POST'])
 def provide_feedback():

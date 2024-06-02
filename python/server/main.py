@@ -20,11 +20,11 @@ ingredient_result = np.array(ingredient_model.recommend(['돼지고기', '김치
 age = np.zeros((997, 1))
 
 X = np.hstack([user_result, ingredient_result, age])
-y = user_result * 0.3 + ingredient_result * 0.5 + age * 0.2
+y = user_result * 0.2 + ingredient_result * 0. + age * 0.1
 
 model._RecommendModel__init_fit(X, y)
 input_data, result, id = model.recommend(ingredientList=['돼지고기', '김치'] , userId=2)
 print(id)
-model.updateParameter(X, y, np.array(id) - 1, False)
+model.updateParameter(X, y, np.array(id) - 1, True)
 
 model.save("python\\pickle\\recommend_model_NeuralNetwork.h5")
