@@ -26,7 +26,7 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      //resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Image.asset('assets/images/yorijori.png', scale: 1.5),
         leading: IconButton(
@@ -76,7 +76,7 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> {
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const SizedBox(
-                        height: 600,
+                        height: 400,
                         width: 400,
                         child:
                         Column(
@@ -91,7 +91,7 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> {
                     RecipeSearchModel info = RecipeSearchModel(snapshot.data);
                     if (info.recipeNames.isEmpty) {
                       return const SizedBox(
-                        height: 600,
+                        height: 400,
                         width: 400,
                         child:
                             Column(
@@ -105,26 +105,23 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> {
                             )
                       );
                     } else {
-                      return Container(
-                        height: 620,
-                        width: 400,
-                        alignment: const Alignment(0, -1),
+                      return Expanded(
                         child: SingleChildScrollView(
-                              scrollDirection: Axis.vertical, 
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  for (int i = 0; i < info.recipeNames.length; ++i)
-                                    _makeRecipeList(
-                                        info.recipeNames[i], 
-                                        info.recipeMainImages[i], 
-                                        info.recipeIngredients[i]!
-                                    )
-                                ],
-                              ),
-                            ),
-                          );
+                          scrollDirection: Axis.vertical,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              for (int i = 0; i < info.recipeNames.length; ++i)
+                                _makeRecipeList(
+                                    info.recipeNames[i],
+                                    info.recipeMainImages[i],
+                                    info.recipeIngredients[i]!
+                                )
+                            ],
+                          ),
+                        ),
+                      );
                     }
                   }
                   },
