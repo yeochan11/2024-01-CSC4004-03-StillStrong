@@ -1,12 +1,10 @@
 import 'package:fe_flutter/service/refrigeServer.dart';
 import 'package:flutter/material.dart';
+import '../../model/refrigeModel.dart';
 import 'myRefrigeratorDropdown.dart';
 import 'ingredientSearch.dart';
 import 'ingredientSelect.dart';
 import '../ingredientMoreInfo/ingredientMoreInfo.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MyRefrigPage extends StatefulWidget {
   @override
@@ -14,52 +12,30 @@ class MyRefrigPage extends StatefulWidget {
 }
 
 class MyRefrigPageState extends State<MyRefrigPage> {
-  List<Map<String, dynamic>> refrigeList = [];
-  int currentRefrigeId = 1;
+  late Future<Map<String, dynamic>> itemsFuture;
+  int currentRefrigeId = 7;
   List<String> newItems = ["기본 냉장고"]; // 기본값으로 초기화합니다.
+  List<String> ingredients = [];
+  List<Refrige> refrigeList = [];
 
   @override
   void initState() {
     super.initState();
-    //fetchRefrigeList();
+    itemsFuture = getRefrigeList();
+    itemsFuture.then((data) {
+      RefrigeData refrigeData = RefrigeData.fromJson(data);
+      setState(() {
+        newItems = refrigeData.refrigeList.map((refrige) => refrige.refrigeName).toList();
+        currentRefrigeId = refrigeData.refrigeList.first.refrigeId;
+        ingredients = refrigeData.refrigeList
+            .firstWhere((refrige) => refrige.refrigeId == currentRefrigeId)
+            .ingredientNames;
+      });
+    });
   }
-
-  // Future<void> fetchRefrigeList() async {
-  //   SharedPreferences pref = await SharedPreferences.getInstance();
-  //   int? userId = pref.getInt("userId");
-  //   final url =
-  //       'http://localhost:8080/refrige/get/refrigeWithIngredients?userId=$userId';
-  //   try {
-  //     final response = await http.get(Uri.parse(url),
-  //         headers: {"Accept": "application/json; charset=utf-8"});
-  //     if (response.statusCode == 200) {
-  //       final responseBody = utf8.decode(response.bodyBytes);
-  //       final data = json.decode(responseBody);
-  //       setState(() {
-  //         refrigeList = List<Map<String, dynamic>>.from(
-  //             data['refrigeList'].map((item) => Map<String, dynamic>.from(item)));
-  //         currentRefrigeId = data['currentRefrigeId'];
-  //         // 냉장고 이름으로 드롭다운 목록 항목을 채웁니다.
-  //         newItems = refrigeList.map<String>((refrige) => refrige['refrigeName'] as String).toList();
-  //         // DropdownRefrigeState의 인스턴스를 얻어와서 items를 업데이트합니다.
-  //         DropdownRefrigeState dropdownRefrigeState = context.findAncestorStateOfType<DropdownRefrigeState>()!;
-  //         dropdownRefrigeState.updateItems(newItems);
-  //         print(newItems);
-  //       });
-  //       print(refrigeList);
-  //       print(currentRefrigeId);
-  //     } else {
-  //       print('냉장고 목록을 불러오는 데 실패했습니다');
-  //     }
-  //   } catch (e) {
-  //     print(e.toString());
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
-    List<dynamic> ingredients = refrigeList.map<String>((refrige) => refrige['ingredientNames'] as String).toList();
-
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -68,7 +44,8 @@ class MyRefrigPageState extends State<MyRefrigPage> {
             color: Colors.white,
             size: 30,
           ),
-          title: Text('MY 냉장고',
+          title: Text(
+            'MY 냉장고',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w700,
@@ -80,7 +57,17 @@ class MyRefrigPageState extends State<MyRefrigPage> {
         body: Container(
           child: Column(
             children: [
-              DropdownRefrige(),
+              DropdownRefrige(
+                itemsFuture: itemsFuture,
+                onChanged: (String selectedName, int selectedId) {
+                  setState(() {
+                    currentRefrigeId = selectedId;
+                    ingredients = refrigeList
+                        .firstWhere((refrige) => refrige.refrigeId == currentRefrigeId)
+                        .ingredientNames;
+                  });
+                },
+              ),
               IngredientSearch(),
               IngredientSelect(),
               Container(
@@ -88,24 +75,23 @@ class MyRefrigPageState extends State<MyRefrigPage> {
                 width: 340,
                 child: Column(
                   children: [
-                    Row( //TODO: API로 냉장고 리스트 받아오면 currentRefrigeId를 읽고 재료만큼 버튼이 생성되게 수정 부탁드립니다.
-                      children:
-                        ingredients.map((ingredient){
-                          return IngredIconButton(
-                              buttonText: ingredient['ingredientNames'],
-                              expDate: 16,
-                              icon: Image.asset('assets/images/ingredient.png'),
-                              onPressed: (isIngredientSelect, isPressed, buttonText) {
-                                if (!isIngredientSelect) {
-                                  showInfo(currentRefrigeId, buttonText);
-                                }
-                              },
-                            );
-                          }).toList(),
-                    )
+                    Row(
+                      children: ingredients.map<Widget>((ingredient) {
+                        return IngredIconButton(
+                          buttonText: ingredient,
+                          expDate: 16,
+                          icon: Image.asset('assets/images/ingredient.png'),
+                          onPressed: (isIngredientSelect, isPressed, buttonText) {
+                            if (!isIngredientSelect) {
+                              showInfo(currentRefrigeId, buttonText);
+                            }
+                          },
+                        );
+                      }).toList(),
+                    ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -140,8 +126,8 @@ class MyRefrigPageState extends State<MyRefrigPage> {
                 ],
               );
 
-              if(selectedValue != null){
-                switch (selectedValue){
+              if (selectedValue != null) {
+                switch (selectedValue) {
                   case 1:
                     break;
                   case 2:
@@ -156,16 +142,19 @@ class MyRefrigPageState extends State<MyRefrigPage> {
             backgroundColor: Color(0Xffffc94a),
           ),
         ),
-
       ),
     );
   }
+
   void showInfo(int refrigeId, String ingredientName) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => IngredientMoreInformation(
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => IngredientMoreInformation(
           refrigeId: refrigeId,
           ingredientName: ingredientName,
-        ))
+        ),
+      ),
     );
   }
 }

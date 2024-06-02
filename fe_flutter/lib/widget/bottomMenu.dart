@@ -15,7 +15,7 @@ class BottomMenuState extends State<BottomMenu> {
   int _selectedIndex = 1;
 
   final List<Widget> _navIndex = [ //하단 바에서 선택할 페이지
-    MyRefrigPage(),
+    MyRefrigPage(), // default값
     //MyRefrigerator(),
     MainPage(),
     MyPage(),

@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
           '/allergy': (context) => AllergyPage(),
           '/BottomMenu': (context) => BottomMenu(),
           '/IngredReg': (context) => IngredRegPage(),
-          '/MyRefirg': (context) => MyRefrigPage(),
+          '/MyRefrig': (context) => MyRefrigPage(), // default값
           '/Mainpage': (context) => MainPage(), //메인페이지 생기면
           //'/IngredientMoreInformation': (context) => IngredientMoreInformation(),
         },
