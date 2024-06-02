@@ -142,7 +142,9 @@ class MyRefrigPageState extends State<MyRefrigPage> {
                 case 3:
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => IngredRegPage()),
+                    MaterialPageRoute(
+                      builder: (context) => IngredRegPage(currentRefrigeId: currentRefrigeId),
+                    ),
                   );
                   break;
               }

@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
           '/category': (context) => CategoryPage(),
           '/allergy': (context) => AllergyPage(),
           '/BottomMenu': (context) => BottomMenu(),
-          '/IngredReg': (context) => IngredRegPage(),
+          //'/IngredReg': (context) => IngredRegPage(),
           '/Mainpage': (context) => MainPage(), //메인페이지 생기면
           //'/IngredientMoreInformation': (context) => IngredientMoreInformation(),
         },

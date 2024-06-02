@@ -1,12 +1,15 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:fe_flutter/screens/ingredientRegister/ingredTextFormField.dart';
-import 'package:fe_flutter/screens/MyRefrigerator/myRefrigeratorDropdown.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:fe_flutter/service/ingredRegServer.dart';
 import 'package:fe_flutter/model/ingredRegModel.dart';
 
 class IngredRegPage extends StatefulWidget {
+  final int currentRefrigeId;
+
+  IngredRegPage({required this.currentRefrigeId});
+
   @override
   _IngredRegPageState createState() => _IngredRegPageState();
 }
@@ -52,7 +55,8 @@ class _IngredRegPageState extends State<IngredRegPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xffFFC94A),
-        title: Text('재료 등록',
+        title: Text(
+          '재료 등록',
           style: TextStyle(
             fontFamily: 'NotoSans',
             fontWeight: FontWeight.bold,
@@ -62,9 +66,11 @@ class _IngredRegPageState extends State<IngredRegPage> {
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.chevron_left,
+          icon: Icon(
+            Icons.chevron_left,
             color: Colors.white,
-            size: 30,),
+            size: 30,
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -72,14 +78,14 @@ class _IngredRegPageState extends State<IngredRegPage> {
       ),
       body: Center(
         child: Column(
-          children: <Widget> [
-            SizedBox(height: 32,),
-            SizedBox(height: 55,),
+          children: <Widget>[
+            SizedBox(height: 32),
+            SizedBox(height: 55),
             Container(
               width: 312,
               height: 365,
               decoration: BoxDecoration(
-                border: Border.all(color: const Color(0xffEEEEEE), width:2),
+                border: Border.all(color: const Color(0xffEEEEEE), width: 2),
                 borderRadius: BorderRadius.circular(8),
               ),
               padding: const EdgeInsets.all(16.0),
@@ -88,24 +94,25 @@ class _IngredRegPageState extends State<IngredRegPage> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container( // 재료 사진
+                      Container(
+                        // 재료 사진
                         width: 72,
                         height: 72,
                         color: Colors.grey,
                       ),
-                      SizedBox(width: 110,),
+                      SizedBox(width: 110),
                       Row(
                         children: [
                           buildTextButton(0, '냉장'),
-                          SizedBox(width: 8,),
+                          SizedBox(width: 8),
                           buildTextButton(1, '냉동'),
-                          SizedBox(width: 8,),
+                          SizedBox(width: 8),
                           buildTextButton(2, '실온'),
                         ],
                       ),
                     ],
                   ),
-                  SizedBox(height: 18,),
+                  SizedBox(height: 18),
                   SingleChildScrollView(
                     child: Form(
                       key: _formKey,
@@ -125,7 +132,8 @@ class _IngredRegPageState extends State<IngredRegPage> {
                                 showSelectedItems: true,
                                 searchDelay: const Duration(seconds: 0),
                                 searchFieldProps: TextFieldProps(
-                                  padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 10.0, horizontal: 10.0),
                                   style: TextStyle(
                                     fontFamily: 'Pretendard',
                                     fontSize: 13.0,
@@ -142,14 +150,17 @@ class _IngredRegPageState extends State<IngredRegPage> {
                                     ),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(4.0),
-                                      borderSide: BorderSide(color: const Color(0xffEEEEEE), width: 2),
+                                      borderSide: BorderSide(
+                                          color: const Color(0xffEEEEEE), width: 2),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(4.0),
-                                      borderSide: BorderSide(color: const Color(0xffEEEEEE), width: 2),
+                                      borderSide: BorderSide(
+                                          color: const Color(0xffEEEEEE), width: 2),
                                     ),
                                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                                    contentPadding: EdgeInsets.symmetric(horizontal: 19.0),
+                                    contentPadding:
+                                    EdgeInsets.symmetric(horizontal: 19.0),
                                   ),
                                 ),
                               ),
@@ -165,14 +176,17 @@ class _IngredRegPageState extends State<IngredRegPage> {
                                   ),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(4.0),
-                                    borderSide: BorderSide(color: const Color(0xffEEEEEE), width: 2),
+                                    borderSide: BorderSide(
+                                        color: const Color(0xffEEEEEE), width: 2),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(4.0),
-                                    borderSide: BorderSide(color: const Color(0xffEEEEEE), width: 2),
+                                    borderSide: BorderSide(
+                                        color: const Color(0xffEEEEEE), width: 2),
                                   ),
                                   floatingLabelBehavior: FloatingLabelBehavior.never,
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 19.0),
+                                  contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 19.0),
                                 ),
                               ),
                               onChanged: (String? selectedItem) {
@@ -180,7 +194,7 @@ class _IngredRegPageState extends State<IngredRegPage> {
                               },
                             ),
                           ),
-                          SizedBox(height: 12,),
+                          SizedBox(height: 12),
                           ingredTextFormField(
                             controller: _ingredNumController,
                             labelText: '수량',
@@ -189,8 +203,7 @@ class _IngredRegPageState extends State<IngredRegPage> {
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return '수량을 입력해주세요.';
-                              }
-                              else {
+                              } else {
                                 try {
                                   int.parse(value);
                                   return null;
@@ -200,7 +213,7 @@ class _IngredRegPageState extends State<IngredRegPage> {
                               }
                             },
                           ),
-                          SizedBox(height: 12,),
+                          SizedBox(height: 12),
                           ingredTextFormField(
                             controller: _ingredCreateDateController,
                             labelText: '구매일',
@@ -212,8 +225,7 @@ class _IngredRegPageState extends State<IngredRegPage> {
                                   context: context,
                                   initialDate: DateTime.now(),
                                   firstDate: DateTime(2020),
-                                  lastDate: DateTime.now()
-                              );
+                                  lastDate: DateTime.now());
                               if (selectedDate != null) {
                                 final formatter = DateFormat('yyyy-MM-dd');
                                 final formattedDate = formatter.format(selectedDate);
@@ -223,7 +235,7 @@ class _IngredRegPageState extends State<IngredRegPage> {
                               }
                             },
                           ),
-                          SizedBox(height: 12,),
+                          SizedBox(height: 12),
                           ingredTextFormField(
                             controller: _ingredExpDateController,
                             labelText: '유통기한',
@@ -235,8 +247,7 @@ class _IngredRegPageState extends State<IngredRegPage> {
                                   context: context,
                                   initialDate: DateTime.now(),
                                   firstDate: DateTime(2020),
-                                  lastDate: DateTime(2025)
-                              );
+                                  lastDate: DateTime(2025));
                               if (selectedDate != null) {
                                 final formatter = DateFormat('yyyy-MM-dd');
                                 final formattedDate = formatter.format(selectedDate);
@@ -246,7 +257,7 @@ class _IngredRegPageState extends State<IngredRegPage> {
                               }
                             },
                           ),
-                          SizedBox(height: 12,),
+                          SizedBox(height: 12),
                           ingredTextFormField(
                             controller: _ingredMemoController,
                             labelText: '메모',
@@ -260,7 +271,7 @@ class _IngredRegPageState extends State<IngredRegPage> {
                 ],
               ),
             ),
-            SizedBox(height: 40,),
+            SizedBox(height: 40),
             Container(
               width: 312,
               height: 36,
@@ -273,23 +284,23 @@ class _IngredRegPageState extends State<IngredRegPage> {
                       ingredientName: _ingredNameController.text,
                       ingredientNum: int.parse(_ingredNumController.text),
                       createdDate: _ingredCreateDateController.text,
-                      ingredientDeadLine : _ingredExpDateController.text,
+                      ingredientDeadLine: _ingredExpDateController.text,
                       ingredientMemo: _ingredMemoController.text,
                       ingredientPlace: _ingredPlace,
                     );
-                    registerIngredient(ingredReg); // 재료 등록 api 호출
+                    registerIngredient(ingredReg, widget.currentRefrigeId); // 재료 등록 api 호출
                     // 콘솔 출력(확인용)
                     print('name : ${ingredReg.ingredientName}\n'
                         'num : ${ingredReg.ingredientNum}\n'
                         'createDate : ${ingredReg.createdDate}\n'
                         'ExpDate : ${ingredReg.ingredientDeadLine}\n'
                         'memo : ${ingredReg.ingredientMemo}\n'
-                        'place : ${ingredReg.ingredientPlace}'
-                    );
+                        'place : ${ingredReg.ingredientPlace}');
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         backgroundColor: const Color(0xffF6A90A),
-                        content: Text('재료 등록이 완료되었습니다.',
+                        content: Text(
+                          '재료 등록이 완료되었습니다.',
                           style: TextStyle(
                             fontFamily: 'Pretendard',
                             fontSize: 13.0,
@@ -310,7 +321,8 @@ class _IngredRegPageState extends State<IngredRegPage> {
                     borderRadius: BorderRadius.circular(18.0),
                   ),
                 ),
-                child: Text('재료 등록',
+                child: Text(
+                  '재료 등록',
                   style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'Pretendard',
@@ -325,6 +337,7 @@ class _IngredRegPageState extends State<IngredRegPage> {
       ),
     );
   }
+
   Widget buildTextButton(int index, String text) {
     return Container(
       width: 26,
@@ -353,7 +366,9 @@ class _IngredRegPageState extends State<IngredRegPage> {
         child: Text(
           text,
           style: TextStyle(
-            color: selectedButtonIndex == index ? const Color(0xffF7BF54) : const Color(0xffC4C4C4),
+            color: selectedButtonIndex == index
+                ? const Color(0xffF7BF54)
+                : const Color(0xffC4C4C4),
             fontSize: 14,
           ),
         ),
