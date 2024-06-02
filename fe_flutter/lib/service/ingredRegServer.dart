@@ -7,7 +7,7 @@ import 'package:fe_flutter/model/ingredRegModel.dart';
 Future<List<String>> getIngredientList() async {
   try {
     final response = await http.get(
-      Uri.parse('http://localhost:8080/refrige/ingredient/register'));
+        Uri.parse('http://localhost:8080/refrige/ingredient/register'));
     if (response.statusCode == 200) {
       final decodeData = utf8.decode(response.bodyBytes);
       final Map<String, dynamic> data = jsonDecode(decodeData);
@@ -24,25 +24,26 @@ Future<List<String>> getIngredientList() async {
 
 // 재료 등록
 Future<String> registerIngredient(IngredReg ingredReg) async {
-    Map<String, dynamic> jsonData = ingredReg.toJson();
-    final int refrigeId = 1; // TODO: refrigeId 설정
-    final SharedPreferences pref = await SharedPreferences.getInstance();
-    int? userId = pref.getInt("userId");
-    try {
-      var response = await http.post(
-        Uri.parse('/refrige/ingredient/register/$refrigeId?userId=$userId'),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode(jsonData),
-      );
+  Map<String, dynamic> jsonData = ingredReg.toJson();
+  final int refrigeId = 1; // TODO: refrigeId 설정
+  final SharedPreferences pref = await SharedPreferences.getInstance();
+  int? userId = pref.getInt("userId");
+  try {
+    var response = await http.post(
+      Uri.parse('http://localhost:8080/refrige/ingredient/register/$refrigeId?userId=$userId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(jsonData),
+    );
 
-      if (response.statusCode == 200) {
-        return json.decode(response.body)['message']; // 응답 메시지 반환
-      } else {
-        throw Exception('Failed to load data');
-      }
-    } catch (e) {
-      throw Exception('Error: $e');
+    if (response.statusCode == 200) {
+      return json.decode(response.body)['message']; // 응답 메시지 반환
+    } else {
+      throw Exception('Failed to load data');
     }
+  } catch (e) {
+    throw Exception('Error: $e');
   }
+}
+

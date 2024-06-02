@@ -2,6 +2,7 @@ class IngredReg {
   String? ingredientName;
   int? ingredientNum;
   String? createdDate;
+  String? ingredientDeadLine;
   String? ingredientMemo;
   String? ingredientPlace;
 
@@ -9,6 +10,7 @@ class IngredReg {
       {this.ingredientName,
         this.ingredientNum,
         this.createdDate,
+        this.ingredientDeadLine,
         this.ingredientMemo,
         this.ingredientPlace});
 
@@ -16,6 +18,7 @@ class IngredReg {
     ingredientName = json['ingredientName'];
     ingredientNum = json['ingredientNum'];
     createdDate = json['createdDate'];
+    ingredientDeadLine = json['ingredientDeadLine'];
     ingredientMemo = json['ingredientMemo'];
     ingredientPlace = json['ingredientPlace'];
   }
@@ -25,8 +28,10 @@ class IngredReg {
     data['ingredientName'] = this.ingredientName;
     data['ingredientNum'] = this.ingredientNum;
     data['createdDate'] = this.createdDate;
+    data['ingredientDeadLine'] = this.ingredientDeadLine;
     data['ingredientMemo'] = this.ingredientMemo;
     data['ingredientPlace'] = this.ingredientPlace;
     return data;
   }
 }
+
