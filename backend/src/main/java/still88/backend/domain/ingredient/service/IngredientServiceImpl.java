@@ -41,7 +41,7 @@ public class IngredientServiceImpl implements IngredientService {
             if (request.getIngredientDeadline() == null) {
                 ingredientDeadline = createdDate.plusDays(14);
             }
-            ingredientDeadline = request.getIngredientDeadline();
+            else ingredientDeadline = request.getIngredientDeadline();
             String ingredientMemo = request.getIngredientMemo();
 
             Refrige existingRefrige = refrigeRepository.findByRefrigeListAndIngredient_IngredientName(refrigeList, ingredientName);
