@@ -9,7 +9,7 @@ public class UpdateUserDetailRequestDto {
 
     private int userAge;
 
-    private Boolean userGender;
+    private Boolean gender;
 
     private String userImage;
 
