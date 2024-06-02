@@ -74,7 +74,6 @@ class _IngredRegPageState extends State<IngredRegPage> {
         child: Column(
           children: <Widget> [
             SizedBox(height: 32,),
-            DropdownRefrige(),
             SizedBox(height: 55,),
             Container(
               width: 312,

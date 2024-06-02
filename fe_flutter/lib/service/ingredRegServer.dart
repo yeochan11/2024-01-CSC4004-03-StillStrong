@@ -25,7 +25,7 @@ Future<List<String>> getIngredientList() async {
 // 재료 등록
 Future<String> registerIngredient(IngredReg ingredReg) async {
   Map<String, dynamic> jsonData = ingredReg.toJson();
-  final int refrigeId = 1; // TODO: refrigeId 설정
+  final int refrigeId = 7; // TODO: refrigeId 설정
   final SharedPreferences pref = await SharedPreferences.getInstance();
   int? userId = pref.getInt("userId");
   try {

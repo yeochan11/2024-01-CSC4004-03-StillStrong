@@ -1,6 +1,7 @@
 import 'package:fe_flutter/service/refrigeServer.dart';
 import 'package:flutter/material.dart';
 import '../../model/refrigeModel.dart';
+import '../ingredientRegister/ingredientRegister.dart';
 import 'myRefrigeratorDropdown.dart';
 import 'ingredientSearch.dart';
 import 'ingredientSelect.dart';
@@ -135,6 +136,10 @@ class MyRefrigPageState extends State<MyRefrigPage> {
                   case 2:
                     break;
                   case 3:
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => IngredRegPage()),
+                    );
                     break;
                 }
               }
