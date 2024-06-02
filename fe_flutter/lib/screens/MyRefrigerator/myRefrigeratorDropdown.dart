@@ -31,8 +31,13 @@ class DropdownRefrigeState extends State<DropdownRefrige> {
           children: [
             Text(
               selectedItem,
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(
+                  fontFamily: 'Pretendard',
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600
+              ),
             ),
+            SizedBox(width: 8),
             GestureDetector(
               onTap: (){
                 _displayTextInputDialog(context);
@@ -42,6 +47,7 @@ class DropdownRefrigeState extends State<DropdownRefrige> {
 
           ],
         ),
+        SizedBox(height: 20,),
         FutureBuilder<RefrigeData>(
           future: itemsFuture,
           builder: (context, snapshot) {
@@ -52,43 +58,38 @@ class DropdownRefrigeState extends State<DropdownRefrige> {
             } else if (snapshot.hasData) {
               List<String> refrigeNames = snapshot.data!.refrigeList!.map((refrige) => refrige.refrigeName!).toList();
 
-              return DecoratedBox(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Color(0Xffffbc38), width: 1),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 30, right: 30),
-                  child: DropdownButton<String>(
-                    value: selectedItem,
-                    onChanged: (String? newValue) {
-                      if (newValue == 'addRefrige') {
-                        _showAddRefrigeDialog(context);
-                      } else {
+              return Container(
+                width: 350,
+                height: 40,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Color(0Xffffbc38), width: 1),
+                      borderRadius: BorderRadius.circular(10.0)
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 30, right: 30),
+                    child: DropdownButton<String>(
+                      value: selectedItem,
+                      onChanged: (String? newValue) {
                         setState(() {
                           selectedItem = newValue!;
                         });
-                      }
-                    },
-                    isExpanded: true,
-                    underline: SizedBox(),
-                    items: refrigeNames.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList()
-                      ..add(
-                        DropdownMenuItem<String>(
-                          value: 'addRefrige',
-                          child: Text('+ 냉장고 추가'),
-                        ),
-                      ),
+                      },
+                      items: refrigeNames.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      isExpanded: true,
+                      underline: SizedBox(),
+                      iconEnabledColor: Color(0xffFFBC3B),
+                    ),
                   ),
                 ),
               );
             } else {
-              return Text('데이터가 없습니다.');
+            return Text('데이터가 없습니다.');
             }
           },
         ),
@@ -139,26 +140,61 @@ void _displayTextInputDialog(BuildContext context) async {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('냉장고 이름을 입력해주세요'),
-          content: TextField(
-            controller: _textFieldController,
-            decoration: InputDecoration(hintText: "여기에 텍스트를 입력하세요"),
+          title: Text('냉장고 이름을 입력해주세요',
+            style: TextStyle(
+              fontFamily: 'Pretendard',
+              fontWeight: FontWeight.w500,
+              fontSize: 14,
+            ),
+          ),
+          content: Container(
+            width: 232,
+            height: 35,
+            padding: EdgeInsets.only(left: 16),
+            decoration: BoxDecoration(
+              border: Border.all(color: Color(0xffC4C4C4), width: 1),
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: TextField(
+              controller: _textFieldController,
+              decoration: InputDecoration(
+                hintText: "기본 냉장고",
+                hintStyle: TextStyle(
+                  fontFamily: 'Pretendard',
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xffC4C4C4),
+                ),
+                border: InputBorder.none,
+              ),
+            ),
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('취소'),
+              child: Text('확인',
+                style: TextStyle(
+                  color: Color(0xffF7BF54),
+                  fontFamily: 'Pretendard',
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
               onPressed: () {
+                // DropdownRefrigeState.items[ = _textFieldController.text;
+                print('입력한 텍스트: ${_textFieldController.text}');
                 Navigator.pop(context);
               },
             ),
             TextButton(
-              child: Text('확인'),
+              child: Text('취소',
+                style: TextStyle(
+                  color: Color(0xffF7BF54),
+                  fontFamily: 'Pretendard',
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
               onPressed: () {
-                Refrige refrige = Refrige(
-                  refrigeName: _textFieldController.text,
-                );
-                updateRefrigeName(refrige, 1);
-                print('입력한 텍스트: ${_textFieldController.text}');
                 Navigator.pop(context);
               },
             ),
