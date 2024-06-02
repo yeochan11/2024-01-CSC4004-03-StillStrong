@@ -75,7 +75,9 @@ class MyRefrigPageState extends State<MyRefrigPage> {
                 width: 340,
                 child: Column(
                   children: [
-                    Row(
+                    Wrap(
+                      spacing: 4.0,
+                      runSpacing: 4.0,
                       children: ingredients.map<Widget>((ingredient) {
                         return IngredIconButton(
                           buttonText: ingredient,
