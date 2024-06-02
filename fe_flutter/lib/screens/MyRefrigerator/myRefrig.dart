@@ -1,9 +1,10 @@
+import 'package:fe_flutter/screens/ingredientRegister/ingredientRegister.dart';
 import 'package:fe_flutter/service/refrigeServer.dart';
 import 'package:flutter/material.dart';
+import '../ingredientMoreInfo/ingredientMoreInfo.dart';
 import 'myRefrigeratorDropdown.dart';
 import 'ingredientSearch.dart';
 import 'ingredientSelect.dart';
-import '../ingredientMoreInfo/ingredientMoreInfo.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,40 +22,7 @@ class MyRefrigPageState extends State<MyRefrigPage> {
   @override
   void initState() {
     super.initState();
-    //fetchRefrigeList();
   }
-
-  // Future<void> fetchRefrigeList() async {
-  //   SharedPreferences pref = await SharedPreferences.getInstance();
-  //   int? userId = pref.getInt("userId");
-  //   final url =
-  //       'http://localhost:8080/refrige/get/refrigeWithIngredients?userId=$userId';
-  //   try {
-  //     final response = await http.get(Uri.parse(url),
-  //         headers: {"Accept": "application/json; charset=utf-8"});
-  //     if (response.statusCode == 200) {
-  //       final responseBody = utf8.decode(response.bodyBytes);
-  //       final data = json.decode(responseBody);
-  //       setState(() {
-  //         refrigeList = List<Map<String, dynamic>>.from(
-  //             data['refrigeList'].map((item) => Map<String, dynamic>.from(item)));
-  //         currentRefrigeId = data['currentRefrigeId'];
-  //         // 냉장고 이름으로 드롭다운 목록 항목을 채웁니다.
-  //         newItems = refrigeList.map<String>((refrige) => refrige['refrigeName'] as String).toList();
-  //         // DropdownRefrigeState의 인스턴스를 얻어와서 items를 업데이트합니다.
-  //         DropdownRefrigeState dropdownRefrigeState = context.findAncestorStateOfType<DropdownRefrigeState>()!;
-  //         dropdownRefrigeState.updateItems(newItems);
-  //         print(newItems);
-  //       });
-  //       print(refrigeList);
-  //       print(currentRefrigeId);
-  //     } else {
-  //       print('냉장고 목록을 불러오는 데 실패했습니다');
-  //     }
-  //   } catch (e) {
-  //     print(e.toString());
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -63,13 +31,10 @@ class MyRefrigPageState extends State<MyRefrigPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          leading: Icon(
-            Icons.chevron_left,
-            color: Colors.white,
-            size: 30,
-          ),
           title: Text('MY 냉장고',
             style: TextStyle(
+              fontFamily: 'Pretendard',
+              fontSize: 20,
               color: Colors.white,
               fontWeight: FontWeight.w700,
             ),
@@ -126,12 +91,65 @@ class MyRefrigPageState extends State<MyRefrigPage> {
                 position: position,
                 items: [
                   PopupMenuItem<int>(
-                    value: 1,
-                    child: Text('영수증 인식하기'),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('재료 등록',
+                            style: TextStyle(
+                              fontFamily: 'Pretendard',
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Container(
+                            height: 1.0,
+                            color: Colors.grey[300],
+                          ),
+                        ],
+                      ),
+                    ),
+                    enabled: false,
                   ),
                   PopupMenuItem<int>(
                     value: 2,
-                    child: Text('직접 입력하기'),
+                    child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 8.0),
+                        child: Column(
+                          children: [
+                            SizedBox(height: 8),
+                            Text('영수증 인식하기',
+                              style: TextStyle(
+                                fontFamily: 'Pretendard',
+                                fontSize: 13,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        )),
+                  ),
+                  PopupMenuItem<int>(
+                    value: 3,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 8,),
+                          Text('직접 입력하기',
+                            style: TextStyle(
+                              fontFamily: 'Pretendard',
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               );
@@ -153,6 +171,36 @@ class MyRefrigPageState extends State<MyRefrigPage> {
 
       ),
     );
+  }
+  void showPopup(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('재료 등록'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ListTile(
+                  title: Text('영수증 인식'),
+                  onTap: () {
+                    // '영수증 인식'을 선택하면 다음 페이지로 이동
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: Text('직접 입력하기'),
+                  onTap: () {
+                    // '직접 입력하기'를 선택하면 다음 페이지로 이동
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/IngredReg'
+                    );
+                  },
+                ),
+              ],
+            ),
+          );
+        });
   }
   void showInfo(int refrigeId, String ingredientName) {
     Navigator.push(context,
