@@ -8,6 +8,7 @@ import still88.backend.entity.ShareRefrige;
 import still88.backend.entity.User;
 import still88.backend.repository.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -95,6 +96,7 @@ public class RefrigeServiceImpl implements RefrigeService {
                 .currentRefrigeName(currentRefrigeName)
                 .build();
     }
+
 
     private List<String> getIngredientNames(int refrigeId) {
         List<Integer> ingredientIds = refrigeRepository.findIngredientIdsByRefrigeId(refrigeId);
