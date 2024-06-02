@@ -147,6 +147,7 @@ Future<void> findPw(User user) async {
   }
 }
 
+// 비밀번호 재설정
 Future<void> updatePw(String updatePassword, String confirmPassword) async {
   try {
     final SharedPreferences pref = await SharedPreferences.getInstance();
@@ -170,5 +171,26 @@ Future<void> updatePw(String updatePassword, String confirmPassword) async {
     }
   } catch (e) {
     print('Failed to update password: $e');
+  }
+}
+
+// 마이페이지 유저 정보 get
+Future<User> getUserInfo() async {
+  try {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    int? userId = pref.getInt("userId");
+
+    final response = await http.get(
+      Uri.parse('http://localhost:8080/user/get/detail?userId=$userId'),
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonData = json.decode(response.body);
+      return User.fromJson(jsonData);
+    } else {
+      throw Exception('Failed to get userinfo : ${response.statusCode}');
+    }
+  } catch (e) {
+    throw Exception('Failed to get userinfo: $e');
   }
 }
