@@ -122,7 +122,9 @@ class _CategoryPageState extends State<CategoryPage> {
                           onPressed: () {
                             if (selectedButtons.isNotEmpty) {
                               Map<String, dynamic> favorite = {};
-                              print('userFavorites : $selectedButtons'); // 선택한 취향 콘솔 출력 (확인용)
+                              //final user = Provider.of<UserProvider>(context, listen: false).user!; // user 정보 불러오기
+                              //user.userFavorites = selectedButtons; // 선택한 취향 유저 정보에 삽입
+                              //print('userFavorites : $selectedButtons'); // 선택한 취향 콘솔 출력 (확인용)
                               favorite["favorites"] = selectedButtons;
                               patchFavorites(favorite); // 취향 등록 api
                               Navigator.pushNamed(context, '/allergy');
