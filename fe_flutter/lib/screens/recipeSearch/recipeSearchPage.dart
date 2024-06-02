@@ -105,27 +105,26 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> {
                             )
                       );
                     } else {
-                      return SizedBox(
-                       height: 620,
-                       width: 400,
-                        child: Center(
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                for (int i = 0; i < info.recipeNames.length; ++i)
-                                  _makeRecipeList(
-                                      info.recipeNames[i],
-                                      info.recipeMainImages[i],
-                                      info.recipeIngredients[i]!
-                                  )
-                              ],
+                      return Container(
+                        height: 620,
+                        width: 400,
+                        alignment: const Alignment(0, -1),
+                        child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical, 
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  for (int i = 0; i < info.recipeNames.length; ++i)
+                                    _makeRecipeList(
+                                        info.recipeNames[i], 
+                                        info.recipeMainImages[i], 
+                                        info.recipeIngredients[i]!
+                                    )
+                                ],
+                              ),
                             ),
-                          ),
-                        )
-                      );
+                          );
                     }
                   }
                   },

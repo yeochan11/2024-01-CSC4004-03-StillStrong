@@ -17,12 +17,12 @@ class RecipeMoreInfoModel {
 
   RecipeMoreInfoModel(Map<String, dynamic>? data) {
     // TODO: API 주소 설정했으면 밑에 주석 해제해주세요.
-    // recipeName = data?['recipeName'];
-    // recipeCategory = data?['recipeCategory'];
-    // recipeMainImage = data?['recipeMainImage'];
-    // recipeIngredients = _convertToStringList(data?['recipeIngredients']) ?? [""];
-    // recipeDescriptions = _convertToStringList(data?['recipeDescriptions']) ?? [""];
-    // recipeImage = _convertToStringList(data?['recipeImage']) ?? [""];
+    recipeName = data?['recipeName'];
+    recipeCategory = data?['recipeCategory'];
+    recipeMainImage = data?['recipeMainImage'];
+    recipeIngredients = _convertToStringList(data?['recipeIngredients']) ?? [""];
+    recipeDescriptions = _convertToStringList(data?['recipeDescriptions']) ?? [""];
+    recipeImage = _convertToStringList(data?['recipeImage']) ?? [""];
   }
   List<String>? _convertToStringList(List<dynamic>? list) {
     if (list == null) return null;

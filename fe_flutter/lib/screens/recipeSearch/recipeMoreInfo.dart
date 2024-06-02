@@ -28,7 +28,8 @@ class _RecipeMoreInfoState extends State<RecipeMoreInfo> {
             Navigator.pop(context);
           },),
       ),
-      body: FutureBuilder(
+      body: Center(
+        child: FutureBuilder(
           future: fetchRecipeMoreInfo(widget.recipeName),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -88,7 +89,7 @@ class _RecipeMoreInfoState extends State<RecipeMoreInfo> {
                       alignment: const Alignment(-1, 0),
                       padding: EdgeInsets.only(left: 10.0),
                       child: const Text('레시피 재료', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
-                      ),
+                    ),
                     const SizedBox(height: 10,),
                     Container(
                       width: 400,
@@ -111,6 +112,7 @@ class _RecipeMoreInfoState extends State<RecipeMoreInfo> {
             }
           },
         ),
+      )
     );
   }
 

@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 enum InputType { text, number, date }
@@ -8,6 +9,9 @@ Widget ingredTextFormField({
   required String hintText,
   InputType inputType = InputType.text,
   validator,
+  onTap,
+  decoration,
+  bool readOnly = false,
 
 }) {
   TextInputType keyboardType;
@@ -20,7 +24,7 @@ Widget ingredTextFormField({
       keyboardType = TextInputType.number;
       break;
     case InputType.date:
-      keyboardType = TextInputType.text; // 날짜 입력 시 키보드 사용하지 않음
+      keyboardType = TextInputType.datetime;
       break;
   }
 
@@ -47,19 +51,8 @@ Widget ingredTextFormField({
         }
         return null;
       },
-      /*onTap: () async {
-        // 달력에서 날짜 선택
-        final DateTime? pickedDate = await showDatePicker(
-          context: context,
-          initialDate: DateTime.now(),
-          firstDate: DateTime(2000),
-          lastDate: DateTime(2101),
-        );
-        if (pickedDate != null) {
-          // 선택한 날짜를 텍스트 필드에 입력
-          controller.text = pickedDate.toString();
-        }
-      },*/
+      onTap: onTap,
+      readOnly: readOnly,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
@@ -83,7 +76,7 @@ Widget ingredTextFormField({
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4.0),
           borderSide: BorderSide(
-            color: const Color(0xffEEEEEE), width: 2
+              color: const Color(0xffEEEEEE), width: 2
           ),
         ),
         contentPadding: EdgeInsets.symmetric(horizontal: 19.0),
