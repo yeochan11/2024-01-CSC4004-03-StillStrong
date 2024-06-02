@@ -169,10 +169,16 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 10),
-                  Text(
-                    recipeName,
-                    style: const TextStyle(
-                      fontSize: 20.0,
+                  Container(
+                    width: 200,
+                    height: 30,
+                    alignment: const Alignment(-1, 0),
+                    child: Text(
+                      recipeName,
+                      style: const TextStyle(
+                        fontSize: 20.0,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   const SizedBox(height: 30),
