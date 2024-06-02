@@ -4,9 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import still88.backend.dto.recommend.FlaskResponseDTO;
-import still88.backend.dto.recommend.RecommendFlaskDTO;
-import still88.backend.dto.recommend.RecommendResponseDTO;
+import still88.backend.dto.recommend.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,5 +19,15 @@ public class RecommendServiceImpl implements RecommendService{
         RecommendFlaskDTO requestBody = RecommendFlaskDTO.builder().userId(userId).ingredientList(ingredientList).build();
         ResponseEntity<FlaskResponseDTO> Response = restTemplate.postForEntity(url, requestBody, FlaskResponseDTO.class);
         return null;
+    }
+
+    @Override
+    public void feedback(FeedbackRequestDTO dto) {
+        boolean feedback = dto.getFeedback();
+        String url = "http://localhost:5000/recommend/feedback";
+        FeedbackFlaskRequestDTO requestBody = FeedbackFlaskRequestDTO.builder().feedback(feedback).build();
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<FeedbackFlaskRequestDTO> Response = restTemplate.postForEntity(url, requestBody, FeedbackFlaskRequestDTO.class);
     }
 }
