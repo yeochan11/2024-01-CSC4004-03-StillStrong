@@ -187,12 +187,18 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          recipeIngredients.length == 1?
-                          recipeIngredients[0]
-                              :'${recipeIngredients[0]} 외 ${recipeIngredients.length-1}개 재료',
-                          style: const TextStyle(
-                            fontSize: 15.0,
+                        Container(
+                          width: 140,
+                          height: 40,
+                          alignment: const Alignment(-1, 0),
+                          child: Text(
+                            recipeIngredients.length == 1?
+                            recipeIngredients[0]
+                                :'${recipeIngredients[0]} 외 ${recipeIngredients.length-1}개 재료',
+                            style: const TextStyle(
+                              fontSize: 15.0,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         const SizedBox(
