@@ -9,14 +9,14 @@ class MyPage extends StatefulWidget {
 
 class _MyPageState extends State<MyPage> {
   //User? user;
-  // 임시 유저 정보 생성. api 연결시 해제
+  // TODO : 임시 유저 정보 생성. api 연결시 해제
   static User user = User(
     userId: 1,
     secretEmail: 'example.com',
     userNickname: '내꿈은요리사',
     userAge: 22,
     gender: true,
-    userImage: 'https://cdn.pixabay.com/photo/2017/12/10/13/37/christmas-3009949_1280.jpg',
+    userImage: 'https://lh4.googleusercontent.com/proxy/bQv_EtcQG0meeYE0BAKd83kzayElQTnqCxfAp0BRZef5NFYq9EhZdRlClAg0Myr-FVEdwQL3x4eNtvnRJoU7Suk2SuHLiGc_bhNCF2OrkBQ-Mu78ggZfvdxarEjxnnziV3bHCUq_13FG9uGooD5RX8UBEfAAElV8vr5OI958-5bOVQ',
     alarm: true,
   );
 
@@ -24,17 +24,20 @@ class _MyPageState extends State<MyPage> {
   @override
   void initState() {
     super.initState();
-    print('user : $user');
     getUser();
   }
 
-void getUser() async {
-    User userinfo = await getUserInfo(); // 비동기로 유저 정보를 가져옴
-    setState(() {
-      user = userinfo; // 상태를 업데이트하여 UI가 변경됨
-    });
-    print('User info: $user'); // 테스트용 출력
-}
+  void getUser() async {
+    try {
+      User userinfo = await getUserInfo();
+      print('User info: $userinfo');
+      setState(() {
+        user = userinfo;
+      });
+    } catch (e) {
+      print('Failed to get user info: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +66,7 @@ void getUser() async {
                 // 프로필 사진 표시
                 ClipOval(
                   child: Image.network(
-                    '${user.userImage}',
+                    '${user!.userImage}',
                     width: 122,
                     height: 122,
                     fit: BoxFit.cover,
@@ -82,7 +85,7 @@ void getUser() async {
                         TextFormField(
                           readOnly: true,
                           decoration: InputDecoration(
-                            labelText: '${user.userNickname}',
+                            labelText: '${user!.userNickname}',
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
                             ),
@@ -106,7 +109,7 @@ void getUser() async {
                         TextFormField(
                           readOnly: true,
                           decoration: InputDecoration(
-                            labelText: '${user.secretEmail}',
+                            labelText: '${user!.secretEmail}',
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
                             ),
@@ -133,7 +136,7 @@ void getUser() async {
                             TextFormField(
                               readOnly: true,
                               decoration: InputDecoration(
-                                labelText: user.gender ?? false ? '남' : '여',
+                                labelText: user!.gender ?? false ? '남' : '여',
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                 ),
@@ -157,7 +160,7 @@ void getUser() async {
                             TextFormField(
                               readOnly: true,
                               decoration: InputDecoration(
-                                labelText: '${user.userAge}',
+                                labelText: '${user!.userAge}',
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                 ),
@@ -183,7 +186,7 @@ void getUser() async {
                       TextFormField(
                         readOnly: true,
                         decoration: InputDecoration(
-                          labelText: user.alarm ?? false ? 'O' : 'X',
+                          labelText: user!.alarm ?? false ? 'O' : 'X',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                           ),

@@ -1,5 +1,5 @@
 class User {
-  int? userId;
+  String? userId;
   String? secretEmail;
   bool? gender;
   String? userNickname;
