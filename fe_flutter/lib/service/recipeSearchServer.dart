@@ -15,13 +15,15 @@ Future<Map<String,dynamic>> fetchRecipeSearchData(String searching) async {
 }
 
 Future<Map<String,dynamic>> postRecipeFromIngredient(int userId, List<String> ingredientList) async {
+  Map<String, dynamic> data = {};
+  data['ingredientList'] = ingredientList;
   String uri = 'https://jsonplaceholder.typicode.com/posts/1'; // 테스트 주소
   //String uri = 'http://localhost:8080/recommend/recipe/ingredient';
   final response = await http.post(Uri.parse(uri),
     headers: <String, String>{
     'Content-Type': 'application/json; charset=utf-8',
   },
-    body: jsonEncode(ingredientList),
+    body: jsonEncode(data),
   );
   if (response.statusCode == 200) {
     final decodeData = utf8.decode(response.bodyBytes);
