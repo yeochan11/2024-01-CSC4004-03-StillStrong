@@ -9,9 +9,8 @@ class MyPage extends StatefulWidget {
 
 class _MyPageState extends State<MyPage> {
   //User? user;
-  // TODO : 임시 유저 정보 생성. api 연결시 해제
   static User user = User(
-    userId: 1,
+    userId: "1",
     secretEmail: 'example.com',
     userNickname: '내꿈은요리사',
     userAge: 22,
@@ -62,7 +61,7 @@ class _MyPageState extends State<MyPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(height: 20,),
+                SizedBox(height: 60,),
                 // 프로필 사진 표시
                 ClipOval(
                   child: Image.network(
@@ -72,100 +71,156 @@ class _MyPageState extends State<MyPage> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                SizedBox(height: 10,),
+                SizedBox(height: 30,),
                 Container(
                     width: 343,
-                    height: 68,
-                    color: const Color(0xffF2F4F7),
-                    padding: EdgeInsets.zero,
+                    height: 67,
+                    padding: EdgeInsets.only(left: 16, top: 5),
+                    decoration: BoxDecoration(
+                        color: const Color(0xffF2F4F7),
+                      borderRadius: BorderRadius.circular(15)
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('닉네임',textAlign: TextAlign.start,),
+                        Text('닉네임',
+                          style: TextStyle(
+                            fontFamily: 'Pretendard',
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                         TextFormField(
                           readOnly: true,
                           decoration: InputDecoration(
                             labelText: '${user!.userNickname}',
+                            labelStyle: TextStyle(
+                              fontFamily: 'Pretendard',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
                             ),
                             floatingLabelBehavior: FloatingLabelBehavior.never,
-                            contentPadding: EdgeInsets.symmetric(horizontal: 19.0),
+                            contentPadding: EdgeInsets.zero,
                           ),
                         )
                       ],
                     )
                 ),
-                SizedBox(height: 8,),
+                SizedBox(height: 16,),
                 Container(
                     width: 343,
-                    height: 68,
-                    color: const Color(0xffF2F4F7),
-                    padding: EdgeInsets.zero,
+                    height: 67,
+                    padding: EdgeInsets.only(left: 16, top: 5),
+                    decoration: BoxDecoration(
+                        color: const Color(0xffF2F4F7),
+                        borderRadius: BorderRadius.circular(15)
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('이메일',textAlign: TextAlign.start,),
+                        Text('이메일',
+                          style: TextStyle(
+                            fontFamily: 'Pretendard',
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                         TextFormField(
                           readOnly: true,
                           decoration: InputDecoration(
                             labelText: '${user!.secretEmail}',
+                            labelStyle: TextStyle(
+                              fontFamily: 'Pretendard',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
                             ),
                             floatingLabelBehavior: FloatingLabelBehavior.never,
-                            contentPadding: EdgeInsets.symmetric(horizontal: 19.0),
+                            contentPadding: EdgeInsets.zero,
                           ),
                         )
                       ],
                     )
                 ),
-                SizedBox(height: 8,),
+                SizedBox(height: 16,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                         width: 167,
-                        height: 68,
-                        color: const Color(0xffF2F4F7),
-                        padding: EdgeInsets.zero,
+                        height: 67,
+                        padding: EdgeInsets.only(left: 16, top: 5),
+                        decoration: BoxDecoration(
+                          color: const Color(0xffF2F4F7),
+                          borderRadius: BorderRadius.circular(15)
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('성별',textAlign: TextAlign.start,),
+                            Text('성별',
+                              style: TextStyle(
+                                fontFamily: 'Pretendard',
+                                fontSize: 10,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                             TextFormField(
                               readOnly: true,
                               decoration: InputDecoration(
                                 labelText: user!.gender ?? false ? '남' : '여',
+                                labelStyle: TextStyle(
+                                  fontFamily: 'Pretendard',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                 ),
                                 floatingLabelBehavior: FloatingLabelBehavior.never,
-                                contentPadding: EdgeInsets.symmetric(horizontal: 19.0),
+                                contentPadding: EdgeInsets.zero,
                               ),
                             )
                           ],
                         )
                     ),
-                    SizedBox(width: 8,),
+                    SizedBox(width: 9,),
                     Container(
                         width: 167,
-                        height: 68,
-                        color: const Color(0xffF2F4F7),
-                        padding: EdgeInsets.zero,
+                        height: 67,
+                        padding: EdgeInsets.only(left: 16, top: 5),
+                        decoration: BoxDecoration(
+                            color: const Color(0xffF2F4F7),
+                            borderRadius: BorderRadius.circular(15)
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('나이',textAlign: TextAlign.start,),
+                            Text('나이',
+                              style: TextStyle(
+                                fontFamily: 'Pretendard',
+                                fontSize: 10,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                             TextFormField(
                               readOnly: true,
                               decoration: InputDecoration(
                                 labelText: '${user!.userAge}',
+                                labelStyle: TextStyle(
+                                  fontFamily: 'Pretendard',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                 ),
                                 floatingLabelBehavior: FloatingLabelBehavior.never,
-                                contentPadding: EdgeInsets.symmetric(horizontal: 19.0),
+                                contentPadding: EdgeInsets.zero,
                               ),
                             )
                           ],
@@ -173,61 +228,146 @@ class _MyPageState extends State<MyPage> {
                     )
                   ],
                 ),
-                SizedBox(height: 8,),
+                SizedBox(height: 16,),
                 Container(
                   width: 343,
-                  height: 68,
-                  color: const Color(0xffF2F4F7),
-                  padding: EdgeInsets.zero,
+                  height: 67,
+                  padding: EdgeInsets.only(left: 16, top: 5),
+                  decoration: BoxDecoration(
+                      color: const Color(0xffF2F4F7),
+                      borderRadius: BorderRadius.circular(15)
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('유통기한 알림 설정',textAlign: TextAlign.start,),
+                      Text('유통기한 알림 설정',
+                        style: TextStyle(
+                          fontFamily: 'Pretendard',
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                       TextFormField(
                         readOnly: true,
                         decoration: InputDecoration(
                           labelText: user!.alarm ?? false ? 'O' : 'X',
+                          labelStyle: TextStyle(
+                            fontFamily: 'Pretendard',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                           ),
                           floatingLabelBehavior: FloatingLabelBehavior.never,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 19.0),
+                          contentPadding: EdgeInsets.zero,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
+                SizedBox(height: 25,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextButton(
-                      onPressed: () {},
-                      child: Text('알러지 정보 수정'),
+                    Container(
+                      width: 138,
+                      height: 30,
+                      child: TextButton(
+                        onPressed: () {},
+                        style: TextButton.styleFrom(
+                          backgroundColor: const Color(0xffF6A90A),
+                          padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        child: Text('알러지 정보 수정',
+                          style: TextStyle(
+                            fontFamily: 'Pretendard',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ),
                     SizedBox(width: 8,),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/ShareRefrige');
-                      },
-                      child: Text('냉장고 공유하기'),
+                    Container(
+                      width: 138,
+                      height: 30,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/ShareRefrige');
+                        },
+                        style: TextButton.styleFrom(
+                          backgroundColor: const Color(0xffF6A90A),
+                          padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        child: Text('냉장고 공유하기',
+                          style: TextStyle(
+                            fontFamily: 'Pretendard',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
-                SizedBox(height: 8,),
+                SizedBox(height: 10,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextButton(
-                      onPressed: () {},
-                      child: Text('회원정보 수정'),
+                    Container(
+                      width: 138,
+                      height: 30,
+                      child: TextButton(
+                        onPressed: () {},
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        child: Text('회원정보수정',
+                          style: TextStyle(
+                            fontFamily: 'Pretendard',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),),
+                      ),
                     ),
                     SizedBox(width: 8,),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text('로그아웃'),
+                    Container(
+                      width: 138,
+                      height: 30,
+                      child: TextButton(
+                        onPressed: () {},
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        child: Text('로그아웃',
+                          style: TextStyle(
+                            fontFamily: 'Pretendard',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
+                //SizedBox(height: 20,)
               ],
             ),
           ),
