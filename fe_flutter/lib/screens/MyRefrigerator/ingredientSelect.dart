@@ -199,7 +199,7 @@ class _IngredIconButtonState extends State<IngredIconButton> {
               left: 18,
               child:
               Text(
-                'D+${widget.expDate}',
+                'D-${widget.expDate}',
                 style: TextStyle(
                   fontFamily: 'Pretendard',
                   fontSize: 12.0,
