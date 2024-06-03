@@ -58,7 +58,7 @@ class MyRefrigPageState extends State<MyRefrigPage> {
                         ingredients.map((ingredient){
                           return IngredIconButton(
                               buttonText: ingredient['ingredientNames'],
-                              expDate: 16,
+                              expDate: ingredient['ingredientDeadlines'],
                               icon: Image.asset('assets/images/ingredient.png'),
                               onPressed: (isIngredientSelect, isPressed, buttonText) {
                                 if (!isIngredientSelect) {

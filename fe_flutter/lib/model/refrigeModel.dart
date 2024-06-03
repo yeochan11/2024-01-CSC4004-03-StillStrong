@@ -45,6 +45,7 @@ class Refrige {
   String? refrigeName;
   bool? share;
   List<String>? ingredientNames;
+  List<String>? ingredientDeadlines;
 
   Refrige({this.refrigeId, this.refrigeName, this.share});
 
@@ -53,6 +54,7 @@ class Refrige {
     refrigeName = json['refrigeName'];
     share = json['share'];
     ingredientNames = json['ingredientNames'].cast<String>();
+    ingredientDeadlines = json['ingredientDeadlines'].cast<String();
   }
 
   Map<String, dynamic> toJson() {
@@ -61,6 +63,7 @@ class Refrige {
     data['refrigeName'] = this.refrigeName;
     data['share'] = this.share;
     data['ingredientNames'] = this.ingredientNames;
+    data['ingredientDeadlines'] = this.ingredientDeadlines;
     return data;
   }
 }
