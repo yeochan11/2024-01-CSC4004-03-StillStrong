@@ -13,6 +13,7 @@ import 'screens/register/allergy.dart';
 import 'screens/ingredientRegister/ingredientRegister.dart';
 import 'screens/mainPage.dart';
 import 'screens/MyRefrigerator/myRefrig.dart';
+import 'screens/myPage/shareRefrige.dart';
 
 
 
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
           '/BottomMenu': (context) => BottomMenu(),
           //'/IngredReg': (context) => IngredRegPage(),
           '/Mainpage': (context) => MainPage(), //메인페이지 생기면
+          '/ShareRefrige': (context) => ShareRefrigePage(),
           //'/IngredientMoreInformation': (context) => IngredientMoreInformation(),
         },
       ),
