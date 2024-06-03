@@ -284,7 +284,7 @@ class _IngredRegPageState extends State<IngredRegPage> {
                       ingredientName: _ingredNameController.text,
                       ingredientNum: int.parse(_ingredNumController.text),
                       createdDate: _ingredCreateDateController.text,
-                      ingredientDeadLine: _ingredExpDateController.text,
+                      ingredientDeadline: _ingredExpDateController.text,
                       ingredientMemo: _ingredMemoController.text,
                       ingredientPlace: _ingredPlace,
                     );
@@ -293,7 +293,7 @@ class _IngredRegPageState extends State<IngredRegPage> {
                     print('name : ${ingredReg.ingredientName}\n'
                         'num : ${ingredReg.ingredientNum}\n'
                         'createDate : ${ingredReg.createdDate}\n'
-                        'ExpDate : ${ingredReg.ingredientDeadLine}\n'
+                        'ExpDate : ${ingredReg.ingredientDeadline}\n'
                         'memo : ${ingredReg.ingredientMemo}\n'
                         'place : ${ingredReg.ingredientPlace}');
                     ScaffoldMessenger.of(context).showSnackBar(
