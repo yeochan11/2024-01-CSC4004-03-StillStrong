@@ -1,3 +1,4 @@
+import 'package:fe_flutter/screens/myPage/myPageEdit.dart';
 import 'package:flutter/material.dart';
 import 'package:fe_flutter/service/userServer.dart';
 import 'package:fe_flutter/model/userModel.dart';
@@ -327,7 +328,12 @@ class _MyPageState extends State<MyPage> {
                       width: 138,
                       height: 30,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) =>
+                                  MyPageEdit(user: user))
+                          );
+                        },
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
                           shape: RoundedRectangleBorder(

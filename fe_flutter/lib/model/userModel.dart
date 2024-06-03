@@ -52,4 +52,16 @@ class User {
     data['alarm'] = this.alarm;
     return data;
   }
+
+  Map<String, dynamic> toJsonForEdit() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['userNickname'] = userNickname;
+    data['userAge'] = userAge;
+    data['userGender'] = gender;
+    data['userImage'] = userImage;
+    data['alarm'] = alarm;
+    data['secretEmail'] = secretEmail;
+
+    return data;
+  }
 }

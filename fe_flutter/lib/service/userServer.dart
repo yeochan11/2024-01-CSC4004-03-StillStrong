@@ -194,3 +194,22 @@ Future<User> getUserInfo() async {
     throw Exception('Failed to get userinfo: $e');
   }
 }
+
+Future<void> patchUser(User user) async {
+  String uri = 'http://localhost:8080/user/update?userid=${user.userId}';
+  print(uri);
+
+  final request = await http.patch(
+    Uri.parse(uri),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8'
+    },
+    body: jsonEncode(user.toJsonForEdit()),
+  );
+  print('statusCode : ${request.statusCode}');
+  if (request.statusCode == 200) {
+    print('Patch successful');
+  } else {
+    throw Exception('Failed to patch data');
+  }
+}
