@@ -17,6 +17,7 @@ class MyRefrigPageState extends State<MyRefrigPage> {
   int currentRefrigeId = 7;
   List<String> newItems = ["기본 냉장고"]; // 기본값으로 초기화합니다.
   List<String> ingredients = [];
+  List<int> ingredientDeadlines = [];
   List<Refrige> refrigeList = [];
 
   @override
@@ -32,6 +33,9 @@ class MyRefrigPageState extends State<MyRefrigPage> {
         ingredients = refrigeData.refrigeList
             .firstWhere((refrige) => refrige.refrigeId == currentRefrigeId)
             .ingredientNames;
+        ingredientDeadlines = refrigeData.refrigeList
+            .firstWhere((refrige) => refrige.refrigeId == currentRefrigeId)
+            .ingredientDeadlines;
       });
     });
   }
@@ -83,10 +87,10 @@ class MyRefrigPageState extends State<MyRefrigPage> {
                   Wrap(
                     spacing: 4.0,
                     runSpacing: 4.0,
-                    children: ingredients.map<Widget>((ingredient) {
+                    children: List.generate(ingredients.length, (index) {
                       return IngredIconButton(
-                        buttonText: ingredient,
-                        expDate: 16,
+                        buttonText: ingredients[index],
+                        expDate: ingredientDeadlines[index],
                         icon: Image.asset('assets/images/ingredient.png'),
                         onPressed: (isIngredientSelect, isPressed, buttonText) {
                           if (!isIngredientSelect) {

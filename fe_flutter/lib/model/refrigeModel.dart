@@ -27,8 +27,9 @@ class Refrige {
   final String refrigeName;
   final bool share;
   final List<String> ingredientNames;
+  final List<int> ingredientDeadlines;
 
-  Refrige({required this.refrigeId, required this.refrigeName, required this.share, required this.ingredientNames});
+  Refrige({required this.refrigeId, required this.refrigeName, required this.share, required this.ingredientNames, required this.ingredientDeadlines});
 
   factory Refrige.fromJson(Map<String, dynamic> json) {
     return Refrige(
@@ -36,6 +37,7 @@ class Refrige {
       refrigeName: json['refrigeName'],
       share: json['share'],
       ingredientNames: List<String>.from(json['ingredientNames']),
+      ingredientDeadlines: List<int>.from(json['ingredientDeadlines'])
     );
   }
 
@@ -45,6 +47,7 @@ class Refrige {
       'refrigeName': refrigeName,
       'share': share,
       'ingredientNames': ingredientNames,
+      'ingredientDeadlines' : ingredientDeadlines
     };
   }
 }
