@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+import 'package:fe_flutter/provider/userProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:fe_flutter/service/shareRefrigeServer.dart';
-import 'package:fe_flutter/screens/MyRefrigerator/myRefrigeratorDropdown.dart';
 import 'package:flutter/widgets.dart';
 
 
@@ -16,14 +17,23 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
   final _searchNameController = TextEditingController();
   static bool isUserSearched = false;
   String? _selectedRefrige;
+  int? _selectedRefrigeId;
   String? _searchUserImage;
   List<String>? _refrigeNames;
   List<int>? _refrigeIds;
+
 
   // 아래 세 줄은 임시 데이터
   //String _searchUserImage = 'https://lh4.googleusercontent.com/proxy/bQv_EtcQG0meeYE0BAKd83kzayElQTnqCxfAp0BRZef5NFYq9EhZdRlClAg0Myr-FVEdwQL3x4eNtvnRJoU7Suk2SuHLiGc_bhNCF2OrkBQ-Mu78ggZfvdxarEjxnnziV3bHCUq_13FG9uGooD5RX8UBEfAAElV8vr5OI958-5bOVQ';
   //List<String> _refrigeNames = ['냉장고1', '냉장고2'];
   //List<int> _refrigeIds = [1, 2];
+
+
+  @override
+  void dispose() {
+    _searchNameController.dispose();
+    super.dispose();
+  }
 
   @override
   void _updateSelectedRefrige(String? selectedRefrige) {
@@ -34,6 +44,8 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
 
   @override
   Widget build(BuildContext context) {
+    String? userId = Provider.of<UserProvider>(context, listen: false).user?.userId;
+    int _userId = int.parse(userId!);
     return Scaffold(
       appBar: AppBar(
           title: Text('냉장고 공유하기'),
@@ -202,7 +214,12 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
                       width: 211,
                       height: 30,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _selectedRefrigeId = _refrigeNames!.indexOf(_selectedRefrige!) + 1;
+                          print('선택한 냉장고 : $_selectedRefrigeId');
+                          print('user id : $_userId');
+                          sharePost(_selectedRefrigeId!, _userId, _searchName);
+                        },
                         style: TextButton.styleFrom(
                           backgroundColor: const Color(0xffF6A90A),
                           padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
