@@ -64,7 +64,7 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/BottomMenu');
+      Navigator.pushReplacementNamed(context, '/login');
     });
     return Scaffold(
       backgroundColor: const Color(0xffFFC94A),
