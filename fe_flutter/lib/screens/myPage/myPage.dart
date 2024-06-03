@@ -75,7 +75,7 @@ class _MyPageState extends State<MyPage> {
                 SizedBox(height: 30,),
                 Container(
                     width: 343,
-                    height: 67,
+                    height: 68,
                     padding: EdgeInsets.only(left: 16, top: 5),
                     decoration: BoxDecoration(
                         color: const Color(0xffF2F4F7),
@@ -113,7 +113,7 @@ class _MyPageState extends State<MyPage> {
                 SizedBox(height: 16,),
                 Container(
                     width: 343,
-                    height: 67,
+                    height: 68,
                     padding: EdgeInsets.only(left: 16, top: 5),
                     decoration: BoxDecoration(
                         color: const Color(0xffF2F4F7),
@@ -154,7 +154,7 @@ class _MyPageState extends State<MyPage> {
                   children: [
                     Container(
                         width: 167,
-                        height: 67,
+                        height: 68,
                         padding: EdgeInsets.only(left: 16, top: 5),
                         decoration: BoxDecoration(
                           color: const Color(0xffF2F4F7),
@@ -192,7 +192,7 @@ class _MyPageState extends State<MyPage> {
                     SizedBox(width: 9,),
                     Container(
                         width: 167,
-                        height: 67,
+                        height: 68,
                         padding: EdgeInsets.only(left: 16, top: 5),
                         decoration: BoxDecoration(
                             color: const Color(0xffF2F4F7),
@@ -232,7 +232,7 @@ class _MyPageState extends State<MyPage> {
                 SizedBox(height: 16,),
                 Container(
                   width: 343,
-                  height: 67,
+                  height: 68,
                   padding: EdgeInsets.only(left: 16, top: 5),
                   decoration: BoxDecoration(
                       color: const Color(0xffF2F4F7),
