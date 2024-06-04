@@ -14,7 +14,7 @@ Future<Map<String,dynamic>> fetchRecipeMoreInfo(String recipeName) async {
   }
 }
 
-Future<Map<String,dynamic>> postRecipeFeedback(bool satisfied) async {
+Future<void> postRecipeFeedback(bool satisfied) async {
   Map<String,dynamic> data = {};
   data['feedback'] = satisfied;
   print(data);
@@ -28,9 +28,7 @@ Future<Map<String,dynamic>> postRecipeFeedback(bool satisfied) async {
   );
   print(response.statusCode);
   if (response.statusCode == 200 || response.statusCode == 201) {
-    final decodeData = utf8.decode(response.bodyBytes);
-    final Map<String, dynamic> data = json.decode(decodeData);
-    return data;
+    print('Post completed');
   } else {
     throw Exception('Failed to post data');
   }
