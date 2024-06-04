@@ -17,7 +17,7 @@ import 'screens/MyRefrigerator/myRefrig.dart';
 
 
 void main() {
-  runApp(MyRefrigPage());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
