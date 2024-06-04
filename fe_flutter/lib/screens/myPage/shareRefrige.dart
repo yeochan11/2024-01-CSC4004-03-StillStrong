@@ -46,6 +46,7 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
   Widget build(BuildContext context) {
     String? userId = Provider.of<UserProvider>(context, listen: false).user?.userId;
     int _userId = int.parse(userId!);
+
     return Scaffold(
       appBar: AppBar(
           title: Text('냉장고 공유하기'),

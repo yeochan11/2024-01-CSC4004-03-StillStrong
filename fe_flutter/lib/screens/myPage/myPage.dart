@@ -67,7 +67,9 @@ class _MyPageState extends State<MyPage> {
                 // 프로필 사진 표시
                 ClipOval(
                   child: Image.network(
-                    '${user!.userImage}',
+                    user?.userImage?.isNotEmpty == true
+                        ? user!.userImage!
+                        : 'https://lh4.googleusercontent.com/proxy/bQv_EtcQG0meeYE0BAKd83kzayElQTnqCxfAp0BRZef5NFYq9EhZdRlClAg0Myr-FVEdwQL3x4eNtvnRJoU7Suk2SuHLiGc_bhNCF2OrkBQ-Mu78ggZfvdxarEjxnnziV3bHCUq_13FG9uGooD5RX8UBEfAAElV8vr5OI958-5bOVQ',
                     width: 122,
                     height: 122,
                     fit: BoxFit.cover,

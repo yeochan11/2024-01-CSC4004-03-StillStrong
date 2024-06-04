@@ -11,7 +11,8 @@ class User {
   bool? alarm;
 
   User(
-      {this.userId,
+      {
+        this.userId,
         this.secretEmail,
         this.gender,
         this.userNickname,
