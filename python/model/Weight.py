@@ -58,11 +58,11 @@ class RecommendModel:
     
     def updateParameter(self, X, y, recommend_id, feedback):
         if feedback:
-            y[recommend_id] += 0.1
-            self.NeuralNetwork.fit(X, y, verbose=0)
+            y[recommend_id] += 0.05
+            self.NeuralNetwork.fit(X, y, verbose=0, epochs=10)
         else:
-            y[recommend_id] -= 0.1
-            self.NeuralNetwork.fit(X, y, verbose=0)
+            y[recommend_id] -= 0.15
+            self.NeuralNetwork.fit(X, y, verbose=0, epochs=10)
 
     def save(self, path):
         self.NeuralNetwork.save(path)

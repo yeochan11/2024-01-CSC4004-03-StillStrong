@@ -27,5 +27,4 @@ class IBRM:
         if not ingredients:
             return np.zeros(997)
         ingredient_vector = self.__embed_recipe(ingredients)
-        print(np.array(self.embedded_recipes).shape)
         return [self.__cosine_similarity(ingredient_vector, emb_recipe) for emb_recipe in self.embedded_recipes]

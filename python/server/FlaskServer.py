@@ -62,6 +62,7 @@ def provide_feedback():
     global feedback_X, feedback_y, recommend_result, feedback_counter, feedback_batch
 
     if feedback_X is None:
+        print("피드백할 데이터가 없습니다")
         return jsonify({'status': 'success'})
     
     json_data = request.get_json()
