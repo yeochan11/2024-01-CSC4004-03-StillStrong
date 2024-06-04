@@ -31,6 +31,7 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
   Future<int?> getUserId() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     _userId = pref.getInt("userId");
+    print("user id : $_userId");
 
     if (_userId != null) {
       return _userId;
