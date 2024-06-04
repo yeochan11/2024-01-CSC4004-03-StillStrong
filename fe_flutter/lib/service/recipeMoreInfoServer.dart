@@ -27,7 +27,7 @@ Future<Map<String,dynamic>> postRecipeFeedback(bool satisfied) async {
     body: jsonEncode(data),
   );
   print(response.statusCode);
-  if (response.statusCode == 201) {
+  if (response.statusCode == 200 || response.statusCode == 201) {
     final decodeData = utf8.decode(response.bodyBytes);
     final Map<String, dynamic> data = json.decode(decodeData);
     return data;
