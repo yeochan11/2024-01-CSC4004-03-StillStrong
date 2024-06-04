@@ -30,12 +30,9 @@ class MyRefrigPageState extends State<MyRefrigPage> {
         refrigeList = refrigeData.refrigeList;
         newItems = refrigeData.refrigeList.map((refrige) => refrige.refrigeName).toList();
         currentRefrigeId = refrigeData.refrigeList.first.refrigeId;
-        ingredients = refrigeData.refrigeList
-            .firstWhere((refrige) => refrige.refrigeId == currentRefrigeId)
-            .ingredientNames;
-        ingredientDeadlines = refrigeData.refrigeList
-            .firstWhere((refrige) => refrige.refrigeId == currentRefrigeId)
-            .ingredientDeadlines;
+        var currentRefrige = refrigeData.refrigeList.firstWhere((refrige) => refrige.refrigeId == currentRefrigeId);
+        ingredients = currentRefrige.ingredientNames;
+        ingredientDeadlines = currentRefrige.ingredientDeadlines;
       });
     });
   }
@@ -67,9 +64,9 @@ class MyRefrigPageState extends State<MyRefrigPage> {
               onChanged: (String selectedName, int selectedId) {
                 setState(() {
                   currentRefrigeId = selectedId;
-                  ingredients = refrigeList
-                      .firstWhere((refrige) => refrige.refrigeId == currentRefrigeId)
-                      .ingredientNames;
+                  var currentRefrige = refrigeList.firstWhere((refrige) => refrige.refrigeId == currentRefrigeId);
+                  ingredients = currentRefrige.ingredientNames;
+                  ingredientDeadlines = currentRefrige.ingredientDeadlines;
                   // 콘솔에 출력하여 확인
                   print('Selected Refrigerator ID: $currentRefrigeId');
                   print('Selected Refrigerator Name: $selectedName');
@@ -88,9 +85,11 @@ class MyRefrigPageState extends State<MyRefrigPage> {
                     spacing: 4.0,
                     runSpacing: 4.0,
                     children: List.generate(ingredients.length, (index) {
+                      // ingredientDeadlines와 길이가 같지 않은 경우에 대한 안전한 접근
+                      int expDate = index < ingredientDeadlines.length ? ingredientDeadlines[index] : 0;
                       return IngredIconButton(
                         buttonText: ingredients[index],
-                        expDate: ingredientDeadlines[index],
+                        expDate: expDate,
                         icon: Image.asset('assets/images/ingredient.png'),
                         onPressed: (isIngredientSelect, isPressed, buttonText) {
                           if (!isIngredientSelect) {
