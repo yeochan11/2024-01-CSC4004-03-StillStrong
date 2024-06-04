@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
-import 'package:fe_flutter/provider/userProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:fe_flutter/service/shareRefrigeServer.dart';
-import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class ShareRefrigePage extends StatefulWidget {
@@ -17,6 +15,7 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
   final _searchNameController = TextEditingController();
   static bool isUserSearched = false;
   String? _selectedRefrige;
+  int? _userId;
   int? _selectedRefrigeId;
   String? _searchUserImage;
   List<String>? _refrigeNames;
@@ -28,6 +27,17 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
   //List<String> _refrigeNames = ['냉장고1', '냉장고2'];
   //List<int> _refrigeIds = [1, 2];
 
+  // userId 받아오기
+  Future<int?> getUserId() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    _userId = pref.getInt("userId");
+
+    if (_userId != null) {
+      return _userId;
+    } else {
+      return null;
+    }
+  }
 
   @override
   void dispose() {
@@ -44,8 +54,6 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
 
   @override
   Widget build(BuildContext context) {
-    String? userId = Provider.of<UserProvider>(context, listen: false).user?.userId;
-    int _userId = int.parse(userId!);
     return Scaffold(
       appBar: AppBar(
           title: Text('냉장고 공유하기'),
@@ -97,6 +105,7 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
                               _formKey.currentState!.save();
                               _searchName = _searchNameController.text;
                               print(_searchName); // 입력한 닉네임 출력 (확인용)
+                              getUserId();
                               setState(() {
                                 isUserSearched = true;
                               });
@@ -215,10 +224,10 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
                       height: 30,
                       child: TextButton(
                         onPressed: () {
-                          _selectedRefrigeId = _refrigeNames!.indexOf(_selectedRefrige!) + 1;
+                          int _selectedRefrigeId = _refrigeNames!.indexOf(_selectedRefrige!) + 1;
                           print('선택한 냉장고 : $_selectedRefrigeId');
                           print('user id : $_userId');
-                          sharePost(_selectedRefrigeId!, _userId, _searchName);
+                          sharePost(_selectedRefrigeId, _userId!, _searchName);
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: const Color(0xffF6A90A),

@@ -12,7 +12,6 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> {
   //User? user;
   static User user = User(
-    userId: "1",
     secretEmail: 'example.com',
     userNickname: '내꿈은요리사',
     userAge: 22,
@@ -133,7 +132,7 @@ class _MyPageState extends State<MyPage> {
                         TextFormField(
                           readOnly: true,
                           decoration: InputDecoration(
-                            labelText: '${user!.secretEmail}',
+                            labelText: '${user.secretEmail}',
                             labelStyle: TextStyle(
                               fontFamily: 'Pretendard',
                               fontSize: 14,
@@ -174,7 +173,7 @@ class _MyPageState extends State<MyPage> {
                             TextFormField(
                               readOnly: true,
                               decoration: InputDecoration(
-                                labelText: user!.gender ?? false ? '남' : '여',
+                                labelText: user.gender ?? false ? '남' : '여',
                                 labelStyle: TextStyle(
                                   fontFamily: 'Pretendard',
                                   fontSize: 14,
