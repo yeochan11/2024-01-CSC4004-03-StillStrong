@@ -54,7 +54,7 @@ class Refrige {
     refrigeName = json['refrigeName'];
     share = json['share'];
     ingredientNames = json['ingredientNames'].cast<String>();
-    ingredientDeadlines = json['ingredientDeadlines'].cast<String();
+    ingredientDeadlines = json['ingredientDeadlines'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {

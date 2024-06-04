@@ -16,7 +16,7 @@ class MyRefrigPage extends StatefulWidget {
 
 class MyRefrigPageState extends State<MyRefrigPage> {
   List<Map<String, dynamic>> refrigeList = [];
-  int currentRefrigeId = 1;
+  static int currentRefrigeId = 1;
   List<String> newItems = ["기본 냉장고"]; // 기본값으로 초기화합니다.
 
   @override
@@ -26,7 +26,7 @@ class MyRefrigPageState extends State<MyRefrigPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<dynamic> ingredients = refrigeList.map<String>((refrige) => refrige['ingredientNames'] as String).toList();
+    //List<dynamic> ingredients = refrigeList.map<String>((refrige) => refrige['ingredientNames'] as String).toList();
 
     return MaterialApp(
       home: Scaffold(
@@ -47,30 +47,7 @@ class MyRefrigPageState extends State<MyRefrigPage> {
             children: [
               DropdownRefrige(),
               IngredientSearch(),
-              IngredientSelect(),
-              Container(
-                alignment: Alignment.center,
-                width: 340,
-                child: Column(
-                  children: [
-                    Row( //TODO: API로 냉장고 리스트 받아오면 currentRefrigeId를 읽고 재료만큼 버튼이 생성되게 수정 부탁드립니다.
-                      children:
-                        ingredients.map((ingredient){
-                          return IngredIconButton(
-                              buttonText: ingredient['ingredientNames'],
-                              expDate: ingredient['ingredientDeadlines'],
-                              icon: Image.asset('assets/images/ingredient.png'),
-                              onPressed: (isIngredientSelect, isPressed, buttonText) {
-                                if (!isIngredientSelect) {
-                                  showInfo(currentRefrigeId, buttonText);
-                                }
-                              },
-                            );
-                          }).toList(),
-                    )
-                  ],
-                ),
-              )
+              IngredientWidget(),
             ],
           ),
         ),
@@ -208,6 +185,58 @@ class MyRefrigPageState extends State<MyRefrigPage> {
           refrigeId: refrigeId,
           ingredientName: ingredientName,
         ))
+    );
+  }
+}
+
+class IngredientWidget extends StatefulWidget {
+  const IngredientWidget({super.key});
+
+  @override
+  State<IngredientWidget> createState() => _IngredientWidgetState();
+}
+
+class _IngredientWidgetState extends State<IngredientWidget> {
+  bool isIngredientSelect = false;
+
+  void toggleIngredientSelect() {
+    setState(() {
+      isIngredientSelect = !isIngredientSelect;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    List<dynamic> ingredients = refrigeList.map<String>((refrige) => refrige['ingredientNames'] as String).toList();
+
+    return Column(
+      children: [
+        IngredientSelect(onToggle: toggleIngredientSelect,),
+        Container(
+          alignment: Alignment.center,
+          width: 340,
+          child: Column(
+            children: [
+              Row( //TODO: API로 냉장고 리스트 받아오면 currentRefrigeId를 읽고 재료만큼 버튼이 생성되게 수정 부탁드립니다.
+                children: ingredients.map((ingredient){
+                  return IngredIconButton(
+                    buttonText: ingredient['ingredientNames'],
+                    expDate: ingredient['ingredientDeadlines'],
+                    icon: Image.asset('assets/images/ingredient.png'),
+                    onPressed: (isIngredientSelect, isPressed, buttonText) {
+                      if (!isIngredientSelect) {
+                        MyRefrigPageState instance = MyRefrigPageState();
+                        instance.showInfo(MyRefrigPageState.currentRefrigeId, buttonText);
+                      }
+                    },
+                  );
+                }).toList(),
+              )
+            ],
+          ),
+        ),
+        if(isIngredientSelect) RecommendRecipeButton(),
+      ],
     );
   }
 }
