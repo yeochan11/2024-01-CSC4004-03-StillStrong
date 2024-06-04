@@ -35,7 +35,6 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("IdPassword not found with id, : " + user);
 
         return GetUserDetailResponseDto.builder()
-                .userId(String.valueOf(user.getUserId()))
                 .userNickname(user.getUserNickname())
                 .gender(user.getUserGender())
                 .userAge(user.getUserAge())
@@ -65,7 +64,6 @@ public class UserServiceImpl implements UserService {
         IdPassword updatedIdPassword = idPasswordRepository.save(idPassword);
 
         return GetUserDetailResponseDto.builder()
-                .userId(String.valueOf(updatedUser.getUserId()))
                 .userNickname(updatedUser.getUserNickname())
                 .userAge(updatedUser.getUserAge())
                 .gender(updatedUser.getUserGender())
