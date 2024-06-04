@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:fe_flutter/model/searchedUserModel.dart';
 import 'package:flutter/material.dart';
 import 'package:fe_flutter/service/shareRefrigeServer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,11 +16,7 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
   static bool isUserSearched = false;
   String? _selectedRefrige;
   int? _userId;
-  int? _selectedRefrigeId;
-  String? _searchUserImage;
-  List<String>? _refrigeNames;
-  List<int>? _refrigeIds;
-
+  SearchedUser? searched_user;
 
   // 아래 세 줄은 임시 데이터
   //String _searchUserImage = 'https://lh4.googleusercontent.com/proxy/bQv_EtcQG0meeYE0BAKd83kzayElQTnqCxfAp0BRZef5NFYq9EhZdRlClAg0Myr-FVEdwQL3x4eNtvnRJoU7Suk2SuHLiGc_bhNCF2OrkBQ-Mu78ggZfvdxarEjxnnziV3bHCUq_13FG9uGooD5RX8UBEfAAElV8vr5OI958-5bOVQ';
@@ -40,13 +36,26 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
     }
   }
 
+  // 검색한 유저 정보 받아오기
+  @override
+  void getSearchedUserInfo(String searchName) async {
+    try {
+      SearchedUser searchedUserInfo = await searchUser(searchName);
+      print('Searched User : $searchedUserInfo');
+      setState(() {
+        searched_user = searchedUserInfo;
+      });
+    } catch (e) {
+      print('Failed to get searched user info: $e');
+    }
+  }
+
   @override
   void dispose() {
     _searchNameController.dispose();
     super.dispose();
   }
 
-  @override
   void _updateSelectedRefrige(String? selectedRefrige) {
     setState(() {
       _selectedRefrige = selectedRefrige;
@@ -105,20 +114,16 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
                               _searchName = _searchNameController.text;
-                              print(_searchName); // 입력한 닉네임 출력 (확인용)
-                              getUserId();
                               setState(() {
                                 isUserSearched = true;
+                                getSearchedUserInfo(_searchName); // 검색한 유저 정보
                               });
-                              // 검색한 유저 정보 불러오기
-                              searchUser(_searchNameController.text).then((value) {
-                                if (value != null) {
+                                if (searched_user != null) {
                                   setState(() {
-                                    _searchUserImage = value['searchUserImage'];
-                                    _refrigeNames = value['refrigeNames'];
-                                    _refrigeIds = value['refrigeIds'];
-                                    _searchName = _searchNameController.text;
                                     isUserSearched = true;
+                                    print('user image : ${searched_user!.searchedUserImage}');
+                                    print('user refrige name : ${searched_user!.refrigeNames}');
+                                    print('user refrige ids : ${searched_user!.refrigeIds}');
                                   });
                                 } else {
                                   // 유저 정보 없을 경우
@@ -135,7 +140,6 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
                                     ),
                                   );
                                 }
-                              });
                             }
                           },
                           icon: Icon(Icons.search, size: 30,),
@@ -145,22 +149,28 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
                 ),
             ),
           SizedBox(height: 10,),
-          if (isUserSearched)
+          if (isUserSearched && searched_user != null)
               Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(height: 45,),
                     ClipOval(
-                      child: Image.network(
-                        '${_searchUserImage}',
+                      child: searched_user!.searchedUserImage != null // image값이 있을 경우
+                      ? Image.network(
+                          '${searched_user!.searchedUserImage}',
+                          width: 122,
+                          height: 122,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.network('https://w7.pngwing.com/pngs/981/645/png-transparent-default-profile-united-states-computer-icons-desktop-free-high-quality-person-icon-miscellaneous-silhouette-symbol.png',
                         width: 122,
                         height: 122,
                         fit: BoxFit.cover,
                       ),
                     ),
                     SizedBox(height: 16,),
-                    Text('$_searchName',
+                    Text('${_searchName}',
                       style: TextStyle(
                         fontFamily: 'Pretendard',
                         fontSize: 20,
@@ -203,7 +213,7 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
                                 color: Colors.black,
                               ),
                               value: _selectedRefrige,
-                              items: _refrigeNames!.map<DropdownMenuItem<String>>((String value) {
+                              items: (searched_user!.refrigeNames)!.map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem(
                                   value: value,
                                   child: Text(value)
@@ -225,10 +235,10 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
                       height: 30,
                       child: TextButton(
                         onPressed: () {
-                          int _selectedRefrigeId = _refrigeNames!.indexOf(_selectedRefrige!) + 1;
-                          print('선택한 냉장고 : $_selectedRefrigeId');
+                          int selectedRefrigeId = (searched_user!.refrigeNames)!.indexOf(_selectedRefrige!) + 1;
+                          print('선택한 냉장고 : $selectedRefrigeId');
                           print('user id : $_userId');
-                          sharePost(_selectedRefrigeId, _userId!, _searchName);
+                          sharePost(selectedRefrigeId, _userId!, _searchName);
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: const Color(0xffF6A90A),
