@@ -54,7 +54,7 @@ class _MyPageEditState extends State<MyPageEdit> {
               children: [
                 ClipOval(
                   child: Image.network(
-                    '${user!.userImage}',
+                    '${user.userImage}',
                     width: 122,
                     height: 122,
                     fit: BoxFit.cover,
@@ -85,7 +85,7 @@ class _MyPageEditState extends State<MyPageEdit> {
             SizedBox(height: 30,),
             Container(
                 width: 343,
-                height: 67,
+                height: 68,
                 padding: EdgeInsets.only(left: 16, top: 5),
                 decoration: BoxDecoration(
                     color: const Color(0xffF2F4F7),
@@ -107,7 +107,7 @@ class _MyPageEditState extends State<MyPageEdit> {
                         setState(() {
                           user.userNickname = value;
                         });
-                        print(user.userNickname);
+                       // print(user.userNickname);
                       },
                       initialValue: user.userNickname,
                       decoration: InputDecoration(
@@ -130,7 +130,7 @@ class _MyPageEditState extends State<MyPageEdit> {
             SizedBox(height: 16,),
             Container(
                 width: 343,
-                height: 67,
+                height: 68,
                 padding: EdgeInsets.only(left: 16, top: 5),
                 decoration: BoxDecoration(
                     color: const Color(0xffF2F4F7),
@@ -152,7 +152,7 @@ class _MyPageEditState extends State<MyPageEdit> {
                         setState(() {
                           user.secretEmail = value;
                         });
-                        print(user.secretEmail);
+                        //print(user.secretEmail);
                       },
                       initialValue: user.secretEmail,
                       decoration: InputDecoration(
@@ -178,7 +178,7 @@ class _MyPageEditState extends State<MyPageEdit> {
               children: [
                 Container(
                     width: 167,
-                    height: 67,
+                    height: 68,
                     padding: EdgeInsets.only(left: 16, top: 5),
                     decoration: BoxDecoration(
                         color: const Color(0xffF2F4F7),
@@ -219,8 +219,8 @@ class _MyPageEditState extends State<MyPageEdit> {
                                 _isSelectedGender[1] = true;
                                 user.gender = false;
                               }
-                              print(_isSelectedGender);
-                              print(user.gender);
+                              //print(_isSelectedGender);
+                              //print(user.gender);
                             });
                           },
                           children: const [
@@ -236,7 +236,7 @@ class _MyPageEditState extends State<MyPageEdit> {
                 SizedBox(width: 9,),
                 Container(
                     width: 167,
-                    height: 67,
+                    height: 68,
                     padding: EdgeInsets.only(left: 16, top: 5),
                     decoration: BoxDecoration(
                         color: const Color(0xffF2F4F7),
@@ -286,7 +286,7 @@ class _MyPageEditState extends State<MyPageEdit> {
             SizedBox(height: 16,),
             Container(
               width: 343,
-              height: 67,
+              height: 68,
               padding: EdgeInsets.only(left: 16, top: 5),
               decoration: BoxDecoration(
                   color: const Color(0xffF2F4F7),
