@@ -46,6 +46,7 @@ void RecipeFeedback(BuildContext context) {
                     ),
                     child: Container(width: 90, height: 20, alignment: const Alignment(0, 0),
                       child: const Text('좋았어요!',style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),),),
+                const SizedBox(height: 10,),
                 ElevatedButton(
                   onPressed: () async {
                     satisfied = false;
@@ -65,6 +66,7 @@ void RecipeFeedback(BuildContext context) {
                   ),
                   child: Container(width: 90, height: 20, alignment: const Alignment(0, 0),
                     child: const Text('아쉬웠어요..',style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),),),
+                const SizedBox(height: 10,),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
