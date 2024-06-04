@@ -25,7 +25,7 @@ Future<Map<String,dynamic>> postRecipeFromIngredient(int userId, List<String> in
   },
     body: jsonEncode(data),
   );
-  if (response.statusCode == 200) {
+  if (response.statusCode == 200 || response.statusCode == 201) {
     final decodeData = utf8.decode(response.bodyBytes);
     final Map<String, dynamic> data = json.decode(decodeData);
     return data;
