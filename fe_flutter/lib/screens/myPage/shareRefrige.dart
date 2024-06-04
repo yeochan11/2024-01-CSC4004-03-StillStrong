@@ -156,9 +156,11 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
                   children: [
                     SizedBox(height: 45,),
                     ClipOval(
-                      child: searched_user!.searchedUserImage != null // image값이 있을 경우
+                      child: searched_user!.searchedUserImage != "" || searched_user!.searchedUserImage != null// image값이 있을 경우
                       ? Image.network(
-                          '${searched_user!.searchedUserImage}',
+                        searched_user?.searchedUserImage?.isNotEmpty == true
+                            ? searched_user!.searchedUserImage!
+                            : 'https://lh4.googleusercontent.com/proxy/bQv_EtcQG0meeYE0BAKd83kzayElQTnqCxfAp0BRZef5NFYq9EhZdRlClAg0Myr-FVEdwQL3x4eNtvnRJoU7Suk2SuHLiGc_bhNCF2OrkBQ-Mu78ggZfvdxarEjxnnziV3bHCUq_13FG9uGooD5RX8UBEfAAElV8vr5OI958-5bOVQ',
                           width: 122,
                           height: 122,
                           fit: BoxFit.cover,
