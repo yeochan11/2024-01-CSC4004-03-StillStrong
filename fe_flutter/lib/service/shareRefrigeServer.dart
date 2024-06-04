@@ -31,8 +31,8 @@ Future<Map<String, dynamic>> searchUser(String searchName) async {
 
       return {
         'searchUserImage': searchUserImage,
-        'refrigeNames': refrigeNames,
-        'refrigeIds': refrigeIds,
+        'refrigeNames': refrigeNames.cast<List<String>>(),
+        'refrigeIds': refrigeIds.cast<List<int>>(),
       };
 
     } else {
