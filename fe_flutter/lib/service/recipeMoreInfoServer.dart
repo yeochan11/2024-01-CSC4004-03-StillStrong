@@ -18,15 +18,16 @@ Future<Map<String,dynamic>> postRecipeFeedback(bool satisfied) async {
   Map<String,dynamic> data = {};
   data['feedback'] = satisfied;
   print(data);
+  //String uri = 'https://jsonplaceholder.typicode.com/posts/';
   String uri = 'http://localhost:8080/recommend/recipe/feedback';
   final response = await http.post(Uri.parse(uri),
     headers: <String, String>{
-      'Content-Type': 'application/json; charset=utf-8',
+    'Content-Type': 'application/json',
     },
     body: jsonEncode(data),
   );
   print(response.statusCode);
-  if (response.statusCode == 200) {
+  if (response.statusCode == 200 || response.statusCode == 201) {
     final decodeData = utf8.decode(response.bodyBytes);
     final Map<String, dynamic> data = json.decode(decodeData);
     return data;
