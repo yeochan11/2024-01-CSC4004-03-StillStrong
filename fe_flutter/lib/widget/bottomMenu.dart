@@ -1,5 +1,5 @@
 import 'package:fe_flutter/screens/mainPage.dart';
-import 'package:fe_flutter/screens/myPage.dart';
+//import 'package:fe_flutter/screens/myPage/myPage.dart';
 import 'package:fe_flutter/screens/myRefrigerator.dart';
 import 'package:flutter/material.dart';
 import '../screens/MyRefrigerator/myRefrig.dart';
@@ -15,10 +15,10 @@ class BottomMenuState extends State<BottomMenu> {
   int _selectedIndex = 1;
 
   final List<Widget> _navIndex = [ //하단 바에서 선택할 페이지
-    MyRefrigPage(),
+    MyRefrigPage(), // default값
     //MyRefrigerator(),
     MainPage(),
-    MyPage(),
+    //MyPage(),
   ];
 
   void _onNavTapped(int index) {

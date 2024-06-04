@@ -6,4 +6,5 @@ public interface RefrigeService {
     public CreateUpdateRefrigeResponseDto createRefrige(String userId, CreateRefrigeRequestDto createRefrigeRequestDto);
     public CreateUpdateRefrigeResponseDto updateRefrige(int refrigeId, UpdateRefrigeRequestDto updateRefrigeRequestDto);
     public RefrigeWithIngredientsResponseDto getRefrigeWithIngredients(int userId);
+
 }

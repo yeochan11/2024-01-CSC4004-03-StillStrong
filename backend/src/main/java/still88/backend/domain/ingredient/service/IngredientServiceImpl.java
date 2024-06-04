@@ -37,7 +37,11 @@ public class IngredientServiceImpl implements IngredientService {
             LocalDate createdDate = request.getCreatedDate();
             int ingredientNum = request.getIngredientNum();
             String ingredientPlace = request.getIngredientPlace();
-            LocalDate ingredientDeadline = createdDate.plusDays(14);
+            LocalDate ingredientDeadline;
+            if (request.getIngredientDeadline() == null) {
+                ingredientDeadline = createdDate.plusDays(14);
+            }
+            else ingredientDeadline = request.getIngredientDeadline();
             String ingredientMemo = request.getIngredientMemo();
 
             Refrige existingRefrige = refrigeRepository.findByRefrigeListAndIngredient_IngredientName(refrigeList, ingredientName);

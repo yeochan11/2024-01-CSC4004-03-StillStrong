@@ -9,13 +9,12 @@ import lombok.*;
 @Builder
 public class GetUserDetailResponseDto {
 
-    private String userId;
 
     private String userNickname;
 
     private int userAge;
 
-    private Boolean userGender;
+    private Boolean gender;
 
     private String userImage;
 

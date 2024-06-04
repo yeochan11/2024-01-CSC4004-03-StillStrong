@@ -26,16 +26,17 @@ public class UserServiceImpl implements UserService {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public GetUserDetailResponseDto getUserDetail(int userId) {
-        User user = userRepository.findById((long) userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+        User user = userRepository.findUserByUserId(userId);
+        if(user == null)
+            throw new IllegalArgumentException("User not found with id: " + userId);
 
-        IdPassword idPassword = idPasswordRepository.findById((long) userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+        IdPassword idPassword = idPasswordRepository.findIdPasswordByUser(user);
+        if (user == null)
+            throw new IllegalArgumentException("IdPassword not found with id, : " + user);
 
         return GetUserDetailResponseDto.builder()
-                .userId(String.valueOf(user.getUserId()))
                 .userNickname(user.getUserNickname())
-                .userGender(user.getUserGender())
+                .gender(user.getUserGender())
                 .userAge(user.getUserAge())
                 .alarm(user.getAlarm())
                 .userImage(user.getUserImage())
@@ -44,11 +45,13 @@ public class UserServiceImpl implements UserService {
     }
 
     public GetUserDetailResponseDto updateUserDetail(int userId, UpdateUserDetailRequestDto updateUserDetailRequestDto) {
-        User user = userRepository.findById((long) userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+        User user = userRepository.findUserByUserId(userId);
+        if(user == null)
+            throw new IllegalArgumentException("User not found with id: " + userId);
 
-        IdPassword idPassword = idPasswordRepository.findById((long) userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+        IdPassword idPassword = idPasswordRepository.findIdPasswordByUser(user);
+        if (user == null)
+            throw new IllegalArgumentException("IdPassword not found with id, : " + user);
 
         user.updateInfo(updateUserDetailRequestDto.getUserNickname(),
                 updateUserDetailRequestDto.getUserAge(),
@@ -61,10 +64,9 @@ public class UserServiceImpl implements UserService {
         IdPassword updatedIdPassword = idPasswordRepository.save(idPassword);
 
         return GetUserDetailResponseDto.builder()
-                .userId(String.valueOf(updatedUser.getUserId()))
                 .userNickname(updatedUser.getUserNickname())
                 .userAge(updatedUser.getUserAge())
-                .userGender(updatedUser.getUserGender())
+                .gender(updatedUser.getUserGender())
                 .userImage(updatedUser.getUserImage())
                 .alarm(updatedUser.getAlarm())
                 .secretEmail(updatedIdPassword.getSecretEmail())

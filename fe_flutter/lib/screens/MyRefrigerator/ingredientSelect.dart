@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fe_flutter/service/recipeServer.dart';
 import 'package:fe_flutter/model/recipeModel.dart';
+import '../ingredientMoreInfo/ingredientMoreInfo.dart';
+import '../MyRefrigerator/ingredIconButton.dart';
 /*
 class IngredientSelect extends StatefulWidget {
+  final Function onToggle;
   const IngredientSelect({super.key});
 
   @override
@@ -17,40 +20,118 @@ class _IngredientSelectState extends State<IngredientSelect> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        ElevatedButton(
-            onPressed:(){
-              setState(() {
-                isIngredientSelect = !isIngredientSelect;
-                if(!isIngredientSelect){
-                  _ImageCheckBoxState.isChecked = false;
-                }
-              });
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0Xffffbc3b),
+        Container(
+          width: 74,
+          height: 22,
+          child: ElevatedButton(
+              onPressed:(){
+                setState(() {
+                  isIngredientSelect = !isIngredientSelect;
+                });
+                widget.onToggle();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xffffbc3b),
+                padding: EdgeInsets.zero,
+                shadowColor: Colors.transparent,
+              ),
+              child:
+                Text('재료 선택', style: TextStyle(
+                    fontFamily: 'Pretendard',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: isIngredientSelect ? Colors.black : Colors.white
+                    ),
+                ),
             ),
-            child:
-              Text('재료 선택', style: TextStyle(
-                  color: isIngredientSelect ? Colors.black : Colors.white),
-              )
         ),
         if (isIngredientSelect)
-          Row(
+          Column(
             children: [
-              ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0Xffffbc3b),
+              Row(
+                children: [
+                  Container(
+                    width: 74,
+                    height: 22,
+                    child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0Xffffbc3b),
+                          padding: EdgeInsets.zero,
+                          shadowColor: Colors.transparent,
+                        ),
+                        child: Text('전체 취소',
+                          style: TextStyle(
+                              fontFamily: 'Pretendard',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),)
+                    ),
                   ),
-                  child: Text('전체 취소', style: TextStyle(color: Colors.white),)
-              ),
-              ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0Xffffbc3b),
+                  SizedBox(width: 5,),
+                  Container(
+                    width: 74,
+                    height: 22,
+                    child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xffffbc3b),
+                          padding: EdgeInsets.zero,
+                          shadowColor: Colors.transparent,
+                        ),
+                        child: Text('재료 삭제',
+                          style: TextStyle(
+                              fontFamily: 'Pretendard',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),)
+                    ),
                   ),
-                  child: Text('재료 삭제', style: TextStyle(color: Colors.white),)
+                ],
               ),
+              /* Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  width: 142,
+                  height: 45,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xffffbc3b),
+                      padding: EdgeInsets.zero,
+                      shadowColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)
+                        ),
+                      ),
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: '선택한 재료로\n',
+                            style: TextStyle(
+                              fontFamily: 'Pretendard',
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            )
+                          ),
+                          TextSpan(
+                            text: '레시피 추천',
+                            style: TextStyle(
+                              fontFamily: 'Pretendard',
+                              fontSize: 19,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            )
+                          )
+                        ]
+                      ),
+                    )
+                  ),
+                ),
+              ), */
             ],
           ),
       ]
@@ -245,7 +326,7 @@ class _IngredIconButtonState extends State<IngredIconButton> {
               left: 18,
               child:
               Text(
-                'D+${widget.expDate}',
+                'D-${widget.expDate}',
                 style: TextStyle(
                   fontFamily: 'Pretendard',
                   fontSize: 12.0,

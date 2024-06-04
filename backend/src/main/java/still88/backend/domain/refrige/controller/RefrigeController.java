@@ -35,5 +35,5 @@ public class RefrigeController {
         log.info("userId = {}의 냉장고 목록 조회", userId);
         return ResponseEntity.ok(refrigeService.getRefrigeWithIngredients(Integer.parseInt(userId)));
     }
-
+    
 }
