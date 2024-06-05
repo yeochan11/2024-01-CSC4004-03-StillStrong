@@ -150,6 +150,12 @@ class IngredientSelect extends StatefulWidget {
 class _IngredientSelectState extends State<IngredientSelect> {
   static bool isIngredientSelect = false;
 
+  void clearAllSelection(){
+    setState(() {
+      _IngredIconButtonState.buttonStates.updateAll((key, value) => false);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -176,7 +182,9 @@ class _IngredientSelectState extends State<IngredientSelect> {
                 ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        selectedButtons = [];
+                        //TODO : FIX 전체취소
+                        selectedButtons.clear();
+                        clearAllSelection();
                       });
                     },
                     style: ElevatedButton.styleFrom(
@@ -185,7 +193,9 @@ class _IngredientSelectState extends State<IngredientSelect> {
                     child: Text('전체 취소', style: TextStyle(color: Colors.white),)
                 ),
                 ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0Xffffbc3b),
                     ),
@@ -276,7 +286,7 @@ class IngredIconButton extends StatefulWidget {
     required this.buttonText, //재료 이름
     required this.expDate,
     required this.icon,
-    required this.onPressed
+    required this.onPressed,
   });
 
   @override
@@ -286,7 +296,7 @@ class IngredIconButton extends StatefulWidget {
 class _IngredIconButtonState extends State<IngredIconButton> {
   bool isPressed = false;
   bool isIngredientSelect = false;
-  final Map<String, bool> buttonStates = {};
+  static final Map<String, bool> buttonStates = {};
 
   @override
   Widget build(BuildContext context) {
