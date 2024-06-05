@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fe_flutter/model/searchedUserModel.dart';
+import 'package:fe_flutter/model/shareRefrigeModel.dart';
 
 // 사용자 검색
 Future<SearchedUser> searchUser(String searchName) async {
@@ -56,3 +57,25 @@ Future<void> sharePost(int refrigeId, int createUserId, String requestUserNickna
     throw Exception('Error: $e');
   }
 }
+
+// 공유 목록 get
+Future<SharedList?> getSharedList() async {
+  try {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    int? userId = pref.getInt("userId");
+    final response = await http.get(Uri.parse('http://localhost:8080/share/get/shareList?userId=${userId}'));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> json = jsonDecode(response.body);
+      return SharedList.fromJson(json);
+    } else {
+      print('Failed to get shared list: ${response.statusCode}');
+      return null;
+    }
+  } catch (e) {
+    print('Error get shared list: $e');
+    return null;
+  }
+}
+
+
