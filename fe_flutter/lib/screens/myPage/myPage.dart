@@ -1,8 +1,10 @@
-import 'package:fe_flutter/screens/login/login.dart';
+import 'package:fe_flutter/main.dart';
 import 'package:fe_flutter/screens/myPage/myPageEdit.dart';
 import 'package:flutter/material.dart';
 import 'package:fe_flutter/service/userServer.dart';
 import 'package:fe_flutter/model/userModel.dart';
+import 'package:fe_flutter/provider/userProvider.dart';
+import 'package:provider/provider.dart';
 
 class MyPage extends StatefulWidget {
   @override
@@ -358,11 +360,13 @@ class _MyPageState extends State<MyPage> {
                       width: 138,
                       height: 30,
                       child: TextButton(
-                        onPressed: () { Navigator.push(context,
+                        onPressed: () {
+                          logout();
+                          Provider.of<UserProvider>(context, listen: false).clearUser(); // provider 유저 정보 삭제
+                          Navigator.push(context,
                             MaterialPageRoute(builder: (context) =>
-                                LoginPage())
-                            //TODO : logout api 요청 추가하기
-                        );
+                                WelcomePage())
+                            );
                           },
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
