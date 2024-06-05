@@ -202,7 +202,7 @@ class MyRefrigPageState extends State<MyRefrigPage> {
                 },
               ),
               IngredientSearch(),
-              IngredientWidget(),
+              IngredientWidget(showInfo: showInfo,),
             ],
           ),
         ),
@@ -308,7 +308,8 @@ class MyRefrigPageState extends State<MyRefrigPage> {
 }
 
 class IngredientWidget extends StatefulWidget {
-  const IngredientWidget({super.key});
+  final void Function(int, String) showInfo;
+  const IngredientWidget({super.key, required this.showInfo});
 
   @override
   State<IngredientWidget> createState() => _IngredientWidgetState();
@@ -351,8 +352,8 @@ class _IngredientWidgetState extends State<IngredientWidget> {
                     icon: Image.asset('assets/images/ingredient.png'),
                     onPressed: (isIngredientSelect, isPressed, buttonText) {
                       if (!isIngredientSelect) {
-                        MyRefrigPageState instance = MyRefrigPageState();
-                        instance.showInfo(MyRefrigPageState.currentRefrigeId, buttonText);
+                        //MyRefrigPageState instance = MyRefrigPageState();
+                        widget.showInfo(MyRefrigPageState.currentRefrigeId, buttonText);
                       }
                     },
                   );
