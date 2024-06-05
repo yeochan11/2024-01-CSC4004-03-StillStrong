@@ -66,7 +66,8 @@ Future<SharedList?> getSharedList() async {
     final response = await http.get(Uri.parse('http://localhost:8080/share/get/shareList?userId=${userId}'));
 
     if (response.statusCode == 200) {
-      final Map<String, dynamic> json = jsonDecode(response.body);
+      final decodeData = utf8.decode(response.bodyBytes);
+      final Map<String, dynamic> json = jsonDecode(decodeData);
       return SharedList.fromJson(json);
     } else {
       print('Failed to get shared list: ${response.statusCode}');
@@ -117,13 +118,13 @@ Future<void> patchRequest(SharedData data, bool accept) async {
       "accept": accept,
     };
     final response = await http.patch(
-      Uri.parse('http://localhost:8080//share/accept/${refrigeId}'),
+      Uri.parse('http://localhost:8080/share/accept/${refrigeId}'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },
       body: json.encode(requestBody),
     );
-
+    print(response.statusCode);
     if (response.statusCode == 200) {
       print('요청 처리 성공');
     } else {
