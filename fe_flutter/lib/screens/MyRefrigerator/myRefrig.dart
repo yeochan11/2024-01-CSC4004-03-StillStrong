@@ -323,14 +323,14 @@ class _IngredientWidgetState extends State<IngredientWidget> {
     });
   }
 
-  List<String> fatchIngredient() {
+  List<String> fetchIngredient() {
     print("Debug: ingredients: ${MyRefrigPageState.ingredients}");
     return MyRefrigPageState.ingredients;
   }
-  List<String> ingredients = this.fatchIngredient();
-
+  
   @override
   Widget build(BuildContext context) {
+    List<String> ingredients = fetchIngredient();
     return Column(
       children: [
         IngredientSelect(onToggle: toggleIngredientSelect,),
