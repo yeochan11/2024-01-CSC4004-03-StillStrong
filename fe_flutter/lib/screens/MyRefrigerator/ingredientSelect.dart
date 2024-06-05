@@ -175,7 +175,9 @@ class _IngredientSelectState extends State<IngredientSelect> {
               children: [
                 ElevatedButton(
                     onPressed: () {
-                      selectedButtons = [];
+                      setState(() {
+                        selectedButtons = [];
+                      });
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0Xffffbc3b),
@@ -216,10 +218,7 @@ class _RecommendRecipeButtonState extends State<RecommendRecipeButton> {
         height: 45,
         child: ElevatedButton(
             onPressed: () {
-              // 재료기반 레시피 추천 버튼
-              // TODO: 선택한 재료 목록 받아오게 구현하기
-              List<String> ingredients = ['고기', '달걀'];
-              RecommendedRecipe recipe = recommendByIngredient(ingredients) as RecommendedRecipe;
+              RecommendedRecipe recipe = recommendByIngredient(selectedButtons) as RecommendedRecipe;
               // Debug log
               print(recipe.recipeNames);
               print(recipe.recipeMainImages);
