@@ -134,7 +134,7 @@ class _MyPageState extends State<MyPage> {
                         TextFormField(
                           readOnly: true,
                           decoration: InputDecoration(
-                            labelText: '${user!.secretEmail}',
+                            labelText: '${user.secretEmail}',
                             labelStyle: TextStyle(
                               fontFamily: 'Pretendard',
                               fontSize: 14,
@@ -175,7 +175,7 @@ class _MyPageState extends State<MyPage> {
                             TextFormField(
                               readOnly: true,
                               decoration: InputDecoration(
-                                labelText: user!.gender ?? false ? '남' : '여',
+                                labelText: user.gender ?? false ? '남' : '여',
                                 labelStyle: TextStyle(
                                   fontFamily: 'Pretendard',
                                   fontSize: 14,
@@ -280,7 +280,7 @@ class _MyPageState extends State<MyPage> {
                         // TODO : 알러지 이동
                         onPressed: () { Navigator.push(context,
                             MaterialPageRoute(builder: (context) =>
-                                MyPageEdit(user: user!))
+                                MyPageEdit(user: user))
                         );},
                         style: TextButton.styleFrom(
                           backgroundColor: const Color(0xffF6A90A),
@@ -337,7 +337,7 @@ class _MyPageState extends State<MyPage> {
                         onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) =>
-                                  MyPageEdit(user: user!))
+                                  MyPageEdit(user: user))
                           );
                         },
                         style: TextButton.styleFrom(
