@@ -202,7 +202,9 @@ Future<User> getUserInfo() async {
 
 // 유저 정보 수정
 Future<void> patchUser(User user) async {
-  String uri = 'http://localhost:8080/user/update?userId=${user.userId}';
+  final SharedPreferences pref = await SharedPreferences.getInstance();
+  int? userId = pref.getInt("userId");
+  String uri = 'http://localhost:8080/user/update?userId=$userId';
   print(uri);
 
   final request = await http.patch(
