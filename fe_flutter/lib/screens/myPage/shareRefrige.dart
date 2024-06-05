@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:fe_flutter/service/shareRefrigeServer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class ShareRefrigePage extends StatefulWidget {
   @override
   _ShareRefrigePageState createState() => _ShareRefrigePageState();
@@ -17,11 +16,12 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
   String? _selectedRefrige;
   int? _userId;
   SearchedUser? searched_user = SearchedUser();
+  // SearchedUser? searched_user = SearchedUser(
+  //   searchedUserImage: '',
+  //   refrigeNames: ['냉장고1', '냉장고2'],
+  //   refrigeIds: [1,2]
+  // );
 
-  // 아래 세 줄은 임시 데이터
-  //String _searchUserImage = 'https://lh4.googleusercontent.com/proxy/bQv_EtcQG0meeYE0BAKd83kzayElQTnqCxfAp0BRZef5NFYq9EhZdRlClAg0Myr-FVEdwQL3x4eNtvnRJoU7Suk2SuHLiGc_bhNCF2OrkBQ-Mu78ggZfvdxarEjxnnziV3bHCUq_13FG9uGooD5RX8UBEfAAElV8vr5OI958-5bOVQ';
-  //List<String> _refrigeNames = ['냉장고1', '냉장고2'];
-  //List<int> _refrigeIds = [1, 2];
 
   // userId 받아오기
   Future<int?> getUserId() async {
@@ -153,7 +153,7 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
               ),
             ),
             SizedBox(height: 10,),
-            if (isUserSearched && searched_user != null)
+            (isUserSearched && searched_user != null) ?
               Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -268,7 +268,9 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
                       width: 211,
                       height: 30,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/SharedList');
+                        },
                         style: TextButton.styleFrom(
                           backgroundColor: const Color(0xffF6A90A),
                           padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
@@ -288,7 +290,36 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
                     ),
                   ],
                 ),
-              ),
+              )
+            : Column(
+              children: [
+                SizedBox(height: 508,),
+                Container(
+                      width: 211,
+                      height: 30,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/SharedList');
+                        },
+                        style: TextButton.styleFrom(
+                          backgroundColor: const Color(0xffF6A90A),
+                          padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        child: Text('공유 요청 보기',
+                          style: TextStyle(
+                            fontFamily: 'Pretendard',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+              ],
+            ),
           ],
         ),
       ),
