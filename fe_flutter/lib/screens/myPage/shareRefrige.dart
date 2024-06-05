@@ -1,6 +1,7 @@
 import 'package:fe_flutter/model/searchedUserModel.dart';
 import 'package:flutter/material.dart';
 import 'package:fe_flutter/service/shareRefrigeServer.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ShareRefrigePage extends StatefulWidget {
@@ -27,7 +28,7 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
   Future<int?> getUserId() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     _userId = pref.getInt("userId");
-    print("user id : $_userId");
+    print("get user id : $_userId");
 
     if (_userId != null) {
       return _userId;
@@ -40,6 +41,7 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
   @override
   void getSearchedUserInfo(String searchName) async {
     try {
+      getUserId();
       SearchedUser searchedUserInfo = await searchUser(searchName);
       if (searchedUserInfo.searchedUserImage != null)
         setState(() {
