@@ -8,7 +8,8 @@ import lombok.*;
 @Builder
 public class ShareRefrigeInfo {
     private int refrigeId;
-    private String userNickname;
+    private String createUserNickname;
+    private String requestUserNickname;
     private String refrigeName;
     private boolean status;
 }
