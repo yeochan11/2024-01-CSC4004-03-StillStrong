@@ -78,4 +78,58 @@ Future<SharedList?> getSharedList() async {
   }
 }
 
+// 요청 취소
+Future<void> cancelShare(SharedData data) async {
+  try {
+    int refrigeId = data.refrigeId;
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    int? userId = pref.getInt("userId");
+    Map<String, dynamic> requestBody = {
+      "createUserId": userId,
+      "requestUserNickname": data.requestUserNickname,
+    };
+    http.Response response = await http.delete(
+      Uri.parse('http://localhost:8080/share/cancel/${refrigeId}'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(requestBody),
+    );
 
+    if (response.statusCode == 200) {
+      print("요청 취소 성공");
+    } else {
+      print("요청 취소 실패 : ${response.statusCode}");
+    }
+  } catch (e) {
+    print('Error : $e');
+  }
+}
+
+// 요청 수락 및 거절
+Future<void> patchRequest(SharedData data, bool accept) async {
+  try {
+    int refrigeId = data.refrigeId;
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    int? userId = pref.getInt("userId");
+    Map<String, dynamic> requestBody = {
+      "requestUserId": userId,
+      "accept": accept,
+    };
+    final response = await http.patch(
+      Uri.parse('http://localhost:8080//share/accept/${refrigeId}'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      body: json.encode(requestBody),
+    );
+
+    if (response.statusCode == 200) {
+      print('요청 처리 성공');
+    } else {
+      print('요청 처리 실패: ${response.reasonPhrase}');
+    }
+  } catch (e) {
+    print('error: $e');
+  }
+}

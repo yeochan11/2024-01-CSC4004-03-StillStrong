@@ -19,14 +19,14 @@ class SharedList {
 }
 
 class SharedData {
-  int shareId;
+  int refrigeId;
   String createUserNickname;
   String requestUserNickname;
   String refrigeName;
   bool status;
 
   SharedData({
-    required this.shareId,
+    required this.refrigeId,
     required this.createUserNickname,
     required this.requestUserNickname,
     required this.refrigeName,
@@ -35,7 +35,7 @@ class SharedData {
 
   factory SharedData.fromJson(Map<String, dynamic> json) {
     return SharedData(
-      shareId: json['shareId'],
+      refrigeId: json['refrigeId'],
       createUserNickname: json['createUserNickname'],
       requestUserNickname: json['requestUserNickname'],
       refrigeName: json['refrigeName'],

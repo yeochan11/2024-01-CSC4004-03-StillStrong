@@ -13,32 +13,40 @@ class _SharedListPageState extends State<SharedListPage> {
   // SharedList sharedList = SharedList(
   //   pendingRequests: [
   //     SharedData(
-  //       shareId: 2,
-  //       createUserNickname: "유저1",
-  //       requestUserNickname: "유저3",
-  //       refrigeName: "기본냉장고1",
+  //       refrigeId: 2,
+  //       createUserNickname: "나",
+  //       requestUserNickname: "다른 유저",
+  //       refrigeName: "요청한 냉장고",
   //       status: false,
   //     ),
   //   ],
   //   receivedRequests: [
   //     SharedData(
-  //       shareId: 4,
-  //       createUserNickname: "유저2",
-  //       requestUserNickname: "유저1",
-  //       refrigeName: "기본냉장고2",
+  //       refrigeId: 4,
+  //       createUserNickname: "나",
+  //       requestUserNickname: "다른 유저",
+  //       refrigeName: "요청받은 냉장고",
+  //       status: false,
+  //     ),
+  //     SharedData(
+  //       refrigeId: 9,
+  //       createUserNickname: "나",
+  //       requestUserNickname: "다른 유저",
+  //       refrigeName: "거절할 냉장고",
   //       status: false,
   //     ),
   //   ],
   //   acceptedRequests: [
   //     SharedData(
-  //       shareId: 3,
-  //       createUserNickname: "유저1",
-  //       requestUserNickname: "유저2",
-  //       refrigeName: "기본냉장고1",
+  //       refrigeId: 3,
+  //       createUserNickname: "나",
+  //       requestUserNickname: "다른 유저",
+  //       refrigeName: "공유 중 냉장고",
   //       status: true,
   //     ),
   //   ],
   // );
+  bool isCanceled = false;
 
   // 공유 목록 get
   @override
@@ -87,15 +95,17 @@ class _SharedListPageState extends State<SharedListPage> {
 
   Widget _widgetForSharedId (SharedList sharedList) {
     List<Widget> widgets = [];
-    if (sharedList.pendingRequests.isNotEmpty) {
-      widgets.add(_pendingRequests(sharedList.pendingRequests.first));
+
+    for (var request in sharedList.pendingRequests) {
+      widgets.add(_pendingRequests(request));
     }
-    if (sharedList.receivedRequests.isNotEmpty) {
-      widgets.add(_receivedRequests(sharedList.receivedRequests.first));
+    for (var request in sharedList.receivedRequests) {
+      widgets.add(_receivedRequests(request));
     }
-    if (sharedList.acceptedRequests.isNotEmpty) {
-      widgets.add(_acceptedRequests(sharedList.acceptedRequests.first));
+    for (var request in sharedList.acceptedRequests) {
+      widgets.add(_acceptedRequests(request));
     }
+
     if (widgets.isNotEmpty) {
       return Column(children: widgets);
     } else {
@@ -111,7 +121,7 @@ class _SharedListPageState extends State<SharedListPage> {
   }
 
   Widget _pendingRequests(SharedData data) {
-    return Padding(
+    return isCanceled ? SizedBox() : Padding(
       padding: const EdgeInsets.only(bottom: 13),
       child: Container(
         width: 343,
@@ -127,7 +137,7 @@ class _SharedListPageState extends State<SharedListPage> {
             RichText(
               text: TextSpan(
                   children: [
-                    TextSpan(text: '${sharedList!.pendingRequests[0].requestUserNickname}',
+                    TextSpan(text: '${data.requestUserNickname}',
                         style: TextStyle(
                           fontFamily: 'Pretendard',
                           fontSize: 14,
@@ -146,7 +156,7 @@ class _SharedListPageState extends State<SharedListPage> {
                   ]
               ),
             ),
-            Text('요청한 냉장고 : ${sharedList!.pendingRequests[0].refrigeName}',
+            Text('요청한 냉장고 : ${data.refrigeName}',
               textAlign: TextAlign.start,
               style: TextStyle(
                 fontFamily: 'Pretendard',
@@ -163,7 +173,28 @@ class _SharedListPageState extends State<SharedListPage> {
                   width: 67,
                   height: 25,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      cancelShare(data).then((_) {
+                        setState(() {
+                          isCanceled = true;
+                        });
+                      });
+                      // setState(() {
+                      //   isCanceled = true;
+                      // });
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: const Color(0xffF6A90A),
+                          content: Text('공유 요청이 취소되었습니다.',
+                            style: TextStyle(
+                              fontFamily: 'Pretendard',
+                              fontSize: 13.0,
+                            ),
+                          ),
+                          duration: Duration(milliseconds: 1000),
+                        ),
+                      );
+                    },
                     style: TextButton.styleFrom(
                       backgroundColor: const Color(0xffF6A90A),
                       padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
@@ -206,7 +237,7 @@ class _SharedListPageState extends State<SharedListPage> {
             RichText(
               text: TextSpan(
                   children: [
-                    TextSpan(text: '${sharedList!.receivedRequests[0].requestUserNickname}',
+                    TextSpan(text: '${data.requestUserNickname}',
                         style: TextStyle(
                           fontFamily: 'Pretendard',
                           fontSize: 14,
@@ -225,7 +256,7 @@ class _SharedListPageState extends State<SharedListPage> {
                   ]
               ),
             ),
-            Text('요청받은 냉장고 : ${sharedList!.receivedRequests[0].refrigeName}',
+            Text('요청받은 냉장고 : ${data.refrigeName}',
               textAlign: TextAlign.start,
               style: TextStyle(
                 fontFamily: 'Pretendard',
@@ -242,7 +273,14 @@ class _SharedListPageState extends State<SharedListPage> {
                   width: 67,
                   height: 25,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                        patchRequest(data, true).then((_) {
+                          setState(() {
+                            sharedList!.acceptedRequests.add(sharedList!.receivedRequests[0]);
+                            sharedList!.receivedRequests.removeAt(0);
+                          });
+                        });
+                    },
                     style: TextButton.styleFrom(
                       backgroundColor: const Color(0xffF6A90A),
                       padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
@@ -265,7 +303,13 @@ class _SharedListPageState extends State<SharedListPage> {
                   width: 67,
                   height: 25,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                        patchRequest(data, false).then((_) {
+                          setState(() {
+                            sharedList!.receivedRequests.removeAt(0);
+                          });
+                        });
+                    },
                     style: TextButton.styleFrom(
                       backgroundColor: const Color(0xffF6A90A),
                       padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
@@ -308,7 +352,7 @@ class _SharedListPageState extends State<SharedListPage> {
             RichText(
               text: TextSpan(
                   children: [
-                    TextSpan(text: '${sharedList!.acceptedRequests[0].requestUserNickname}',
+                    TextSpan(text: '${data.requestUserNickname}',
                         style: TextStyle(
                           fontFamily: 'Pretendard',
                           fontSize: 14,
@@ -327,7 +371,7 @@ class _SharedListPageState extends State<SharedListPage> {
                   ]
               ),
             ),
-            Text('공유된 냉장고 : ${sharedList!.acceptedRequests[0].refrigeName}',
+            Text('공유된 냉장고 : ${data.refrigeName}',
               textAlign: TextAlign.start,
               style: TextStyle(
                 fontFamily: 'Pretendard',
