@@ -277,11 +277,9 @@ class _MyPageState extends State<MyPage> {
                       width: 138,
                       height: 30,
                       child: TextButton(
-                        // TODO : 알러지 이동
-                        onPressed: () { Navigator.push(context,
-                            MaterialPageRoute(builder: (context) =>
-                                MyPageEdit(user: user))
-                        );},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/allergy');
+                        },
                         style: TextButton.styleFrom(
                           backgroundColor: const Color(0xffF6A90A),
                           padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
