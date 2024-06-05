@@ -88,7 +88,7 @@ public class ShareServiceImpl implements ShareService {
         List<ShareRefrigeInfo> pendingRequests = shareRefrigeRepository.findByCreateUserIdAndStatus(user.get(), false)
                 .stream()
                 .map(shareRefrige -> ShareRefrigeInfo.builder()
-                        .shareId((long) shareRefrige.getShareId())
+                        .refrigeId(shareRefrige.getRefrigeList().getRefrigeId())
                         .userNickname(shareRefrige.getRequestUserId().getUserNickname())
                         .refrigeName(shareRefrige.getRefrigeList().getRefrigeName())
                         .status(shareRefrige.isStatus())
@@ -97,7 +97,7 @@ public class ShareServiceImpl implements ShareService {
         List<ShareRefrigeInfo> receivedRequests = shareRefrigeRepository.findByRequestUserIdAndStatus(Optional.of(user.get()), false)
                 .stream()
                 .map(shareRefrige -> ShareRefrigeInfo.builder()
-                        .shareId((long) shareRefrige.getShareId())
+                        .refrigeId(shareRefrige.getRefrigeList().getRefrigeId())
                         .userNickname(shareRefrige.getCreateUserId().getUserNickname())
                         .refrigeName(shareRefrige.getRefrigeList().getRefrigeName())
                         .status(shareRefrige.isStatus())
@@ -107,7 +107,7 @@ public class ShareServiceImpl implements ShareService {
         List<ShareRefrigeInfo> acceptedRequests = shareRefrigeRepository.findByCreateUserIdAndStatusOrRequestUserIdAndStatus(user.get(), true, user.get(), true)
                 .stream()
                 .map(shareRefrige -> ShareRefrigeInfo.builder()
-                        .shareId((long) shareRefrige.getShareId())
+                        .refrigeId(shareRefrige.getRefrigeList().getRefrigeId())
                         // create와 request 중 현재 로그인한 사용자의 닉네임과 다른 닉네임 가져오기
                         .userNickname(shareRefrige.getCreateUserId().getUserNickname().equals(userNickname) ? shareRefrige.getRequestUserId().getUserNickname() : shareRefrige.getCreateUserId().getUserNickname())
                         .refrigeName(shareRefrige.getRefrigeList().getRefrigeName())
@@ -148,11 +148,7 @@ public class ShareServiceImpl implements ShareService {
         List<RefrigeList> userRefrige = refrigeListRepository.findByUser(user);
 
         if (searchedUser == null)
-            return SearchUserResponseDTO.builder()
-                    .searchedUserImage(null)
-                    .refrigeNames(null)
-                    .refrigeIds(null)
-                    .build();
+            throw new IllegalArgumentException("유저를 찾을 수 없습니다");
 
         for (RefrigeList refrigeList : userRefrige) {
             refrigeNames.add(refrigeList.getRefrigeName());

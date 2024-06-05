@@ -7,8 +7,9 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class ShareRefrigeInfo {
-    private Long shareId;
+    private int refrigeId;
     private String userNickname;
     private String refrigeName;
     private boolean status;
 }
+

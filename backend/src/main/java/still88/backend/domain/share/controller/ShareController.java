@@ -43,8 +43,8 @@ public class ShareController {
 
     // 냉장고 공유 요청 현황 조회
     @GetMapping("/get/shareList")
-    public ResponseEntity<?> getShareList(@RequestBody int userid) {
-        GetShareListResponseDto getShareListResponseDto = shareService.getShareList(userid);
+    public ResponseEntity<?> getShareList(@RequestParam int userId) {
+        GetShareListResponseDto getShareListResponseDto = shareService.getShareList(userId);
         log.info("refrigeId = {}로 초대 완료");
         return ResponseEntity.ok(getShareListResponseDto);
     }
@@ -70,3 +70,4 @@ public class ShareController {
         }
     }
 }
+
