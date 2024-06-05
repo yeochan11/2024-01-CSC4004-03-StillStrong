@@ -1,6 +1,7 @@
 package still88.backend.domain.share.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import still88.backend.dto.share.*;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class ShareServiceImpl implements ShareService {
     private final ShareRefrigeRepository shareRefrigeRepository;
     private final UserRepository userRepository;
@@ -146,9 +148,14 @@ public class ShareServiceImpl implements ShareService {
         User searchedUser = userRepository.findUserByUserNickname(userName);
         User user = userRepository.findUserByUserId(userID);
         List<RefrigeList> userRefrige = refrigeListRepository.findByUser(user);
+        log.info("searchedUser = {}", searchedUser);
 
         if (searchedUser == null)
-            throw new IllegalArgumentException("유저를 찾을 수 없습니다");
+            return SearchUserResponseDTO.builder()
+                    .searchedUserImage(null)
+                    .refrigeNames(null)
+                    .refrigeIds(null)
+                    .build();
 
         for (RefrigeList refrigeList : userRefrige) {
             refrigeNames.add(refrigeList.getRefrigeName());
