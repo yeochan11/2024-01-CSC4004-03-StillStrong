@@ -3,16 +3,14 @@ package still88.backend.domain.refrige.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import still88.backend.dto.refrige.*;
-import still88.backend.entity.Refrige;
-import still88.backend.entity.RefrigeList;
-import still88.backend.entity.ShareRefrige;
-import still88.backend.entity.User;
+import still88.backend.entity.*;
 import still88.backend.repository.*;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -106,8 +104,19 @@ public class RefrigeServiceImpl implements RefrigeService {
 
     private List<String> getIngredientNames(int refrigeId) {
         List<Integer> ingredientIds = refrigeRepository.findIngredientIdsByRefrigeId(refrigeId);
-        return ingredientRepository.findIngredientNamesByIngredientIds(ingredientIds);
+        List<Ingredient> ingredients = ingredientRepository.findIngredientsByIds(ingredientIds);
+
+        Map<Integer, String> ingredientIdNameMap = ingredients.stream()
+                .collect(Collectors.toMap(
+                        Ingredient::getIngredientId,
+                        Ingredient::getIngredientName
+                ));
+
+        return ingredientIds.stream()
+                .map(ingredientIdNameMap::get)
+                .collect(Collectors.toList());
     }
+
 
     private List<Integer> getIngredientDeadlines(int refrigeId) {
         List<Refrige> ingredients = refrigeRepository.findByRefrigeList_RefrigeId(refrigeId);

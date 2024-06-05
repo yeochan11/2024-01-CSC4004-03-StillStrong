@@ -21,6 +21,7 @@ Future<List<String>> getIngredientList() async {
     throw Exception('Failed to get ingredient list: $e');
   }
 }
+
 /// 재료 등록
 Future<String> registerIngredient(IngredReg ingredReg, int refrigeId) async {
   Map<String, dynamic> jsonData = ingredReg.toJson();

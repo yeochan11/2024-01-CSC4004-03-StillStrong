@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:fe_flutter/model/recipeMoreInfoModel.dart';
+import 'package:fe_flutter/screens/recipeSearch/recipeFeedback.dart';
 import 'package:fe_flutter/service/recipeSearchServer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

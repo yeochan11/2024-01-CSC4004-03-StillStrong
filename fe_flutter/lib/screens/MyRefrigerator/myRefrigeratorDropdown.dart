@@ -134,7 +134,7 @@ class DropdownRefrigeState extends State<DropdownRefrige> {
                   refrigeName: _newRefrigeController.text,
                   refrigeId: 0, // 임시 ID, 실제로는 서버에서 생성된 ID를 사용해야 합니다.
                   share: false,
-                  ingredientNames: [],
+                  ingredientNames: [], ingredientDeadlines: [],
                 );
                 createRefrige(refrige);
                 Navigator.of(context).pop();
@@ -172,7 +172,7 @@ class DropdownRefrigeState extends State<DropdownRefrige> {
                   refrigeName: _textFieldController.text,
                   refrigeId: selectedRefrigeId, // 실제 ID를 사용
                   share: false,
-                  ingredientNames: [],
+                  ingredientNames: [], ingredientDeadlines: [],
                 );
                 updateRefrigeName(refrige, selectedRefrigeId);
                 setState(() {
