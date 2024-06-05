@@ -323,6 +323,12 @@ class _IngredientWidgetState extends State<IngredientWidget> {
     });
   }
 
+  List<String> fatchIngredient() {
+    print("Debug: ingredients: ${MyRefrigPageState.ingredients}");
+    return MyRefrigPageState.ingredients;
+  }
+  List<String> ingredients = this.fatchIngredient();
+
   @override
   Widget build(BuildContext context) {
     return Column(
