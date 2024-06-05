@@ -41,16 +41,10 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
   void getSearchedUserInfo(String searchName) async {
     try {
       SearchedUser searchedUserInfo = await searchUser(searchName);
-      if (searchedUserInfo.searchedUserImage != null)
-        setState(() {
-          searched_user = searchedUserInfo;
-        });
-      else
-        setState(() {
-          searched_user!.searchedUserImage = null;
-          searched_user!.refrigeIds = [];
-          searched_user!.refrigeNames = [];
-        });
+      print('Searched User : $searchedUserInfo');
+      setState(() {
+        searched_user = searchedUserInfo;
+      });
     } catch (e) {
       print('Failed to get searched user info: $e');
     }
@@ -72,16 +66,16 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('냉장고 공유하기'),
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.chevron_left,
-            color: Colors.white,
-            size: 30,),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+          title: Text('냉장고 공유하기'),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.chevron_left,
+              color: Colors.white,
+              size: 30,),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
       ),
       body: Center(
         child: Column(
@@ -92,65 +86,67 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
               height: 56,
               padding: EdgeInsets.only(left: 16, bottom: 5),
               decoration: BoxDecoration(
-                  color: const Color(0xffF2F4F7),
-                  borderRadius: BorderRadius.circular(15)
+                color: const Color(0xffF2F4F7),
+                borderRadius: BorderRadius.circular(15)
               ),
-              child: Form(
-                key: _formKey,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: _searchNameController,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(vertical: 15),
-                          border: InputBorder.none,
-                          floatingLabelBehavior: FloatingLabelBehavior.never,
-                          labelText: '닉네임 검색',
-                          labelStyle: TextStyle(
-                            fontFamily: 'Pretendard',
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w500,
+                child: Form(
+                  key: _formKey,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: _searchNameController,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(vertical: 15),
+                            border: InputBorder.none,
+                            floatingLabelBehavior: FloatingLabelBehavior.never,
+                            labelText: '닉네임 검색',
+                            labelStyle: TextStyle(
+                              fontFamily: 'Pretendard',
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          _searchName = _searchNameController.text;
-
-                          getSearchedUserInfo(_searchName); // 검색한 유저 정보
-                          setState(() {
-                            isUserSearched = false;
-                          });
-                          if (searched_user!.searchedUserImage != null) {
-                            setState(() {
-                              isUserSearched = true;
-                            });
-                          } else {
-                            // 유저 정보 없을 경우
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                backgroundColor: const Color(0xffF6A90A),
-                                content: Text('일치하는 사용자를 찾을 수 없습니다.',
-                                  style: TextStyle(
-                                    fontFamily: 'Pretendard',
-                                    fontSize: 13.0,
-                                  ),
-                                ),
-                                duration: Duration(milliseconds: 1000),
-                              ),
-                            );
-                          }
-                        }
-                      },
-                      icon: Icon(Icons.search, size: 30,),
-                    ),
-                  ],
+                      IconButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+                              _searchName = _searchNameController.text;
+                              setState(() {
+                                isUserSearched = true;
+                                getSearchedUserInfo(_searchName); // 검색한 유저 정보
+                              });
+                                if (searched_user != null) {
+                                  setState(() {
+                                    isUserSearched = true;
+                                    print('user image : ${searched_user!.searchedUserImage}');
+                                    print('user refrige name : ${searched_user!.refrigeNames}');
+                                    print('user refrige ids : ${searched_user!.refrigeIds}');
+                                  });
+                                } else {
+                                  // 유저 정보 없을 경우
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      backgroundColor: const Color(0xffF6A90A),
+                                      content: Text('일치하는 사용자를 찾을 수 없습니다.',
+                                        style: TextStyle(
+                                          fontFamily: 'Pretendard',
+                                          fontSize: 13.0,
+                                        ),
+                                      ),
+                                      duration: Duration(milliseconds: 1000),
+                                    ),
+                                  );
+                                }
+                            }
+                          },
+                          icon: Icon(Icons.search, size: 30,),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
             ),
             SizedBox(height: 10,),
             (isUserSearched && searched_user != null) ?
@@ -160,16 +156,16 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
                   children: [
                     SizedBox(height: 45,),
                     ClipOval(
-                      child: searched_user!.searchedUserImage != "" && searched_user!.searchedUserImage != null// image값이 있을 경우
-                          ? Image.network(
+                      child: searched_user!.searchedUserImage != "" || searched_user!.searchedUserImage != null// image값이 있을 경우
+                      ? Image.network(
                         searched_user?.searchedUserImage?.isNotEmpty == true
                             ? searched_user!.searchedUserImage!
                             : 'https://lh4.googleusercontent.com/proxy/bQv_EtcQG0meeYE0BAKd83kzayElQTnqCxfAp0BRZef5NFYq9EhZdRlClAg0Myr-FVEdwQL3x4eNtvnRJoU7Suk2SuHLiGc_bhNCF2OrkBQ-Mu78ggZfvdxarEjxnnziV3bHCUq_13FG9uGooD5RX8UBEfAAElV8vr5OI958-5bOVQ',
-                        width: 122,
-                        height: 122,
-                        fit: BoxFit.cover,
-                      )
-                          : Image.network('https://w7.pngwing.com/pngs/981/645/png-transparent-default-profile-united-states-computer-icons-desktop-free-high-quality-person-icon-miscellaneous-silhouette-symbol.png',
+                          width: 122,
+                          height: 122,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.network('https://w7.pngwing.com/pngs/981/645/png-transparent-default-profile-united-states-computer-icons-desktop-free-high-quality-person-icon-miscellaneous-silhouette-symbol.png',
                         width: 122,
                         height: 122,
                         fit: BoxFit.cover,
@@ -221,8 +217,8 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
                               value: _selectedRefrige,
                               items: (searched_user!.refrigeNames)!.map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem(
-                                    value: value,
-                                    child: Text(value)
+                                  value: value,
+                                  child: Text(value)
                                 );
                               }).toList(),
                               onChanged: _updateSelectedRefrige,
