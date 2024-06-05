@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:fe_flutter/model/recipeMoreInfoModel.dart';
+import 'package:fe_flutter/screens/recipeSearch/recipeFeedback.dart';
 import 'package:fe_flutter/service/recipeSearchServer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +25,8 @@ class _RecipeMoreInfoState extends State<RecipeMoreInfo> {
         title: const Text('레시피 추천'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white,),
-          onPressed: () {
-            Navigator.pop(context);
+          onPressed: (){
+            RecipeFeedback(context);
           },),
       ),
       body: Center(
