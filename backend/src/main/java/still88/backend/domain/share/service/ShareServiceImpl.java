@@ -148,7 +148,11 @@ public class ShareServiceImpl implements ShareService {
         List<RefrigeList> userRefrige = refrigeListRepository.findByUser(user);
 
         if (searchedUser == null)
-            throw new IllegalArgumentException("유저를 찾을 수 없습니다");
+            return SearchUserResponseDTO.builder()
+                    .searchedUserImage(null)
+                    .refrigeNames(null)
+                    .refrigeIds(null)
+                    .build();
 
         for (RefrigeList refrigeList : userRefrige) {
             refrigeNames.add(refrigeList.getRefrigeName());
