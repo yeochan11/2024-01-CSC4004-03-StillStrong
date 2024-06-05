@@ -333,7 +333,6 @@ class _IngredientWidgetState extends State<IngredientWidget> {
           width: 340,
           child: Column(
             children: [
-              Text("ㅁㅇㄻㅇㄴㄹ"),
               Wrap(
                 spacing: 4.0,
                 runSpacing: 4.0,
