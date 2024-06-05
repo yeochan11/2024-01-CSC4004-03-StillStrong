@@ -20,7 +20,7 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
   // SearchedUser? searched_user = SearchedUser(
   //   searchedUserImage: 'https://lh4.googleusercontent.com/proxy/bQv_EtcQG0meeYE0BAKd83kzayElQTnqCxfAp0BRZef5NFYq9EhZdRlClAg0Myr-FVEdwQL3x4eNtvnRJoU7Suk2SuHLiGc_bhNCF2OrkBQ-Mu78ggZfvdxarEjxnnziV3bHCUq_13FG9uGooD5RX8UBEfAAElV8vr5OI958-5bOVQ',
   //   refrigeNames: ['냉장고1', '냉장고2'],
-  //   refrigeIds: [3,4]
+  //   refrigeIds: [1,2]
   // );
 
 
@@ -234,17 +234,16 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
                             padding: EdgeInsets.only(top: 7),
                           ),
                         ),
-                        ],
-                      ),
+                      ],
                     ),
+                  ),
                   SizedBox(height: 169,),
                   Container(
                     width: 211,
                     height: 30,
                     child: TextButton(
                       onPressed: () {
-                        int selectedRefrigeIndex = (searched_user!.refrigeNames)!.indexOf(_selectedRefrige!);
-                        int selectedRefrigeId = searched_user!.refrigeIds![selectedRefrigeIndex];
+                        int selectedRefrigeId = (searched_user!.refrigeNames)!.indexOf(_selectedRefrige!) + 1;
                         print('선택한 냉장고 : $selectedRefrigeId');
                         print('user id : $_userId');
                         sharePost(selectedRefrigeId, _userId!, _searchName);

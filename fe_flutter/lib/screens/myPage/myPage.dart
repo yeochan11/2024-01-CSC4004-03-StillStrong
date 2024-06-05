@@ -12,15 +12,15 @@ class MyPage extends StatefulWidget {
   }
 
 class _MyPageState extends State<MyPage> {
-  User? user;
-  // static User user = User(
-  //   secretEmail: 'example.com',
-  //   userNickname: '내꿈은요리사',
-  //   userAge: 22,
-  //   gender: true,
-  //   userImage: 'https://lh4.googleusercontent.com/proxy/bQv_EtcQG0meeYE0BAKd83kzayElQTnqCxfAp0BRZef5NFYq9EhZdRlClAg0Myr-FVEdwQL3x4eNtvnRJoU7Suk2SuHLiGc_bhNCF2OrkBQ-Mu78ggZfvdxarEjxnnziV3bHCUq_13FG9uGooD5RX8UBEfAAElV8vr5OI958-5bOVQ',
-  //   alarm: true,
-  // );
+  //User? user;
+  static User user = User(
+    secretEmail: 'example.com',
+    userNickname: '내꿈은요리사',
+    userAge: 22,
+    userGender: true,
+    userImage: 'https://lh4.googleusercontent.com/proxy/bQv_EtcQG0meeYE0BAKd83kzayElQTnqCxfAp0BRZef5NFYq9EhZdRlClAg0Myr-FVEdwQL3x4eNtvnRJoU7Suk2SuHLiGc_bhNCF2OrkBQ-Mu78ggZfvdxarEjxnnziV3bHCUq_13FG9uGooD5RX8UBEfAAElV8vr5OI958-5bOVQ',
+    alarm: true,
+  );
 
   // 유저 정보 가져오는 함수
   @override
@@ -136,7 +136,7 @@ class _MyPageState extends State<MyPage> {
                         TextFormField(
                           readOnly: true,
                           decoration: InputDecoration(
-                            labelText: '${user!.secretEmail}',
+                            labelText: '${user.secretEmail}',
                             labelStyle: TextStyle(
                               fontFamily: 'Pretendard',
                               fontSize: 14,
@@ -177,7 +177,7 @@ class _MyPageState extends State<MyPage> {
                             TextFormField(
                               readOnly: true,
                               decoration: InputDecoration(
-                                labelText: user!.userGender ?? false ? '남' : '여',
+                                labelText: user.userGender ?? false ? '남' : '여',
                                 labelStyle: TextStyle(
                                   fontFamily: 'Pretendard',
                                   fontSize: 14,
@@ -337,7 +337,7 @@ class _MyPageState extends State<MyPage> {
                         onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) =>
-                                  MyPageEdit(user: user!))
+                                  MyPageEdit(user: user))
                           );
                         },
                         style: TextButton.styleFrom(
