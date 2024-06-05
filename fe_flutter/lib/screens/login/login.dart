@@ -124,6 +124,9 @@ class _LoginPageState extends State<LoginPage> {
                                   );
                                 }
                               });
+                              // Provider.of<UserProvider>(context, listen: false).setUser(user); // 유저 정보 provider에 설정
+                              // print('id : ${user.secretEmail}\npw : ${user.secretPassword}'); // 유저 정보 콘솔 출력 (확인용)
+                              // Navigator.pushNamed(context, '/BottomMenu');
                             }
                           },
                           child: Text(
