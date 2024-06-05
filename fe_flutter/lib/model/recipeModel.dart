@@ -2,7 +2,7 @@ class Recipe {
   String? recipeName;
   String? recipeCategory;
   String? recipeMainImage;
-  List<String>? recipeIngredients;
+  List<List<String>>? recipeIngredients;
   List<String>? recipeDescriptions;
   List<String>? recipeImage;
 
@@ -22,7 +22,7 @@ class Recipe {
     recipeCategory = json['recipeCategory'];
     recipeMainImage = json['recipeMainImage'];
     recipeIngredients = json['recipeIngredients'] != null
-        ? List<String>.from(json['recipeIngredients'])
+        ? List<List<String>>.from(json['recipeIngredients'])
         : null;
     recipeDescriptions = json['recipeDescriptions'] != null
         ? List<String>.from(json['recipeDescriptions'])
@@ -47,7 +47,7 @@ class Recipe {
 class RecommendedRecipe{
   List<String>? recipeNames;
   List<String>? recipeMainImages;
-  List<String>? recipeIngredients;
+  List<List<String>>? recipeIngredients;
 
   RecommendedRecipe(
     {
@@ -65,7 +65,7 @@ class RecommendedRecipe{
         ? List<String>.from(json['recipeMainImages'])
         : null;
     recipeIngredients = json['recipeIngredients'] != null
-        ? List<String>.from(json['recipeIngredients'])
+        ? List<List<String>>.from(json['recipeIngredients'])
         : null;
   }
 
