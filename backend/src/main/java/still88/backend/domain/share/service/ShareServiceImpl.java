@@ -11,6 +11,7 @@ import still88.backend.repository.RefrigeListRepository;
 import still88.backend.repository.ShareRefrigeRepository;
 import still88.backend.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -135,5 +136,30 @@ public class ShareServiceImpl implements ShareService {
         } else {
             throw new IllegalArgumentException("요청 데이터가 없습니다!");
         }
+    }
+
+    @Override
+    public SearchUserResponseDTO searchUser(int userID, String userName) {
+        List<String> refrigeNames = new ArrayList<>();
+        List<Integer> refrigeIds = new ArrayList<>();
+
+        User searchedUser = userRepository.findUserByUserNickname(userName);
+        User user = userRepository.findUserByUserId(userID);
+        List<RefrigeList> userRefrige = refrigeListRepository.findByUser(user);
+
+        if (searchedUser == null)
+            throw new IllegalArgumentException("유저를 찾을 수 없습니다");
+
+        for (RefrigeList refrigeList : userRefrige) {
+            refrigeNames.add(refrigeList.getRefrigeName());
+            refrigeIds.add((refrigeList.getRefrigeId()));
+        }
+
+
+        return SearchUserResponseDTO.builder()
+                .searchedUserImage(searchedUser.getUserImage())
+                .refrigeNames(refrigeNames)
+                .refrigeIds(refrigeIds)
+                .build();
     }
 }

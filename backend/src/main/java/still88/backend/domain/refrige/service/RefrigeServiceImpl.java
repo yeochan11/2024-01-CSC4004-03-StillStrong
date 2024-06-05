@@ -3,11 +3,15 @@ package still88.backend.domain.refrige.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import still88.backend.dto.refrige.*;
+import still88.backend.entity.Refrige;
 import still88.backend.entity.RefrigeList;
 import still88.backend.entity.ShareRefrige;
 import still88.backend.entity.User;
 import still88.backend.repository.*;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,10 +34,11 @@ public class RefrigeServiceImpl implements RefrigeService {
                 .refrigeName(createRefrigeRequestDto.getRefrigeName())
                 .user(user)
                 .build());
-
         return CreateUpdateRefrigeResponseDto.builder()
                 .refrigeId(refrigeList.getRefrigeId())
                 .refrigeName(refrigeList.getRefrigeName())
+                .share(null)
+                .ingredientNames(null)
                 .build();
     }
 
@@ -55,18 +60,20 @@ public class RefrigeServiceImpl implements RefrigeService {
     public RefrigeWithIngredientsResponseDto getRefrigeWithIngredients(int userId) {
         User user = userRepository.findById((long) userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
-
         // 내가 생성한 냉장고
         List<RefrigeList> refrigeLists = refrigeListRepository.findByUser(user);
+        String currentRefrigeName = refrigeLists.get(0).getRefrigeName();
         List<RefrigeInfoDto> refrigeInfoList = refrigeLists.stream()
                 .map(refrigeList -> {
                     boolean isShared = shareRefrigeRepository.findByRefrigeListAndStatus(refrigeList, true).size() > 0;
                     List<String> ingredientNames = getIngredientNames(refrigeList.getRefrigeId());
+                    List<Integer> ingredientDeadlines = getIngredientDeadlines(refrigeList.getRefrigeId());
                     return RefrigeInfoDto.builder()
                             .refrigeId(refrigeList.getRefrigeId())
                             .refrigeName(refrigeList.getRefrigeName())
                             .share(isShared)
                             .ingredientNames(ingredientNames)
+                            .ingredientDeadlines(ingredientDeadlines)
                             .build();
                 })
                 .collect(Collectors.toList());
@@ -77,11 +84,13 @@ public class RefrigeServiceImpl implements RefrigeService {
                 .map(shareRefrige -> {
                     RefrigeList refrigeList = shareRefrige.getRefrigeList();
                     List<String> ingredientNames = getIngredientNames(refrigeList.getRefrigeId());
+                    List<Integer> ingredientDeadlines = getIngredientDeadlines(refrigeList.getRefrigeId());
                     return RefrigeInfoDto.builder()
                             .refrigeId(refrigeList.getRefrigeId())
                             .refrigeName(refrigeList.getRefrigeName())
                             .share(true)
                             .ingredientNames(ingredientNames)
+                            .ingredientDeadlines(ingredientDeadlines)
                             .build();
                 })
                 .collect(Collectors.toList());
@@ -91,12 +100,25 @@ public class RefrigeServiceImpl implements RefrigeService {
 
         return RefrigeWithIngredientsResponseDto.builder()
                 .refrigeList(refrigeInfoList)
+                .currentRefrigeName(currentRefrigeName)
                 .build();
     }
 
     private List<String> getIngredientNames(int refrigeId) {
         List<Integer> ingredientIds = refrigeRepository.findIngredientIdsByRefrigeId(refrigeId);
         return ingredientRepository.findIngredientNamesByIngredientIds(ingredientIds);
+    }
+
+    private List<Integer> getIngredientDeadlines(int refrigeId) {
+        List<Refrige> ingredients = refrigeRepository.findByRefrigeList_RefrigeId(refrigeId);
+        return ingredients.stream()
+                .map(ingredient -> {
+                    LocalDate createdDate = ingredient.getCreatedDate();
+                    LocalDate ingredientDeadline = ingredient.getIngredientDeadline();
+                    Duration duration = Duration.between(createdDate.atStartOfDay(), ingredientDeadline.atStartOfDay());
+                    return (int) duration.toDays();
+                })
+                .collect(Collectors.toList());
     }
 }
 

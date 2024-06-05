@@ -9,6 +9,7 @@ import still88.backend.entity.IdPassword;
 import still88.backend.entity.Recipe;
 import still88.backend.entity.User;
 import still88.backend.repository.IdPasswordRepository;
+import still88.backend.repository.IngredientRepository;
 import still88.backend.repository.RecipeRepository;
 import still88.backend.repository.UserRepository;
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final IngredientRepository ingredientRepository;
     private final IdPasswordRepository idPasswordRepository;
     private final RecipeRepository recipeRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -33,7 +35,7 @@ public class UserServiceImpl implements UserService {
         return GetUserDetailResponseDto.builder()
                 .userId(String.valueOf(user.getUserId()))
                 .userNickname(user.getUserNickname())
-                .userGender(user.getUserGender())
+                .gender(user.getUserGender())
                 .userAge(user.getUserAge())
                 .alarm(user.getAlarm())
                 .userImage(user.getUserImage())
@@ -50,7 +52,7 @@ public class UserServiceImpl implements UserService {
 
         user.updateInfo(updateUserDetailRequestDto.getUserNickname(),
                 updateUserDetailRequestDto.getUserAge(),
-                updateUserDetailRequestDto.getUserGender(),
+                updateUserDetailRequestDto.getGender(),
                 updateUserDetailRequestDto.getUserImage(),
                 updateUserDetailRequestDto.getAlarm());
         idPassword.updateEmail(updateUserDetailRequestDto.getSecretEmail());
@@ -62,7 +64,7 @@ public class UserServiceImpl implements UserService {
                 .userId(String.valueOf(updatedUser.getUserId()))
                 .userNickname(updatedUser.getUserNickname())
                 .userAge(updatedUser.getUserAge())
-                .userGender(updatedUser.getUserGender())
+                .gender(updatedUser.getUserGender())
                 .userImage(updatedUser.getUserImage())
                 .alarm(updatedUser.getAlarm())
                 .secretEmail(updatedIdPassword.getSecretEmail())
@@ -80,7 +82,7 @@ public class UserServiceImpl implements UserService {
             // Fetch recipe IDs for each category
             for (String category : favorites) {
                 List<Recipe> recipes = recipeRepository.findRecipeIdByRecipeCategory(category);
-                List<Integer> categoryRecipeIds = recipes.stream().map(Recipe::getRecipeId).collect(Collectors.toList()).reversed();
+                List<Integer> categoryRecipeIds = recipes.stream().map(Recipe::getRecipeId).collect(Collectors.toList());
                 recipeIds.addAll(categoryRecipeIds);
             }
 
@@ -114,6 +116,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public GetAllergyListResponseDTO getAllergyList() {
+        return GetAllergyListResponseDTO.builder()
+                .allergies(ingredientRepository.getAllAllergyInfo())
+                .build();
+    }
+
     public GetAllergyResponseDto getUserAllergry(int userId) {
         Optional<User> userO = userRepository.findById((long) userId);
         if (userO.isPresent()) {
@@ -133,5 +142,6 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new IllegalArgumentException("존재하지 않는 사용자입니다!");
         }
+
     }
 }

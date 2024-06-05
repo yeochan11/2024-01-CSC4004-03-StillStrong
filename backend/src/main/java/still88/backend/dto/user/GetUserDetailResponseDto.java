@@ -4,7 +4,6 @@ import jakarta.persistence.Column;
 import lombok.*;
 
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -16,7 +15,7 @@ public class GetUserDetailResponseDto {
 
     private int userAge;
 
-    private Boolean userGender;
+    private Boolean gender;
 
     private String userImage;
 
