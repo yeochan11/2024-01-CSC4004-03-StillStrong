@@ -189,7 +189,7 @@ class _JoinPageState extends State<JoinPage> {
                                   // 유저 인스턴스 생성
                                   User user = User(
                                     secretEmail: _emailController.text,
-                                    gender: _selectedSex,
+                                    userGender: _selectedSex,
                                     userNickname: _nicknameController.text,
                                     secretPassword: _passwordController.text,
                                     userAge: userAge,

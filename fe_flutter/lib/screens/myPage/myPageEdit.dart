@@ -18,7 +18,7 @@ class _MyPageEditState extends State<MyPageEdit> {
 
   @override
   Widget build(BuildContext context) {
-      if (user.gender == true) {
+      if (user.userGender == true) {
         _isSelectedGender[0] = true;
       } else {
         _isSelectedGender[1] = true;
@@ -216,11 +216,11 @@ class _MyPageEditState extends State<MyPageEdit> {
                               if (index == 0) {
                                 _isSelectedGender[0] = true;
                                 _isSelectedGender[1] = false;
-                                user.gender = true;
+                                user.userGender = true;
                               } else {
                                 _isSelectedGender[0] = false;
                                 _isSelectedGender[1] = true;
-                                user.gender = false;
+                                user.userGender = false;
                               }
                               //print(_isSelectedGender);
                               //print(user.gender);
