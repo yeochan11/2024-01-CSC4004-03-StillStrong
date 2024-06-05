@@ -327,7 +327,7 @@ class _IngredientWidgetState extends State<IngredientWidget> {
     print("Debug: ingredients: ${MyRefrigPageState.ingredients}");
     return MyRefrigPageState.ingredients;
   }
-  
+
   @override
   Widget build(BuildContext context) {
     List<String> ingredients = fetchIngredient();
@@ -342,11 +342,11 @@ class _IngredientWidgetState extends State<IngredientWidget> {
               Wrap(
                 spacing: 4.0,
                 runSpacing: 4.0,
-                children: List.generate(MyRefrigPageState.ingredients.length, (index) {
+                children: List.generate(ingredients.length, (index) {
                   // ingredientDeadlines와 길이가 같지 않은 경우에 대한 안전한 접근
                   int expDate = index < MyRefrigPageState.ingredientDeadlines.length ? MyRefrigPageState.ingredientDeadlines[index] : 0;
                   return IngredIconButton(
-                    buttonText: MyRefrigPageState.ingredients[index],
+                    buttonText: ingredients[index],
                     expDate: expDate,
                     icon: Image.asset('assets/images/ingredient.png'),
                     onPressed: (isIngredientSelect, isPressed, buttonText) {
