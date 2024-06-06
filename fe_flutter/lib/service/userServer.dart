@@ -152,7 +152,6 @@ Future<void> findPw(User user) async {
   }
 }
 
-// 비밀번호 재설정
 Future<void> updatePw(String updatePassword, String confirmPassword) async {
   try {
     final SharedPreferences pref = await SharedPreferences.getInstance();
