@@ -76,4 +76,14 @@ class RecommendedRecipe{
     data['recipeIngredients'] = this.recipeIngredients;
     return data;
   }
+
+  List<String>? _convertToStringList(List<dynamic>? list) {
+    if (list == null) return null;
+    return list.map((item) => item.toString()).toList();
+  }
+
+  List<List<String>?>? _convertToListList(List<dynamic>? list) {
+    if (list == null) return null;
+    return list.map((item) => _convertToStringList(item)).toList();
+  }
 }

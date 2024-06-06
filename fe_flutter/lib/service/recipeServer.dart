@@ -25,7 +25,9 @@ Future<RecommendedRecipe> recommendByIngredient(List<String> ingredientList) asy
       RecommendedRecipe recipe = RecommendedRecipe(
         recipeNames: List<String>.from(responseData['recipeNames']),
         recipeMainImages: List<String>.from(responseData['recipeMainImages']),
-        recipeIngredients: List<String>.from(responseData['recipeIngredients'])
+          recipeIngredients: (responseData['recipeIngredients'] as List)
+              .map((item) => List<String>.from(item))
+              .toList()
       );
 
       return recipe;
