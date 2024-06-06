@@ -5,10 +5,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import still88.backend.domain.recipe.service.RecipeService;
 import still88.backend.dto.recommend.*;
 import still88.backend.entity.Recipe;
 import still88.backend.repository.RecipeRepository;
@@ -44,7 +42,7 @@ public class RecommendServiceImpl implements RecommendService{
         return RecommendResponseDTO.builder()
                 .recipeNames(recipeNames)
                 .recipeIngredients(recipeIngredients)
-                .recipeImages(recipeImages)
+                .recipeMainImages(recipeImages)
                 .build();
     }
 
