@@ -4,6 +4,7 @@ import 'package:fe_flutter/service/refrigeServer.dart';
 import 'package:fe_flutter/model/refrigeModel.dart';
 import '../ingredientMoreInfo/ingredientMoreInfo.dart';
 import '../ingredientRegister/ingredientRegister.dart';
+import '../recipeSearch/recipeFromIngredient.dart';
 import 'myRefrigeratorDropdown.dart';
 import 'ingredientSearch.dart';
 import 'ingredientSelect.dart';
@@ -202,7 +203,7 @@ class MyRefrigPageState extends State<MyRefrigPage> {
                 },
               ),
               IngredientSearch(),
-              IngredientWidget(showInfo: showInfo,),
+              IngredientWidget(showInfo: showInfo,showRecipeFromIngredient: showRecipeFromIngredient,),
             ],
           ),
         ),
@@ -305,14 +306,27 @@ class MyRefrigPageState extends State<MyRefrigPage> {
       ),
     );
   }
+
+  void showRecipeFromIngredient(List<String> selectedButtons) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => RecipeFromIngredient(ingredientList: selectedButtons),
+      ),
+    );
+  }
+
 }
 
 class IngredientWidget extends StatefulWidget {
   final void Function(int, String) showInfo;
-  const IngredientWidget({super.key, required this.showInfo});
+  final void Function(List<String>) showRecipeFromIngredient;
+  const IngredientWidget({super.key, required this.showInfo, required this.showRecipeFromIngredient});
 
   @override
   State<IngredientWidget> createState() => _IngredientWidgetState();
+
+
 }
 
 class _IngredientWidgetState extends State<IngredientWidget> {
@@ -362,7 +376,11 @@ class _IngredientWidgetState extends State<IngredientWidget> {
             ],
           ),
         ),
-        if(isIngredientSelect) RecommendRecipeButton(),
+        if(isIngredientSelect) RecommendRecipeButton(
+          onPressed: (selectedButtons) {
+            widget.showRecipeFromIngredient(selectedButtons);
+          }
+        ),
       ],
     );
   }

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:fe_flutter/service/recipeServer.dart';
 import 'package:fe_flutter/model/recipeModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../ingredientMoreInfo/ingredientMoreInfo.dart';
 import '../MyRefrigerator/ingredIconButton.dart';
+import '../recipeSearch/recipeFromIngredient.dart';
 /*
 >>>>>>> fd71c8a268e66234bc3662341ad58e34bbdbdbb6
 class IngredientSelect extends StatefulWidget {
@@ -220,7 +222,8 @@ class _IngredientSelectState extends State<IngredientSelect> {
 
 
 class RecommendRecipeButton extends StatefulWidget {
-  const RecommendRecipeButton({super.key});
+  final Function(List<String> selectedButtons) onPressed;
+  const RecommendRecipeButton({required this.onPressed});
 
   @override
   State<RecommendRecipeButton> createState() => _RecommendRecipeButtonState();
@@ -236,12 +239,19 @@ class _RecommendRecipeButtonState extends State<RecommendRecipeButton> {
         width: 142,
         height: 45,
         child: ElevatedButton(
-            onPressed: () {
-              RecommendedRecipe recipe = recommendByIngredient(selectedButtons) as RecommendedRecipe;
-              // Debug log
-              print(recipe.recipeNames);
-              print(recipe.recipeMainImages);
-              print(recipe.recipeIngredients);
+            onPressed: () async {
+              // RecommendedRecipe recipe = recommendByIngredient(selectedButtons) as RecommendedRecipe;
+              //
+              // // Debug log
+              // print(recipe.recipeNames);
+              // print(recipe.recipeMainImages);
+              // print(recipe.recipeIngredients);
+
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) =>
+              //         RecipeFromIngredient(ingredientList: selectedButtons))
+              // );
+              widget.onPressed(selectedButtons);
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Color(0xffffbc3b),
