@@ -75,3 +75,4 @@ Future<void> updateRefrigeName(Refrige refrige, int refrigeId) async {
     print("Failed to send user data: $e");
   }
 }
+

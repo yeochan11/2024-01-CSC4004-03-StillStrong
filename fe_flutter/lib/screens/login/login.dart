@@ -110,10 +110,20 @@ class _LoginPageState extends State<LoginPage> {
                                 secretEmail: _emailController.text,
                                 secretPassword: _passwordController.text,
                               );
-                              login(user); // 로그인 api 호출
-                              Provider.of<UserProvider>(context, listen: false).setUser(user); // 유저 정보 provider에 설정
-                              print('id : ${user.secretEmail}\npw : ${user.secretPassword}'); // 유저 정보 콘솔 출력 (확인용)
-                              Navigator.pushNamed(context, '/BottomMenu');
+                              login(user).then((value) {
+                                if (value != null) { // 로그인 성공
+                                  Provider.of<UserProvider>(context, listen: false).setUser(user); // 유저 정보 provider에 설정
+                                  print('id : ${user.secretEmail}\npw : ${user.secretPassword}'); // 유저 정보 콘솔 출력 (확인용)
+                                  Navigator.pushNamed(context, '/BottomMenu');
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      backgroundColor: const Color(0xffF6A90A),
+                                      content: Text('로그인에 실패했습니다. 다시 시도해주세요.'),
+                                    ),
+                                  );
+                                }
+                              });
                             }
                           },
                           child: Text(

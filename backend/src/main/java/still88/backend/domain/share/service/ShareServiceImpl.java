@@ -90,32 +90,39 @@ public class ShareServiceImpl implements ShareService {
         List<ShareRefrigeInfo> pendingRequests = shareRefrigeRepository.findByCreateUserIdAndStatus(user.get(), false)
                 .stream()
                 .map(shareRefrige -> ShareRefrigeInfo.builder()
-                        .shareId((long) shareRefrige.getShareId())
-                        .userNickname(shareRefrige.getRequestUserId().getUserNickname())
+                        .refrigeId(shareRefrige.getRefrigeList().getRefrigeId())
+                        .createUserNickname(shareRefrige.getCreateUserId().getUserNickname())
+                        .requestUserNickname(shareRefrige.getRequestUserId().getUserNickname())
                         .refrigeName(shareRefrige.getRefrigeList().getRefrigeName())
                         .status(shareRefrige.isStatus())
                         .build())
                 .collect(Collectors.toList());
+        log.info("pending request");
+
         List<ShareRefrigeInfo> receivedRequests = shareRefrigeRepository.findByRequestUserIdAndStatus(Optional.of(user.get()), false)
                 .stream()
                 .map(shareRefrige -> ShareRefrigeInfo.builder()
-                        .shareId((long) shareRefrige.getShareId())
-                        .userNickname(shareRefrige.getCreateUserId().getUserNickname())
+                        .refrigeId(shareRefrige.getRefrigeList().getRefrigeId())
+                        .createUserNickname(shareRefrige.getCreateUserId().getUserNickname())
+                        .requestUserNickname(shareRefrige.getRequestUserId().getUserNickname())
                         .refrigeName(shareRefrige.getRefrigeList().getRefrigeName())
                         .status(shareRefrige.isStatus())
                         .build())
                 .collect(Collectors.toList());
+        log.info("received request");
 
         List<ShareRefrigeInfo> acceptedRequests = shareRefrigeRepository.findByCreateUserIdAndStatusOrRequestUserIdAndStatus(user.get(), true, user.get(), true)
                 .stream()
                 .map(shareRefrige -> ShareRefrigeInfo.builder()
-                        .shareId((long) shareRefrige.getShareId())
+                        .refrigeId(shareRefrige.getRefrigeList().getRefrigeId())
                         // create와 request 중 현재 로그인한 사용자의 닉네임과 다른 닉네임 가져오기
-                        .userNickname(shareRefrige.getCreateUserId().getUserNickname().equals(userNickname) ? shareRefrige.getRequestUserId().getUserNickname() : shareRefrige.getCreateUserId().getUserNickname())
+                        .createUserNickname(shareRefrige.getCreateUserId().getUserNickname())
+                        .requestUserNickname(shareRefrige.getRequestUserId().getUserNickname())
                         .refrigeName(shareRefrige.getRefrigeList().getRefrigeName())
                         .status(shareRefrige.isStatus())
                         .build())
                 .collect(Collectors.toList());
+        log.info("accepted request");
         return new GetShareListResponseDto(pendingRequests, receivedRequests, acceptedRequests);
     }
 

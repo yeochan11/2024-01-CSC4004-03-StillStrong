@@ -9,6 +9,6 @@ import java.util.List;
 @Builder
 public class RecommendResponseDTO {
     private List<String> recipeNames;
-    private List<String> recipeImages;
+    private List<String> recipeMainImages;
     private List<List<String>> recipeIngredients;
 }

@@ -4,7 +4,7 @@ import 'package:fe_flutter/model/userModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // 로그인
-Future<void> login(User user) async {
+Future<String?> login(User user) async {
   try {
     final response = await http.post(
       Uri.parse('http://localhost:8080/login'),
@@ -26,11 +26,16 @@ Future<void> login(User user) async {
 
       print('Received userId: $object');
       print('Received cookieValue: $cookieValue');
+
+      return cookieValue;
+
     } else {
-      throw Exception("Failed to send data");
+      print("Failed to login");
+      return null;
     }
   } catch(e) {
     print("Failed to send user data: $e");
+    return null;
   }
 }
 
@@ -170,5 +175,67 @@ Future<void> updatePw(String updatePassword, String confirmPassword) async {
     }
   } catch (e) {
     print('Failed to update password: $e');
+  }
+}
+
+// 마이페이지 유저 정보 get
+Future<User> getUserInfo() async {
+  try {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    int? userId = pref.getInt("userId");
+
+    final response = await http.get(
+      Uri.parse('http://localhost:8080/user/get/detail?userId=$userId'),
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonData = json.decode(response.body);
+      return User.fromJson(jsonData);
+    } else {
+      throw Exception('Failed to get userinfo : ${response.statusCode}');
+    }
+  } catch (e) {
+    throw Exception('Failed to get userinfo: $e');
+  }
+}
+
+// 유저 정보 수정
+Future<void> patchUser(User user) async {
+  final SharedPreferences pref = await SharedPreferences.getInstance();
+  int? userId = pref.getInt("userId");
+  String uri = 'http://localhost:8080/user/update?userId=$userId';
+  print(uri);
+
+  final request = await http.patch(
+    Uri.parse(uri),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8'
+    },
+    body: jsonEncode(user.toJsonForEdit()),
+  );
+  print('statusCode : ${request.statusCode}');
+  if (request.statusCode == 200) {
+    print('Patch successful');
+  } else {
+    throw Exception('Failed to patch data');
+  }
+}
+
+//로그아웃
+Future<void> logout() async {
+  try {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    int? userId = pref.getInt("userId");
+    final response = await http.get(
+      Uri.parse('http://localhost:8080//logout?userId=${userId}'),
+    );
+
+    if (response.statusCode == 200) {
+      print('logout 완료');
+    } else {
+      throw Exception('Failed to logout : ${response.statusCode}');
+    }
+  } catch (e) {
+    throw Exception('Error : $e');
   }
 }

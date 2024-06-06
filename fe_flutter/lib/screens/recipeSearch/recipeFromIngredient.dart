@@ -1,3 +1,5 @@
+import 'package:fe_flutter/model/recipeModel.dart';
+import 'package:fe_flutter/service/recipeServer.dart';
 import 'package:fe_flutter/widget/recipeListWidget.dart';
 import 'package:flutter/material.dart';
 
@@ -5,9 +7,8 @@ import '../../model/recipeSearchModel.dart';
 import '../../service/recipeSearchServer.dart';
 
 class RecipeFromIngredient extends StatefulWidget {
-  final int usedId;
   final List<String> ingredientList;
-  const RecipeFromIngredient({required this.usedId, required this.ingredientList});
+  const RecipeFromIngredient({required this.ingredientList});
 
   @override
   State<RecipeFromIngredient> createState() => _RecipeFromIngredientState();
@@ -31,7 +32,7 @@ class _RecipeFromIngredientState extends State<RecipeFromIngredient> {
         child: Column(
           children: [
             FutureBuilder(
-              future: postRecipeFromIngredient(widget.usedId, widget.ingredientList),
+              future: recommendByIngredient(widget.ingredientList),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const SizedBox(
@@ -47,8 +48,8 @@ class _RecipeFromIngredientState extends State<RecipeFromIngredient> {
                   );
                 }
                 else {
-                  RecipeSearchModel info = RecipeSearchModel(snapshot.data);
-                  if (info.recipeNames.isEmpty) {
+                  RecommendedRecipe info = snapshot.data!;
+                  if (info.recipeNames!.isEmpty) {
                     return const SizedBox(
                         height: 400,
                         width: 400,
@@ -71,11 +72,11 @@ class _RecipeFromIngredientState extends State<RecipeFromIngredient> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            for (int i = 0; i < info.recipeNames.length; ++i)
+                            for (int i = 0; i < info.recipeNames!.length; ++i)
                               makeRecipeList(
-                                  info.recipeNames[i],
-                                  info.recipeMainImages[i],
-                                  info.recipeIngredients[i]!,
+                                  info.recipeNames![i],
+                                  info.recipeMainImages![i],
+                                  info.recipeIngredients![i]!,
                                 context
                               )
                           ],

@@ -12,4 +12,9 @@ class UserProvider extends ChangeNotifier {
     _user = user; // 받은 유저 정보 _user에 업데이트
     notifyListeners(); // 정보 변경 알림
   }
+  // 유저 로그아웃
+  void clearUser() {
+    _user = null;
+    notifyListeners();
+  }
 }
