@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
         return GetUserDetailResponseDto.builder()
                 .userNickname(user.getUserNickname())
-                .gender(user.getUserGender())
+                .userGender(user.getUserGender())
                 .userAge(user.getUserAge())
                 .alarm(user.getAlarm())
                 .userImage(user.getUserImage())
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
         return GetUserDetailResponseDto.builder()
                 .userNickname(updatedUser.getUserNickname())
                 .userAge(updatedUser.getUserAge())
-                .gender(updatedUser.getUserGender())
+                .userGender(updatedUser.getUserGender())
                 .userImage(updatedUser.getUserImage())
                 .alarm(updatedUser.getAlarm())
                 .secretEmail(updatedIdPassword.getSecretEmail())

@@ -14,7 +14,7 @@ public class GetUserDetailResponseDto {
 
     private int userAge;
 
-    private Boolean gender;
+    private Boolean userGender;
 
     private String userImage;
 

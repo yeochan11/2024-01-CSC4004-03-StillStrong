@@ -1,6 +1,7 @@
 package still88.backend.domain.share.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import still88.backend.dto.share.*;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class ShareServiceImpl implements ShareService {
     private final ShareRefrigeRepository shareRefrigeRepository;
     private final UserRepository userRepository;
@@ -95,6 +97,7 @@ public class ShareServiceImpl implements ShareService {
                         .status(shareRefrige.isStatus())
                         .build())
                 .collect(Collectors.toList());
+        log.info("pending request");
 
         List<ShareRefrigeInfo> receivedRequests = shareRefrigeRepository.findByRequestUserIdAndStatus(Optional.of(user.get()), false)
                 .stream()
@@ -106,6 +109,7 @@ public class ShareServiceImpl implements ShareService {
                         .status(shareRefrige.isStatus())
                         .build())
                 .collect(Collectors.toList());
+        log.info("received request");
 
         List<ShareRefrigeInfo> acceptedRequests = shareRefrigeRepository.findByCreateUserIdAndStatusOrRequestUserIdAndStatus(user.get(), true, user.get(), true)
                 .stream()
@@ -118,6 +122,7 @@ public class ShareServiceImpl implements ShareService {
                         .status(shareRefrige.isStatus())
                         .build())
                 .collect(Collectors.toList());
+        log.info("accepted request");
         return new GetShareListResponseDto(pendingRequests, receivedRequests, acceptedRequests);
     }
 
@@ -152,7 +157,11 @@ public class ShareServiceImpl implements ShareService {
         List<RefrigeList> userRefrige = refrigeListRepository.findByUser(user);
 
         if (searchedUser == null)
-            throw new IllegalArgumentException("유저를 찾을 수 없습니다");
+            return SearchUserResponseDTO.builder()
+                    .searchedUserImage(null)
+                    .refrigeNames(null)
+                    .refrigeIds(null)
+                    .build();
 
         for (RefrigeList refrigeList : userRefrige) {
             refrigeNames.add(refrigeList.getRefrigeName());

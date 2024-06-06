@@ -18,7 +18,7 @@ class BottomMenuState extends State<BottomMenu> {
     MyRefrigPage(), // default값
     //MyRefrigerator(),
     MainPage(),
-    //MyPage(),
+    MyPage(),
   ];
 
   void _onNavTapped(int index) {

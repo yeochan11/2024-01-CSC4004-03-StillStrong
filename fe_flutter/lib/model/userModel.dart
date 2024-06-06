@@ -28,7 +28,7 @@ class User {
   User.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     secretEmail = json['secretEmail'];
-    userGender = json['gender'];
+    userGender = json['userGender'];
     userNickname = json['userNickname'];
     secretPassword = json['secretPassword'];
     userAge = json['userAge'];
@@ -43,7 +43,7 @@ class User {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userId'] = this.userId;
     data['secretEmail'] = this.secretEmail;
-    data['gender'] = this.userGender;
+    data['userGender'] = this.userGender;
     data['userNickname'] = this.userNickname;
     data['secretPassword'] = this.secretPassword;
     data['userAge'] = this.userAge;

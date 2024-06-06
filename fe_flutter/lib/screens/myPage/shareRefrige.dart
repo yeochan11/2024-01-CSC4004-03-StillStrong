@@ -11,7 +11,7 @@ class ShareRefrigePage extends StatefulWidget {
 
 class _ShareRefrigePageState extends State<ShareRefrigePage> {
   final _formKey = GlobalKey<FormState>();
-  late String _searchName;
+  late String _searchName = "";
   final _searchNameController = TextEditingController();
   static bool isUserSearched = false;
   String? _selectedRefrige;
