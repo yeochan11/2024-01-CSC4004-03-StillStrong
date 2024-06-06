@@ -12,8 +12,8 @@ Future<RecommendedRecipe> recommendByIngredient(List<String> ingredientList) asy
       'ingredientList': ingredientList
     };
     final response = await http.post(
-      Uri.parse('https://jsonplaceholder.typicode.com/posts/1'),
-     // Uri.parse('http://localhost:8080/recommend/recipe/ingredient'),
+      // Uri.parse('https://jsonplaceholder.typicode.com/posts/1'),
+     Uri.parse('http://localhost:8080/recommend/recipe/ingredient'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },
@@ -21,8 +21,8 @@ Future<RecommendedRecipe> recommendByIngredient(List<String> ingredientList) asy
     );
 
     if(response.statusCode == 200) {
-      Map<String, dynamic> responseData = jsonDecode(response.body);
-      print(responseData);
+      final decodeData = utf8.decode(response.bodyBytes);
+      final Map<String, dynamic> responseData= json.decode(decodeData);
       RecommendedRecipe recipe = RecommendedRecipe(
         recipeNames: List<String>.from(responseData['recipeNames']),
         recipeMainImages: List<String>.from(responseData['recipeMainImages']),
