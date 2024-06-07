@@ -1,7 +1,6 @@
 package still88.backend.domain.login.service;
 
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -46,7 +45,7 @@ public class LoginServiceImpl implements LoginService{
 
     @Override
     public JoinResponseDTO join(JoinInfoRequestDTO request) {
-        Boolean gender = request.getGender();
+        Boolean gender = request.getUserGender();
         int userAge = request.getUserAge();
         String userNickname = request.getUserNickname();
         String secretEmail = request.getSecretEmail();

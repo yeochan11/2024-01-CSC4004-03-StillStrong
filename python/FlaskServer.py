@@ -53,7 +53,7 @@ def recipe_recommend():
     feedback_X = X
     feedback_y = y
     recommend_result = result
-    print(f'User_{user_id}?—ê²? {result} ì¶”ì²œ?™„ë£?')
+    print(f'User_{user_id} received {result} recommendation')
     return jsonify({"recipeId" : result})
 
 @app.route("/recommend/feedback", methods=['POST'])
@@ -61,7 +61,7 @@ def provide_feedback():
     global feedback_X, feedback_y, recommend_result, feedback_counter, feedback_batch
 
     if feedback_X is None:
-        print("?”¼?“œë°? ? •ë³? ?—†?Œ")
+        print("feedback ignore")
         return jsonify({'status': 'success'})
     
     json_data = request.get_json()
@@ -69,14 +69,14 @@ def provide_feedback():
 
     if feedback_counter < 100:
         model.updateParameter(feedback_X, feedback_y, np.array(recommend_result) - 1, feedback)
-        print(f'feedback = {feedback} : ?—…?°?´?Š¸ ?™„ë£?')
+        print(f'feedback = {feedback}')
     else:
         feedback_batch.append((feedback_X, feedback_y, np.array(recommend_result) - 1, feedback))
         if len(feedback_batch) == 10:
             for fb_X, fb_y, fb_result, fb in feedback_batch:
                 model.updateParameter(fb_X, fb_y, fb_result, fb)
             feedback_batch.clear()
-            print('ë°°ì¹˜ - ?—…?°?´?Š¸')
+            print('feed-batch learning')
 
     feedback_counter += 1
     feedback_X = None
@@ -87,7 +87,7 @@ def provide_feedback():
 
 def saveModel():
     model.save("python\\recommend_model_NeuralNetwork.h5")
-    print("????¥ ?›„ ?”Œ?¼?Š¤?Š¸ ?„œë²? ì¢…ë£Œ.")
+    print("saving model.")
 
 atexit.register(saveModel)
 
