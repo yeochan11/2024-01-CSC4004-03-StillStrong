@@ -86,6 +86,7 @@ def provide_feedback():
     return jsonify({'status': 'success'})
 
 def saveModel():
+    print("model score : ", model.score() * 100)
     model.save("python\\recommend_model_NeuralNetwork.h5")
     print("saving model.")
 

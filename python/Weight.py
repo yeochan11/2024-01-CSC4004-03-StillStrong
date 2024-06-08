@@ -12,15 +12,14 @@ class RecommendModel:
         if NeuralNetwork is None:
             self.NeuralNetwork = Sequential([
                 Input(shape=(3,)), 
-                Dense(100, activation='relu'),
-                Dense(100, activation='relu'),
-                Dense(100, activation='relu'),
+                Dense(9, activation='relu'),
+                Dense(81, activation='relu'),
+                Dense(9, activation='relu'),
                 Dense(1, activation='sigmoid')
             ])
             self.NeuralNetwork.compile(
                 optimizer='adam',
-                loss=tf.keras.losses.MeanSquaredError(),
-                metrics=['accuracy']
+                loss=tf.keras.losses.MeanSquaredError()
             )
         else:
             self.NeuralNetwork = NeuralNetwork
@@ -28,6 +27,8 @@ class RecommendModel:
         self.ingredientModel = ingredientModel
         self.userModel = userModel
         self.ageWeight = np.zeros(997, dtype=np.float32)
+
+        self.feedback = []
 
         self.host = 'localhost'
         self.user = 'root'
@@ -57,6 +58,7 @@ class RecommendModel:
         return input_data, result, recommend_id
     
     def updateParameter(self, X, y, recommend_id, feedback):
+        self.feedback.append(feedback)
         if feedback:
             y[recommend_id] += 0.05
             self.NeuralNetwork.fit(X, y, verbose=0, epochs=10)
@@ -67,6 +69,11 @@ class RecommendModel:
     def save(self, path):
         self.NeuralNetwork.save(path)
 
+    def score(self):
+        total = len(self.feedback)
+        positive = self.feedback.count(True)
+        return positive / total
+    
     def __updateAge(self, recommend_index):
         self.ageWeight[recommend_index] = 0.
         for i in range(997):

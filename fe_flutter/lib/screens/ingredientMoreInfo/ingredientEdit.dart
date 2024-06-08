@@ -237,7 +237,7 @@ class _IngredientEditState extends State<IngredientEdit> {
                                 children: [
                                   Text(info.createdDate,
                                       style: const TextStyle(color: Colors.black)),
-                                  const SizedBox(height: 50, width: 155),
+                                  const SizedBox(height: 50, width: 150),
                                   const Text('등록날짜', style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.amber)),
@@ -272,7 +272,7 @@ class _IngredientEditState extends State<IngredientEdit> {
                                 children: [
                                   Text(info.ingredientDeadLine,
                                       style: const TextStyle(color: Colors.black)),
-                                  const SizedBox(height: 50, width: 155),
+                                  const SizedBox(height: 50, width: 150),
                                   const Text('유통기한', style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.amber)),
