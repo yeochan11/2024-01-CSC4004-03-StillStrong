@@ -81,7 +81,7 @@ class UBRM:
             
         user_info = self.__normalize_age(user_info)
         user_vector = self.__transformUserInfoToVector(user_info)
-
+        userId = userId - 1
 
         cosine_sim = cosine_similarity(user_vector)[userId]
         cosine_sim[userId] = -1
