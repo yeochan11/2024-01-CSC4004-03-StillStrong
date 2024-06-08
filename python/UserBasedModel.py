@@ -9,9 +9,9 @@ import json
 class UBRM:
     def __init__(self):
         self.standardizer =  StandardScaler()
-        self.host = 'localhost'
+        self.host = 'still88db.cbaamqy88abn.ap-northeast-2.rds.amazonaws.com'
         self.user = 'root'
-        self.password = 'zpalq,123098!@#'
+        self.password = 'zpalq,123098'
         self.db = 'still88'
 
     def __convert_boolean(self, value):
