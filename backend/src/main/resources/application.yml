@@ -1,0 +1,23 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        show_sql: true
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://still88db.cbaamqy88abn.ap-northeast-2.rds.amazonaws.com:3306/still88
+    username: root
+    password: "zpalq,123098"
+
+server:
+  port: 9000 #포트 정의하는 부분
+  ssl:
+    enabled: true
+    key-store: keystore.p12
+    key-store-password: 1234
+    key-store-type: PKCS12
+    key-alias: spring
