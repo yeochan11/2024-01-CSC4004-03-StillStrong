@@ -32,9 +32,15 @@ public class IngredientServiceImpl implements IngredientService {
         try {
             User user = userRepository.findUserByUserId(Integer.parseInt(userId));
             RefrigeList refrigeList = refrigeListRepository.findByRefrigeIdAndUser(refrigeId, user);
+            if (refrigeList == null){
+                ShareRefrige share = shareRefrigeRepository.findShareRefrigeByRequestUserId(user);
+                refrigeList= refrigeListRepository.findByRefrigeIdAndUser(refrigeId, share.getCreateUserId());
+            }
+
             String ingredientName = request.getIngredientName();
             Ingredient ingredient = ingredientRepository.findIngredientByIngredientName(ingredientName);
             LocalDate createdDate = request.getCreatedDate();
+
             int ingredientNum = request.getIngredientNum();
             String ingredientPlace = request.getIngredientPlace();
             LocalDate ingredientDeadline;

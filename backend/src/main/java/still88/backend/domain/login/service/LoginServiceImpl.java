@@ -65,9 +65,9 @@ public class LoginServiceImpl implements LoginService{
         userRepository.save(user);
         idPasswordRepository.save(idPassword);
         User joinedUser = userRepository.findUserByUserNickname(userNickname);
-        refrigeListRepository.save(RefrigeList.builder().refrigeName("기본냉장고").user(joinedUser).build());
+        refrigeListRepository.save(RefrigeList.builder().refrigeName(userNickname + "기본냉장고").user(joinedUser).build());
         return new JoinResponseDTO(user.getUserId(), user.getUserNickname());
-    }
+    }   
 
     @Override
     public LogoutResponseDTO logout(String userId) {

@@ -13,6 +13,7 @@ import still88.backend.entity.User;
 
 @Repository
 public interface ShareRefrigeRepository extends JpaRepository<ShareRefrige, Long> {
+    ShareRefrige findShareRefrigeByRequestUserId(User user);
     List<ShareRefrige> findAllByRefrigeList(RefrigeList refrigeList);
     Optional<ShareRefrige> findByCreateUserIdAndRequestUserIdAndRefrigeList(User createUserId, User requestUserId, RefrigeList refrigeList);
 

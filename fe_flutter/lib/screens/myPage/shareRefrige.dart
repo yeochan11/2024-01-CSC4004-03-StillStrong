@@ -13,23 +13,16 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
   final _formKey = GlobalKey<FormState>();
   late String _searchName = "";
   final _searchNameController = TextEditingController();
-  static bool isUserSearched = false;
+  bool isUserSearched = false;
   String? _selectedRefrige;
   int? _userId;
   SearchedUser? searched_user = SearchedUser();
-  // SearchedUser? searched_user = SearchedUser(
-  //   searchedUserImage: 'https://lh4.googleusercontent.com/proxy/bQv_EtcQG0meeYE0BAKd83kzayElQTnqCxfAp0BRZef5NFYq9EhZdRlClAg0Myr-FVEdwQL3x4eNtvnRJoU7Suk2SuHLiGc_bhNCF2OrkBQ-Mu78ggZfvdxarEjxnnziV3bHCUq_13FG9uGooD5RX8UBEfAAElV8vr5OI958-5bOVQ',
-  //   refrigeNames: ['냉장고1', '냉장고2'],
-  //   refrigeIds: [3,4]
-  // );
-
 
   // userId 받아오기
   Future<int?> getUserId() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     _userId = pref.getInt("userId");
     print("get user id : $_userId");
-
     if (_userId != null) {
       return _userId;
     } else {
@@ -207,7 +200,8 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
                         Container(
                           width: 311,
                           child: DropdownButton<String>(
-                            hint: Text('냉장고 선택',
+                            hint: Text(
+                              '냉장고 선택',
                               style: TextStyle(
                                 fontFamily: 'Pretendard',
                                 fontSize: 17,
@@ -221,10 +215,10 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
                               color: Colors.black,
                             ),
                             value: _selectedRefrige,
-                            items: (searched_user!.refrigeNames)!.map<DropdownMenuItem<String>>((String value) {
+                            items: (searched_user?.refrigeNames ?? []).map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem(
-                                  value: value,
-                                  child: Text(value)
+                                value: value,
+                                child: Text(value),
                               );
                             }).toList(),
                             onChanged: _updateSelectedRefrige,

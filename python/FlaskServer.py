@@ -56,7 +56,7 @@ def recipe_recommend():
     print(f'User_{user_id} received {result} recommendation')
     return jsonify({"recipeId" : result})
 
-@app.route("/recommend/feedback", methods=['POST'])
+@app.route("/recommend/feedback", methods=['POST'])     
 def provide_feedback():
     global feedback_X, feedback_y, recommend_result, feedback_counter, feedback_batch
 
@@ -87,10 +87,10 @@ def provide_feedback():
 
 def saveModel():
     print("model score : ", model.score() * 100)
+    print("saving model.\n\n")
     model.save("python\\recommend_model_NeuralNetwork.h5")
-    print("saving model.")
 
 atexit.register(saveModel)
-
+    
 if __name__ == '__main__':
     app.run(debug=False,host="localhost", port=5000)

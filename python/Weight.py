@@ -30,9 +30,9 @@ class RecommendModel:
 
         self.feedback = []
 
-        self.host = 'still88db.cbaamqy88abn.ap-northeast-2.rds.amazonaws.com'
+        self.host = 'localhost'
         self.user = 'root'
-        self.password = 'zpalq,123098'
+        self.password = 'zpalq,123098!@#'
         self.db = 'still88'
 
     def recommend(self, ingredientList, userId):
@@ -62,9 +62,11 @@ class RecommendModel:
         if feedback:
             y[recommend_id] += 0.05
             self.NeuralNetwork.fit(X, y, verbose=0, epochs=10)
+            print("positive feedback")
         else:
             y[recommend_id] -= 0.15
             self.NeuralNetwork.fit(X, y, verbose=0, epochs=10)
+            print("negative feedback")
 
     def save(self, path):
         self.NeuralNetwork.save(path)
