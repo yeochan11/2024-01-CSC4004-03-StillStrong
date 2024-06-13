@@ -66,11 +66,6 @@ public class IngredientController {
                                             @PathVariable("ingredientId") int ingredientId,
                                             @RequestBody EditIngredientRequestDTO request) {
         try{
-            log.info("Number = {}", request.getIngredientNum());
-            log.info("Place = {}", request.getIngredientPlace());
-            log.info("Memo = {}", request.getIngredientMemo());
-            log.info("deadline = {}", request.getIngredientDeadline());
-            log.info("created date = {}", request.getCreatedDate());
             ingredientService.editIngredient(refrigeId, ingredientId, request);
             return ResponseEntity.ok("수정완료");
         }catch (Exception e){

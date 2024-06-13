@@ -16,7 +16,6 @@ class RecipeMoreInfoModel {
   ];
 
   RecipeMoreInfoModel(Map<String, dynamic>? data) {
-    // TODO: API 주소 설정했으면 밑에 주석 해제해주세요.
     recipeName = data?['recipeName'];
     recipeCategory = data?['recipeCategory'];
     recipeMainImage = data?['recipeMainImage'];

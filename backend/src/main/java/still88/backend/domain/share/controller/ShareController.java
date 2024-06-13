@@ -17,7 +17,6 @@ public class ShareController {
 
     private final ShareService shareService;
 
-    // 냉장고 공유 초대
     @PostMapping("/invite/{refrigeId}")
     public ResponseEntity<?> inviteUser(@PathVariable int refrigeId, @RequestBody InviteRequestDto inviteRequestDto) {
         try{
@@ -29,7 +28,6 @@ public class ShareController {
         }
     }
 
-    // 냉장고 공유 수락/거절
     @PatchMapping("/accept/{refrigeId}")
     public ResponseEntity<?> shareStatusUpdate(@PathVariable int refrigeId, @RequestBody AcceptRequestDto acceptRequestDto) {
         try{
@@ -41,7 +39,6 @@ public class ShareController {
         }
     }
 
-    // 냉장고 공유 요청 현황 조회
     @GetMapping("/get/shareList")
     public ResponseEntity<?> getShareList(@RequestParam int userId) {
         log.info("userId = {} shareList 요청", userId);
@@ -59,7 +56,7 @@ public class ShareController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    // 냉장고 공유 요청 취소
+
     @DeleteMapping("/cancel/{refrigeId}")
     public ResponseEntity<?> cancelShareRequest(@PathVariable int refrigeId, @RequestBody CancelRequestDto cancelRequestDto) {
         try{

@@ -17,7 +17,6 @@ class IngredientSelect extends StatefulWidget {
 
 class _IngredientSelectState extends State<IngredientSelect> {
   static bool isIngredientSelect = false;
-
   void clearAllSelection(){
     setState(() {
       _IngredIconButtonState.buttonStates.updateAll((key, value) => false);
@@ -50,7 +49,6 @@ class _IngredientSelectState extends State<IngredientSelect> {
                 ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        //TODO : FIX 전체취소
                         selectedButtons.clear();
                         clearAllSelection();
                       });

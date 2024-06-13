@@ -35,7 +35,6 @@ public class ShareServiceImpl implements ShareService {
         Optional<RefrigeList> refrigeList = refrigeListRepository.findById((long) refrigeId);
 
         if (createUser.isPresent() && requestUser.isPresent() && refrigeList.isPresent()) {
-            // 중복 요청 방지
             Optional<ShareRefrige> existingRequest = shareRefrigeRepository.findByCreateUserIdAndRequestUserIdAndRefrigeList(createUser.get(), requestUser.get(), refrigeList.get());
             if (existingRequest.isPresent()) {
                 throw new IllegalArgumentException("중복 요청입니다!");
@@ -65,10 +64,8 @@ public class ShareServiceImpl implements ShareService {
             if (shareRefrige.isPresent()) {
                 ShareRefrige shareRequest = shareRefrige.get();
                 if (accept) {
-                    // 요청 수락
                     shareRequest.updateStatus(true);
                 } else {
-                    // 요청 거절
                     shareRefrigeRepository.delete(shareRequest);
                 }
             } else {
@@ -84,7 +81,6 @@ public class ShareServiceImpl implements ShareService {
         if (user.isEmpty()) {
             throw new IllegalArgumentException("유효하지 않은 사용자입니다.");
         }
-        // 현재 로그인 된 사용자 닉네임
         String userNickname = user.get().getUserNickname();
 
         List<ShareRefrigeInfo> pendingRequests = shareRefrigeRepository.findByCreateUserIdAndStatus(user.get(), false)
@@ -135,7 +131,6 @@ public class ShareServiceImpl implements ShareService {
         Optional<RefrigeList> refrigeList = refrigeListRepository.findById((long) refrigeId);
 
         if (createUser.isPresent() && requestUser.isPresent() && refrigeList.isPresent()) {
-            // 공유 요청 취소
             Optional<ShareRefrige> shareRefrige = shareRefrigeRepository.findByCreateUserIdAndRequestUserIdAndRefrigeList(createUser.get(), requestUser.get(), refrigeList.get());
             if (shareRefrige.isPresent()) {
                 shareRefrigeRepository.delete(shareRefrige.get());

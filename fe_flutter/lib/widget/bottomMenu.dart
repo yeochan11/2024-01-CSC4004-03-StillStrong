@@ -14,9 +14,8 @@ class BottomMenu extends StatefulWidget {
 class BottomMenuState extends State<BottomMenu> {
   int _selectedIndex = 1;
 
-  final List<Widget> _navIndex = [ //하단 바에서 선택할 페이지
-    MyRefrigPage(), // default값
-    //MyRefrigerator(),
+  final List<Widget> _navIndex = [
+    MyRefrigPage(),
     MainPage(),
     MyPage(),
   ];
@@ -33,14 +32,14 @@ class BottomMenuState extends State<BottomMenu> {
       body: _navIndex.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color(0xffFFC94A),
-        fixedColor: Colors.black, //선택한 아이콘 색상
-        unselectedItemColor: Colors.white, //선택 안 된 아이콘 색상
-        showUnselectedLabels: true, // 선택 안 된 아이콘 표시
-        type: BottomNavigationBarType.fixed, // 하단 바 고정
-        items: const [ // 하단 바에 표시될 아이콘
-          BottomNavigationBarItem(icon: Icon(Icons.kitchen), label: 'MY 냉장고',), //index 0
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label:  '홈',), //index 1
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: '마이 페이지'), //index 2
+        fixedColor: Colors.black,
+        unselectedItemColor: Colors.white,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.kitchen), label: 'MY 냉장고',),
+          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label:  '홈',),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: '마이 페이지'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onNavTapped,

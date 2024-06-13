@@ -12,8 +12,7 @@ Future<RecommendedRecipe> recommendByIngredient(List<String> ingredientList) asy
       'ingredientList': ingredientList
     };
     final response = await http.post(
-      // Uri.parse('https://jsonplaceholder.typicode.com/posts/1'),
-     Uri.parse('http://localhost:8080/recommend/recipe/ingredient'),
+     Uri.parse('http://3.35.140.200:8080/recommend/recipe/ingredient'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },

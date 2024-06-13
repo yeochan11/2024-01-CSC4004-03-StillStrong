@@ -138,7 +138,6 @@ public class UserServiceImpl implements UserService {
                     throw new RuntimeException("Failed to parse allergy JSON", e);
                 }
             } else {
-                // 알러지가 없는 경우 빈 리스트 반환
                 return new GetAllergyResponseDto(Collections.emptyList());
             }
         } else {

@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 public class Ingredient {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private int ingredientId;
 
@@ -25,11 +25,9 @@ public class Ingredient {
     @Column
     private String ingredientCategory;
 
-    // 연관 관계 매핑
     @OneToMany(mappedBy = "ingredient")
     private List<Refrige> refriges = new ArrayList<>();
 
-    // 생성자 + Builder로 일관성 유지
     @Builder
     public Ingredient(String ingredientName, String ingredientCategory) {
         this.ingredientName = ingredientName;

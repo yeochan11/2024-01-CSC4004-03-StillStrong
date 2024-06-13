@@ -132,7 +132,7 @@ class DropdownRefrigeState extends State<DropdownRefrige> {
               onPressed: () {
                 Refrige refrige = Refrige(
                   refrigeName: _newRefrigeController.text,
-                  refrigeId: 0, // 임시 ID, 실제로는 서버에서 생성된 ID를 사용해야 합니다.
+                  refrigeId: 0,
                   share: false,
                   ingredientNames: [], ingredientDeadlines: [],
                 );
@@ -170,7 +170,7 @@ class DropdownRefrigeState extends State<DropdownRefrige> {
               onPressed: () {
                 Refrige refrige = Refrige(
                   refrigeName: _textFieldController.text,
-                  refrigeId: selectedRefrigeId, // 실제 ID를 사용
+                  refrigeId: selectedRefrigeId,
                   share: false,
                   ingredientNames: [], ingredientDeadlines: [],
                 );

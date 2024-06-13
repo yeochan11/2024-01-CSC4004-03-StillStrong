@@ -9,7 +9,7 @@ Future<Map<String, dynamic>> getRefrigeList() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     int? userId = pref.getInt("userId");
     final response = await http.get(
-        Uri.parse('http://localhost:8080/refrige/get/refrigeWithIngredients?userId=$userId'),
+        Uri.parse('http://3.35.140.200:8080/refrige/get/refrigeWithIngredients?userId=$userId'),
         headers: {"Accept": "application/json; charset=utf-8"});
     if (response.statusCode == 200) {
       final decodeData = utf8.decode(response.bodyBytes);
@@ -31,7 +31,7 @@ Future<void> createRefrige(Refrige refrige) async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     int? userId = pref.getInt("userId");
     final response = await http.post(
-      Uri.parse('http://localhost:8080/refrige/create?userId=$userId'),
+      Uri.parse('http://3.35.140.200:8080/refrige/create?userId=$userId'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },
@@ -56,7 +56,7 @@ Future<void> updateRefrigeName(Refrige refrige, int refrigeId) async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     int? userId = pref.getInt("userId");
     final response = await http.patch(
-      Uri.parse('http://localhost:8080/refrige/update/$refrigeId?userId=$userId'),
+      Uri.parse('http://3.35.140.200:8080/refrige/update/$refrigeId?userId=$userId'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },

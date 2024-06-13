@@ -18,7 +18,6 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
   int? _userId;
   SearchedUser? searched_user = SearchedUser();
 
-  // userId 받아오기
   Future<int?> getUserId() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     _userId = pref.getInt("userId");
@@ -30,7 +29,6 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
     }
   }
 
-  // 검색한 유저 정보 받아오기
   @override
   void getSearchedUserInfo(String searchName) async {
     try {
@@ -116,7 +114,7 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
                           _formKey.currentState!.save();
                           _searchName = _searchNameController.text;
 
-                          getSearchedUserInfo(_searchName); // 검색한 유저 정보
+                          getSearchedUserInfo(_searchName);
                           setState(() {
                             isUserSearched = false;
                           });
@@ -125,7 +123,6 @@ class _ShareRefrigePageState extends State<ShareRefrigePage> {
                               isUserSearched = true;
                             });
                           } else {
-                            // 유저 정보 없을 경우
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 backgroundColor: const Color(0xffF6A90A),

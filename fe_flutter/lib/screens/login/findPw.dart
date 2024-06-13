@@ -78,12 +78,12 @@ class _FindPwPageState extends State<FindPwPage> {
                           child: TextButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                _formKey.currentState!.save(); // 입력값 가져오기
+                                _formKey.currentState!.save();
                                 User user = User(
                                   secretEmail: _emailController.text,
                                   userNickname: _nicknameController.text,
                                 );
-                                findPw(user); // 사용자 인증 api
+                                findPw(user);
                                 print('email: ${user.secretEmail}\n nickname: ${user.userNickname}');
                                 Navigator.pushNamed(context, '/updatepw');
                               };

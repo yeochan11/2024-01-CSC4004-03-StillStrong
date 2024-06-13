@@ -24,7 +24,6 @@ class User {
         this.alarm,
       });
 
-  // json 데이터로 유저 정보 생성
   User.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     secretEmail = json['secretEmail'];
@@ -38,7 +37,6 @@ class User {
     alarm = json['alarm'];
   }
 
-  // 유저 정보 json 형식으로 변환
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userId'] = this.userId;

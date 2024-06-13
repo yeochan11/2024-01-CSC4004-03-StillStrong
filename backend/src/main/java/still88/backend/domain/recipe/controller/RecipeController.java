@@ -18,7 +18,6 @@ public class RecipeController {
 
     private final RecipeService recipeService;
 
-    // 랜덤 레시피 조회
     @GetMapping("/mainPage")
     public ResponseEntity<?> getRandomRecipes() {
         log.info("메인페이지 요청");

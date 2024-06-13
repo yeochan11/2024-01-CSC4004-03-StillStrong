@@ -23,7 +23,7 @@ public class RecommendServiceImpl implements RecommendService{
     @Override
     public RecommendResponseDTO recommend(int userId, List<String> ingredientList) throws JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:5000/recommend/ingredient";
+        String url = "http://54.180.135.103:5000/recommend/ingredient";
         RecommendFlaskDTO requestBody = RecommendFlaskDTO.builder().userId(userId).ingredientList(ingredientList).build();
         FlaskResponseDTO response = restTemplate.postForEntity(url, requestBody, FlaskResponseDTO.class).getBody();
         List<Integer> recipeId = response.getRecipeId();
@@ -49,7 +49,7 @@ public class RecommendServiceImpl implements RecommendService{
     @Override
     public void feedback(FeedbackRequestDTO dto) {
         boolean feedback = dto.getFeedback();
-        String url = "http://localhost:5000/recommend/feedback";
+        String url = "http://54.180.135.103/recommend/feedback";
         FeedbackFlaskRequestDTO requestBody = FeedbackFlaskRequestDTO.builder().feedback(feedback).build();
 
         RestTemplate restTemplate = new RestTemplate();

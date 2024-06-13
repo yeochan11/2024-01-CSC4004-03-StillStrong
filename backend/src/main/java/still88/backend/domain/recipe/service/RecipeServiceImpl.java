@@ -90,11 +90,10 @@ public class RecipeServiceImpl implements RecipeService {
                 .recipeIngredients(jsonToArray(recipe.getRecipeIngredient())).build();
     }
 
-    // 997까지의 레시피 ID 중 랜덤으로 선택하는 메서드
     private int getRandomRecipeId() {
         int totalRecipes = 997;
         Random random = new Random();
-        return random.nextInt(totalRecipes) + 1; // 1부터 시작하도록
+        return random.nextInt(totalRecipes) + 1;
     }
 
 

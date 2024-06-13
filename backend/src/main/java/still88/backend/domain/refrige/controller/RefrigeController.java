@@ -17,19 +17,16 @@ public class RefrigeController {
 
     private final RefrigeService refrigeService;
 
-    // 냉장고 생성하기
     @PostMapping("/create")
     public ResponseEntity<?> createRefrige(@RequestParam String userId, @RequestBody CreateRefrigeRequestDto createRefrigeRequestDto) {
         return ResponseEntity.ok(refrigeService.createRefrige(userId, createRefrigeRequestDto));
     }
 
-    // 냉장고 수정하기
     @PatchMapping("/update/{refrigeId}")
     public ResponseEntity<?> updateRefrige(@PathVariable int refrigeId, @RequestBody UpdateRefrigeRequestDto updateRefrigeRequestDto) {
         return ResponseEntity.ok(refrigeService.updateRefrige(refrigeId, updateRefrigeRequestDto));
     }
 
-    // 냉장고 목록 및 재료 조회
     @GetMapping("/get/refrigeWithIngredients")
     public ResponseEntity<?> getRefrigeWithIngredients(@RequestParam String userId) {
         log.info("userId = {}의 냉장고 목록 조회", userId);

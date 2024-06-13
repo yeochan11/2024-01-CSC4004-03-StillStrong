@@ -9,7 +9,7 @@ import lombok.*;
 @Entity
 public class Recipe {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private int recipeId;
 
@@ -19,22 +19,18 @@ public class Recipe {
     @Column
     private String recipeCategory;
 
-    // JSON 타입으로 지정
     @Column(columnDefinition = "json")
     private String recipeDescription;
 
-    // JSON 타입으로 지정
     @Column(columnDefinition = "json")
     private String recipeImage;
 
-    // JSON 타입으로 지정
     @Column(columnDefinition = "json")
     private String recipeIngredient;
 
     @Column
     private String recipeMainImage;
 
-    // 생성자 + Builder로 일관성 유지
     @Builder
     public Recipe(String recipeName, String recipeCategory, String recipeDescription,
                   String recipeImage, String recipeIngredient, String recipeMainImage) {

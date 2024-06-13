@@ -22,7 +22,6 @@ class _AllergyPageState extends State<AllergyPage> {
     getAllergyList();
   }
 
-  // 알러지 목록 가져오는 함수
   void getAllergyList() async {
       List<String> allergies = await getAllergies();
       setState(() {
@@ -107,7 +106,6 @@ class _AllergyPageState extends State<AllergyPage> {
                           setState(() {
                             _selectedAllergy.remove(value);
                           });
-                          //print(_selectedAllergy.map((allergy) => allergy.name).join(', '));
                         },
                       ),
                       selectedColor: const Color(0xffF6A90A),
@@ -141,8 +139,8 @@ class _AllergyPageState extends State<AllergyPage> {
                         if (_selectedAllergy.isNotEmpty) {
                           Map<String, dynamic> allergy = {};
                           allergy['allergies'] = _selectedAllergy;
-                          patchAllergies(allergy); // 취향 등록 api
-                          print('userAllergies : $_selectedAllergy'); // 선택한 취향 콘솔 출력 (확인용)
+                          patchAllergies(allergy);
+                          print('userAllergies : $_selectedAllergy');
                           Navigator.pushReplacementNamed(context, '/BottomMenu');
                         } else {
                           showDialog(

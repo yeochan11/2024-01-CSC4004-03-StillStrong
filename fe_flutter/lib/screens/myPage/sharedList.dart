@@ -9,46 +9,8 @@ class SharedListPage extends StatefulWidget {
 
 class _SharedListPageState extends State<SharedListPage> {
   SharedList? sharedList;
-  // 임시 데이터
-  // SharedList sharedList = SharedList(
-  //   pendingRequests: [
-  //     SharedData(
-  //       refrigeId: 2,
-  //       createUserNickname: "나",
-  //       requestUserNickname: "다른 유저",
-  //       refrigeName: "요청한 냉장고",
-  //       status: false,
-  //     ),
-  //   ],
-  //   receivedRequests: [
-  //     SharedData(
-  //       refrigeId: 4,
-  //       createUserNickname: "나",
-  //       requestUserNickname: "다른 유저",
-  //       refrigeName: "요청받은 냉장고",
-  //       status: false,
-  //     ),
-  //     SharedData(
-  //       refrigeId: 9,
-  //       createUserNickname: "나",
-  //       requestUserNickname: "다른 유저",
-  //       refrigeName: "거절할 냉장고",
-  //       status: false,
-  //     ),
-  //   ],
-  //   acceptedRequests: [
-  //     SharedData(
-  //       refrigeId: 3,
-  //       createUserNickname: "나",
-  //       requestUserNickname: "다른 유저",
-  //       refrigeName: "공유 중 냉장고",
-  //       status: true,
-  //     ),
-  //   ],
-  // );
   bool isCanceled = false;
 
-  // 공유 목록 get
   @override
   void initState() {
     super.initState();
@@ -76,7 +38,7 @@ class _SharedListPageState extends State<SharedListPage> {
         ),
         body: Center(
             child: sharedList == null
-                ? Text('목록이 없습니다.',  // 목록 없을 경우
+                ? Text('목록이 없습니다.',
                     style: TextStyle(
                       fontFamily: 'Pretendard',
                       fontSize: 14,
@@ -179,9 +141,6 @@ class _SharedListPageState extends State<SharedListPage> {
                           isCanceled = true;
                         });
                       });
-                      // setState(() {
-                      //   isCanceled = true;
-                      // });
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           backgroundColor: const Color(0xffF6A90A),

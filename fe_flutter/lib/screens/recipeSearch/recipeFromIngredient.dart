@@ -19,7 +19,6 @@ class _RecipeFromIngredientState extends State<RecipeFromIngredient> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Image.asset('assets/images/yorijori.png', scale: 1.5),
         leading: IconButton(

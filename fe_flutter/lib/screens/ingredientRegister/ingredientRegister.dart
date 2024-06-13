@@ -31,7 +31,6 @@ class _IngredRegPageState extends State<IngredRegPage> {
     IngredientList();
   }
 
-  // 재료 목록 가져오는 함수
   void IngredientList() async {
     List<String> ingredients = await getIngredientList();
     print('Ingredient list : $ingredients');
@@ -95,7 +94,6 @@ class _IngredRegPageState extends State<IngredRegPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        // 재료 사진
                         width: 72,
                         height: 72,
                         color: Colors.grey,
@@ -278,8 +276,7 @@ class _IngredRegPageState extends State<IngredRegPage> {
               child: TextButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save(); // 입력값 가져오기
-                    // 재료 인스턴스 생성
+                    _formKey.currentState!.save();
                     IngredReg ingredReg = IngredReg(
                       ingredientName: _ingredNameController.text,
                       ingredientNum: int.parse(_ingredNumController.text),
@@ -288,8 +285,7 @@ class _IngredRegPageState extends State<IngredRegPage> {
                       ingredientMemo: _ingredMemoController.text,
                       ingredientPlace: _ingredPlace,
                     );
-                    registerIngredient(ingredReg, widget.currentRefrigeId); // 재료 등록 api 호출
-                    // 콘솔 출력(확인용)
+                    registerIngredient(ingredReg, widget.currentRefrigeId);
                     print('name : ${ingredReg.ingredientName}\n'
                         'num : ${ingredReg.ingredientNum}\n'
                         'createDate : ${ingredReg.createdDate}\n'

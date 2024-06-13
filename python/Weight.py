@@ -11,10 +11,10 @@ class RecommendModel:
     def __init__(self, ingredientModel, userModel, NeuralNetwork=None):
         if NeuralNetwork is None:
             self.NeuralNetwork = Sequential([
-                Input(shape=(3,)), 
-                Dense(9, activation='relu'),
-                Dense(81, activation='relu'),
-                Dense(9, activation='relu'),
+                Input(shape=(2,)), 
+                Dense(8, activation='relu'),
+                Dense(64, activation='relu'),
+                Dense(8, activation='relu'),
                 Dense(1, activation='sigmoid')
             ])
             self.NeuralNetwork.compile(
@@ -30,17 +30,18 @@ class RecommendModel:
 
         self.feedback = []
 
-        self.host = 'localhost'
+        self.host = 'still88db.cbaamqy88abn.ap-northeast-2.rds.amazonaws.com'
         self.user = 'root'
-        self.password = 'zpalq,123098!@#'
+        self.password = ''
         self.db = 'still88'
 
     def recommend(self, ingredientList, userId):
         ingredientScore = np.array(self.ingredientModel.recommend(ingredientList)).reshape(997,1)
         userScore = np.array(self.userModel.recommend(userId)).reshape(997, 1)
-
-        input_data = np.hstack([userScore, ingredientScore, self.ageWeight.reshape(997, 1)])
+    
+        input_data = np.hstack([userScore, ingredientScore])
         result = self.NeuralNetwork.predict(input_data, verbose=0)
+        result = result * self.ageWeight.reshape(997, 1)
         result_flat = result.flatten()
         final_score = np.argsort(result_flat)[::-1]
 
@@ -77,6 +78,7 @@ class RecommendModel:
         return positive / total
     
     def __updateAge(self, recommend_index):
+        recommend_index = [r -1 for r in recommend_index]
         self.ageWeight[recommend_index] = 0.
         for i in range(997):
             if not i in recommend_index:

@@ -23,7 +23,6 @@ class _IngredientMoreInformationState extends State<IngredientMoreInformation> {
     super.initState();
       refrigeId = widget.refrigeId;
       ingredientName = widget.ingredientName;
-      //선택한 식재료의 정보가 제대로 나오는지 테스트, 에뮬레이터 화면말고 print로 출력되는 값 확인해주세요.
       print('MoreInfo Page Test : ${refrigeId}   ${ingredientName}');
   }
 
@@ -55,7 +54,7 @@ class _IngredientMoreInformationState extends State<IngredientMoreInformation> {
                   return Column(
                     children: <Widget>[
                       const SizedBox(height: 40),
-                      Container( // 임시
+                      Container(
                         width: 350,
                         height: 280,
                         decoration: BoxDecoration(
@@ -69,7 +68,7 @@ class _IngredientMoreInformationState extends State<IngredientMoreInformation> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Container( // 재료 사진
+                                Container(
                                   width: 100,
                                   height: 100,
                                   color: Colors.grey,
@@ -212,7 +211,6 @@ class _IngredientMoreInformationState extends State<IngredientMoreInformation> {
                                 MaterialPageRoute(builder: (context) =>
                                     IngredientEdit(info: info, refrigeId: refrigeId))
                             );
-                            // debugPrint("TEST AWAIT");
                             setState(() {
                               fetchIngredientsInfo(refrigeId, ingredientName);
                             });

@@ -88,10 +88,10 @@ class _UpdatePwPageState extends State<UpdatePwPage> {
                           child: TextButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                _formKey.currentState!.save(); // 입력값 가져오기
+                                _formKey.currentState!.save();
                                 updatePassword = _passwordController.text;
                                 confirmPassword = _passwordcheckController.text;
-                                updatePw(updatePassword, confirmPassword); // 비밀번호 재설정 api
+                                updatePw(updatePassword, confirmPassword);
                                 print('updatepw: ${updatePassword}');
                                 Navigator.pushReplacementNamed(context, '/login');
                               };

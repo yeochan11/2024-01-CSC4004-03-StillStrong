@@ -3,11 +3,10 @@ import 'dart:convert';
 import 'package:fe_flutter/model/userModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// 로그인
 Future<String?> login(User user) async {
   try {
     final response = await http.post(
-      Uri.parse('http://localhost:8080/login'),
+      Uri.parse('http://3.35.140.200:8080/login'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },
@@ -15,9 +14,8 @@ Future<String?> login(User user) async {
     );
     if (response.statusCode == 200) {
       final SharedPreferences pref = await SharedPreferences.getInstance();
-      Map<String, dynamic> responseData = jsonDecode(response.body); // response body JSON으로 디코딩
+      Map<String, dynamic> responseData = jsonDecode(response.body);
 
-      // 받은 데이터 저장
       int userId = responseData['userId'];
       String cookieValue = responseData['cookieValue'];
       pref.setInt("userId", userId);
@@ -39,20 +37,19 @@ Future<String?> login(User user) async {
   }
 }
 
-// 회원가입
 Future<void> join(User user) async {
   try {
     final response = await http.post(
-      Uri.parse('http://localhost:8080/join'),
+      Uri.parse('http://3.35.140.200:8080/join'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },
       body: jsonEncode(user.toJson()),
     );
     if (response.statusCode == 200) {
-      Map<String, dynamic> responseData = jsonDecode(response.body); // response body JSON으로 디코딩
+      Map<String, dynamic> responseData = jsonDecode(response.body);
       final SharedPreferences pref = await SharedPreferences.getInstance();
-      // 받은 데이터 저장
+
       int userId = responseData['userId'];
       String userNickname = responseData['userNickname'];
       String cookieValue = responseData['cookieValue'];
@@ -69,13 +66,12 @@ Future<void> join(User user) async {
   }
 }
 
-// 취향 등록
 Future<void> patchFavorites(Map<String, dynamic> favorite) async {
   try {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     int? userId = pref.getInt("userId");
     final response = await http.patch(
-      Uri.parse('http://localhost:8080/user/register/favorite?userId=$userId'),
+      Uri.parse('http://3.35.140.200:8080/user/register/favorite?userId=$userId'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },
@@ -92,10 +88,9 @@ Future<void> patchFavorites(Map<String, dynamic> favorite) async {
   }
 }
 
-// 알러지 목록 get
 Future<List<String>> getAllergies() async {
   try {
-    final response = await http.get(Uri.parse('http://localhost:8080/user/get/allergyList'));
+    final response = await http.get(Uri.parse('http://3.35.140.200:8080/user/get/allergyList'));
     if (response.statusCode == 200) {
       final decodeData = utf8.decode(response.bodyBytes);
       final Map<String, dynamic> data = jsonDecode(decodeData);
@@ -109,13 +104,12 @@ Future<List<String>> getAllergies() async {
   }
 }
 
-// 알러지 등록
 Future<void> patchAllergies(Map<String, dynamic> allergy) async {
   try {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     int? userId = pref.getInt("userId");
     final response = await http.patch(
-      Uri.parse('http://localhost:8080/user/register/allergy?userId=$userId'),
+      Uri.parse('http://3.35.140.200:8080/user/register/allergy?userId=$userId'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },
@@ -132,11 +126,10 @@ Future<void> patchAllergies(Map<String, dynamic> allergy) async {
   }
 }
 
-// 비밀번호 찾기
 Future<void> findPw(User user) async {
   try {
     final response = await http.post(
-      Uri.parse('http://localhost:8080/find-pw'),
+      Uri.parse('http://3.35.140.200:8080/find-pw'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -162,7 +155,7 @@ Future<void> updatePw(String updatePassword, String confirmPassword) async {
     };
 
     final response = await http.post(
-      Uri.parse('http://localhost:8080/update-pw?userId=$userId'),
+      Uri.parse('http://3.35.140.200:8080/update-pw?userId=$userId'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -178,14 +171,13 @@ Future<void> updatePw(String updatePassword, String confirmPassword) async {
   }
 }
 
-// 마이페이지 유저 정보 get
 Future<User> getUserInfo() async {
   try {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     int? userId = pref.getInt("userId");
 
     final response = await http.get(
-      Uri.parse('http://localhost:8080/user/get/detail?userId=$userId'),
+      Uri.parse('http://3.35.140.200:8080/user/get/detail?userId=$userId'),
     );
 
     if (response.statusCode == 200) {
@@ -199,11 +191,10 @@ Future<User> getUserInfo() async {
   }
 }
 
-// 유저 정보 수정
 Future<void> patchUser(User user) async {
   final SharedPreferences pref = await SharedPreferences.getInstance();
   int? userId = pref.getInt("userId");
-  String uri = 'http://localhost:8080/user/update?userId=$userId';
+  String uri = 'http://3.35.140.200:8080/user/update?userId=$userId';
   print(uri);
 
   final request = await http.patch(
@@ -221,13 +212,12 @@ Future<void> patchUser(User user) async {
   }
 }
 
-//로그아웃
 Future<void> logout() async {
   try {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     int? userId = pref.getInt("userId");
     final response = await http.get(
-      Uri.parse('http://localhost:8080//logout?userId=${userId}'),
+      Uri.parse('http://3.35.140.200:8080//logout?userId=${userId}'),
     );
 
     if (response.statusCode == 200) {

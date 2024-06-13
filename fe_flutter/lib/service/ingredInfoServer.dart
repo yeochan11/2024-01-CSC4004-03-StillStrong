@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<Map<String, dynamic>> fetchIngredientsInfo(int refrigeId, String ingredientName) async {
-  String uri = 'http://localhost:8080/refrige/ingredient/$refrigeId?ingredientName=$ingredientName';
+  String uri = 'http://3.35.140.200:8080/refrige/ingredient/$refrigeId?ingredientName=$ingredientName';
   final response = await http.get(Uri.parse(uri));
   print(response.body);
   if (response.statusCode == 200) {
@@ -17,7 +17,7 @@ Future<Map<String, dynamic>> fetchIngredientsInfo(int refrigeId, String ingredie
 }
 
 Future<void> deleteIngredientInfo(int refrigeId, int ingredientId) async {
-  String uri = 'http://localhost:8080/refrige/ingredient/delete/${refrigeId}/${ingredientId}'; //TODO: API 테스트시 이 주소를 이용해주세요.
+  String uri = 'http://3.35.140.200:8080/refrige/ingredient/delete/${refrigeId}/${ingredientId}';
   final response = await http.delete(Uri.parse(uri));
   if (response.statusCode == 200) {
     print('Delect Sucessful');
@@ -28,7 +28,7 @@ Future<void> deleteIngredientInfo(int refrigeId, int ingredientId) async {
 
 Future<void> patchIngredient(IngredientMoreInfoModel info, int refrigeId) async {
   print('${info.ingredientId}        ${refrigeId}');
-  String uri = 'http://localhost:8080/refrige/ingredient/$refrigeId/${info.ingredientId}/edit'; //TODO: API 테스트시 이 주소를 이용해주세요.
+  String uri = 'http://3.35.140.200:8080/refrige/ingredient/$refrigeId/${info.ingredientId}/edit';
   print(uri);
 
   final request = await http.patch(

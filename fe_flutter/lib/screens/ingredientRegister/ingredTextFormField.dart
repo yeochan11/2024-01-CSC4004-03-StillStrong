@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 enum InputType { text, number, date }
@@ -35,7 +34,6 @@ Widget ingredTextFormField({
       controller: controller,
       validator: validator != null
           ? (value) {
-        // 내부, 외부 validator 모두 수행
         final internalResult = validator!(value);
         if (internalResult != null) {
           return internalResult;

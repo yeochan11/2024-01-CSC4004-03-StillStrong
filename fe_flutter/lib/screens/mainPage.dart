@@ -10,10 +10,7 @@ class MainPage extends StatelessWidget {
   const MainPage({super.key});
   @override
   Widget build(BuildContext context) {
-    //final user = Provider.of<UserProvider>(context).user; // 유저 정보 불러오기
     String searchRecipe = '';
-
-    //API로 값을 가져왔다고 가정
 
     return Scaffold(
       appBar: AppBar(
@@ -27,7 +24,7 @@ class MainPage extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator(),);
             } else {
-              mainPageModel info = mainPageModel(snapshot.data); // API로 받은 데이터
+              mainPageModel info = mainPageModel(snapshot.data);
               return SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Column(
@@ -35,7 +32,7 @@ class MainPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 20,),
-                    Padding( //레시피 검색 위젯
+                    Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: SearchBar(
                         trailing: [
@@ -90,10 +87,7 @@ class MainPage extends StatelessWidget {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20.0),
                               child: Image.network(
-                                //TODO: API 주소 설정하면 이 값을 이용
                                 info.MainRecipeImage,
-                                //TODO: 임시 이미지입니다. API 주소 설정 후 주석 처리 해주세요.
-                                //'https://recipe1.ezmember.co.kr/cache/recipe/2022/09/30/8e7eb8e3019532a8dc6d39a9a325aad41.jpg',
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -187,7 +181,6 @@ class MainPage extends StatelessWidget {
     );
   }
 
-  // 서브 레시피 생성 함수
   Widget _makeSubRecipeBox(String subRecipeImage, String subRecipeCategory, String subRecipeName, BuildContext context) {
     return Row(
       children: [
@@ -211,10 +204,7 @@ class MainPage extends StatelessWidget {
             child: Column(
               children: [
                 Image.network(
-                  //TODO: API 주소 설정하면 이 값을 이용
                   subRecipeImage,
-                  //TODO: 임시 이미지입니다. API 주소 설정 후 주석 처리 해주세요.
-                  //'https://recipe1.ezmember.co.kr/cache/recipe/2022/09/30/8e7eb8e3019532a8dc6d39a9a325aad41.jpg',
                   width: 230,
                   height: 200,
                   fit: BoxFit.cover,

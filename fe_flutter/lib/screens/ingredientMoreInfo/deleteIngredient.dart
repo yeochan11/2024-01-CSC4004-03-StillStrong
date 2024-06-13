@@ -15,7 +15,7 @@ void deleteIngredient(BuildContext context, int refrigeId, int ingredientId) {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text( //텍스트 위치 조정
+            Text(
               "정말 삭제하시겠습니까?",
             ),
           ],

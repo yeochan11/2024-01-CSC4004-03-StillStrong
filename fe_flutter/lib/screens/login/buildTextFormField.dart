@@ -16,7 +16,6 @@ Widget buildTextFormField({
       obscureText: isPassword,
       validator: validator != null
           ? (value) {
-            // 내부, 외부 validator 모두 수행
             final internalResult = validator!(value);
             if (internalResult != null) {
               return internalResult;

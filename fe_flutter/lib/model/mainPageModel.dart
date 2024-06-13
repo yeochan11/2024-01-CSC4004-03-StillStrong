@@ -7,13 +7,11 @@ class mainPageModel {
   List<String> SubRecipeName = ["김치찌개", "초밥", "짜장면", "파스타", "라멘"];
 
   mainPageModel(Map<String, dynamic>? data) {
-    // TODO: API 주소 설정했으면 밑에 주석 해제.
     MainRecipeImage = data?['mainRecipeImage'] ?? "http//~/";
     MainRecipeName = data?['mainRecipeName'] ?? "스파게티";
     SubRecipeImage = _convertToStringList(data?['subRecipeImage']) ?? ["http//~/1", "http//~/2", "http//~/3", "http//~/4", "http//~/5"];
     SubRecipeCategory = _convertToStringList(data?['subRecipeCategory']) ?? ["한식", "일식", "중식", "양식", "일식"];
     SubRecipeName = _convertToStringList(data?['subRecipeName']) ?? ["김치찌개", "초밥", "짜장면", "파스타", "라멘"];
-    // MainRecipeImage = data?['body']; // TODO: 이건 주석 처리해주세요.
   }
 
   List<String>? _convertToStringList(List<dynamic>? list) {

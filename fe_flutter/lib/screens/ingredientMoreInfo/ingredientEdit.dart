@@ -12,7 +12,6 @@ class IngredientEdit extends StatefulWidget {
 }
 
 class _IngredientEditState extends State<IngredientEdit> {
-//TEST
   late IngredientMoreInfoModel info;
   late int refrigeId;
   final List<bool> _isSelected = [false, false, false];
@@ -26,7 +25,7 @@ class _IngredientEditState extends State<IngredientEdit> {
 
   @override
   Widget build(BuildContext context) {
-    for (int i = 0; i < 3; i++) { // 초기 보관 상태 지정하는 부분
+    for (int i = 0; i < 3; i++) {
       if (info.ingredientPlace.compareTo(_ingredientPlaceList[i]) == 0) {
         _isSelected[i] = true;
       }
@@ -62,14 +61,14 @@ class _IngredientEditState extends State<IngredientEdit> {
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Container( // 재료 사진
+                            Container(
                               width: 100,
                               height: 100,
                               color: Colors.grey,
                             ),
                             Column(
                               children: [
-                                ToggleButtons( // 보관 장소 지정 버튼
+                                ToggleButtons(
                                   disabledColor: Colors.white,
                                   renderBorder: false,
                                   borderRadius: BorderRadius.circular(10),
@@ -110,7 +109,7 @@ class _IngredientEditState extends State<IngredientEdit> {
                       Column(
                         children: [
                           const SizedBox(height: 15),
-                          TextFormField( // 이름 버튼
+                          TextFormField(
                             initialValue: info.ingredientName,
                             onChanged: (value) {
                               setState(() {
@@ -210,7 +209,7 @@ class _IngredientEditState extends State<IngredientEdit> {
                             ),
                           ),
                           const SizedBox(height: 10,),
-                          OutlinedButton(onPressed: () async { // 등록날짜 버튼
+                          OutlinedButton(onPressed: () async {
                             final DateTime? selectDate = await showDatePicker(
                               context: context,
                               initialDate: DateTime.parse(info.createdDate),
@@ -245,7 +244,7 @@ class _IngredientEditState extends State<IngredientEdit> {
                               )
                           ),
                           const SizedBox(height: 10),
-                          OutlinedButton(onPressed: () async { // 유통기한 버튼
+                          OutlinedButton(onPressed: () async {
                             final DateTime? selectDate = await showDatePicker(
                               context: context,
                               initialDate: DateTime.parse(info.ingredientDeadLine),
@@ -311,7 +310,7 @@ class _IngredientEditState extends State<IngredientEdit> {
                   ),
                 ),
                 const SizedBox(height: 20,),
-                ElevatedButton( //완료 버튼
+                ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
                           const Color(0xffFFC94A)),
@@ -325,7 +324,6 @@ class _IngredientEditState extends State<IngredientEdit> {
                           SnackBar(content: Text('Patch failed: $e'),),
                         );
                       }
-                      // 값 변경 테스트용
                       debugPrint('Current Place : ${info.ingredientPlace}');
                       debugPrint('Current Name : ${info.ingredientName}');
                       debugPrint('Current Number : ${info.ingredientNum}');

@@ -104,16 +104,15 @@ class _LoginPageState extends State<LoginPage> {
                         child: TextButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              _formKey.currentState!.save(); // 입력값 가져오기
-                              // 유저 인스턴스 생성
+                              _formKey.currentState!.save();
                               User user = User(
                                 secretEmail: _emailController.text,
                                 secretPassword: _passwordController.text,
                               );
                               login(user).then((value) {
-                                if (value != null) { // 로그인 성공
-                                  Provider.of<UserProvider>(context, listen: false).setUser(user); // 유저 정보 provider에 설정
-                                  print('id : ${user.secretEmail}\npw : ${user.secretPassword}'); // 유저 정보 콘솔 출력 (확인용)
+                                if (value != null) {
+                                  Provider.of<UserProvider>(context, listen: false).setUser(user);
+                                  print('id : ${user.secretEmail}\npw : ${user.secretPassword}');
                                   Navigator.pushNamed(context, '/BottomMenu');
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(

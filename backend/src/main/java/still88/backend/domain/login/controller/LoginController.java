@@ -50,6 +50,7 @@ public class LoginController {
                     .build();
 
             HttpHeaders headers = new HttpHeaders();
+            log.info("회원가입 성공");
             return ResponseEntity.ok().headers(headers).body(response);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -70,7 +71,7 @@ public class LoginController {
     public ResponseEntity<?> find_pw(@RequestBody FindPasswordRequestDTO request){
         try {
             Cookie cookie = loginService.findPasswordValidate(request);
-            log.info("cookie value = {}", cookie.getValue());
+            log.info("userId = {}, find pw", cookie.getValue());
             return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body("비밀번호 수정으로 이동합니다");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

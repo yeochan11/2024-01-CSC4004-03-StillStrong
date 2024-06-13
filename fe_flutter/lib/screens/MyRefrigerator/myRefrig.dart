@@ -21,7 +21,7 @@ class MyRefrigPageState extends State<MyRefrigPage> {
 
   late Future<Map<String, dynamic>> itemsFuture;
   static int currentRefrigeId = 7;
-  List<String> newItems = ["기본 냉장고"]; // 기본값으로 초기화합니다.
+  List<String> newItems = ["기본 냉장고"];
   static List<String> ingredients = [];
   static List<int> ingredientDeadlines = [];
   static List<Refrige> refrigeList = [];
@@ -75,7 +75,6 @@ class MyRefrigPageState extends State<MyRefrigPage> {
                     var currentRefrige = refrigeList.firstWhere((refrige) => refrige.refrigeId == currentRefrigeId);
                     ingredients = currentRefrige.ingredientNames;
                     ingredientDeadlines = currentRefrige.ingredientDeadlines;
-                    // 콘솔에 출력하여 확인
                     print('Selected Refrigerator ID: $currentRefrigeId');
                     print('Selected Refrigerator Name: $selectedName');
                     print('Ingredients: $ingredients');
@@ -156,14 +155,12 @@ class MyRefrigPageState extends State<MyRefrigPage> {
                 ListTile(
                   title: Text('영수증 인식'),
                   onTap: () {
-                    // '영수증 인식'을 선택하면 다음 페이지로 이동
                     Navigator.pop(context);
                   },
                 ),
                 ListTile(
                   title: Text('직접 입력하기'),
                   onTap: () {
-                    // '직접 입력하기'를 선택하면 다음 페이지로 이동
                     Navigator.pop(context);
                     Navigator.pushNamed(context, '/IngredReg'
                     );
@@ -211,7 +208,6 @@ class IngredientWidget extends StatefulWidget {
 
 class _IngredientWidgetState extends State<IngredientWidget> {
   bool isIngredientSelect = false;
-  //List<dynamic> ingredients = MyRefrigPageState.refrigeList.map<String>((refrige) => refrige.ingredientNames as String).toList();
   void toggleIngredientSelect() {
     setState(() {
       isIngredientSelect = !isIngredientSelect;
@@ -238,7 +234,6 @@ class _IngredientWidgetState extends State<IngredientWidget> {
                 spacing: 4.0,
                 runSpacing: 4.0,
                 children: List.generate(ingredients.length, (index) {
-                  // ingredientDeadlines와 길이가 같지 않은 경우에 대한 안전한 접근
                   int expDate = index < MyRefrigPageState.ingredientDeadlines.length ? MyRefrigPageState.ingredientDeadlines[index] : 0;
                   return IngredIconButton(
                     buttonText: ingredients[index],
@@ -246,7 +241,6 @@ class _IngredientWidgetState extends State<IngredientWidget> {
                     icon: Image.asset('assets/images/ingredient.png'),
                     onPressed: (isIngredientSelect, isPressed, buttonText) {
                       if (!isIngredientSelect) {
-                        //MyRefrigPageState instance = MyRefrigPageState();
                         widget.showInfo(MyRefrigPageState.currentRefrigeId, buttonText);
                       }
                     },

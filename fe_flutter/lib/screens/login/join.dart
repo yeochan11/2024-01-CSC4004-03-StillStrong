@@ -84,7 +84,6 @@ class _JoinPageState extends State<JoinPage> {
                                 value: e == '남자',
                                 child: SizedBox(
                                   width: 300.0,
-                                  //height: 46.0,
                                   child : Text(e),
                                   ),
                                   ))
@@ -184,9 +183,8 @@ class _JoinPageState extends State<JoinPage> {
                             child: TextButton(
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
-                                  _formKey.currentState!.save(); // 입력값 가져오기
-                                  int userAge = int.parse(_ageController.text); // 나이값 int로 변환
-                                  // 유저 인스턴스 생성
+                                  _formKey.currentState!.save();
+                                  int userAge = int.parse(_ageController.text);
                                   User user = User(
                                     secretEmail: _emailController.text,
                                     userGender: _selectedSex,
@@ -194,9 +192,9 @@ class _JoinPageState extends State<JoinPage> {
                                     secretPassword: _passwordController.text,
                                     userAge: userAge,
                                   );
-                                  join(user); // 회원가입 api 호출
-                                  Provider.of<UserProvider>(context, listen: false).setUser(user); // 유저 정보 provider에 설정 (자동로그인)
-                                  print('id : ${user.secretEmail}\npw : ${user.secretPassword}'); // 유저 정보 콘솔 출력 (확인용)
+                                  join(user);
+                                  Provider.of<UserProvider>(context, listen: false).setUser(user);
+                                  print('id : ${user.secretEmail}\npw : ${user.secretPassword}');
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       backgroundColor: const Color(0xffF6A90A),

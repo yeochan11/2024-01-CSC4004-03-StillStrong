@@ -19,21 +19,18 @@ public class UserController {
 
     private final UserService userService;
 
-    // 사용자 정보 조회
     @GetMapping("/get/detail")
     public ResponseEntity<?> getUserDetail(@RequestParam int userId) {
         log.info("userId = {}의 회원 정보 조회", userId);
         return ResponseEntity.ok(userService.getUserDetail(userId));
     }
 
-    // 사용자 정보 수정
     @PatchMapping("/update")
     public ResponseEntity<?> updateUserDetail(@RequestParam int userId, @RequestBody UpdateUserDetailRequestDto updateUserDetailRequestDto) {
         log.info("userId = {}의 회원 정보 수정", userId);
         return ResponseEntity.ok(userService.updateUserDetail(userId, updateUserDetailRequestDto));
     }
 
-    // 취향 등록
     @PatchMapping("/register/favorite")
     public ResponseEntity<?> registerUserFavorites(@RequestParam int userId, @RequestBody RegisterFavoriteRequestDto registerFavoriteRequestDto) {
         try {
@@ -44,7 +41,6 @@ public class UserController {
         }
     }
 
-    // 알러지 등록
     @PatchMapping("/register/allergy")
     public ResponseEntity<?> registerUserAllergies(@RequestParam int userId, @RequestBody RegisterAllergyRequestDto registerAllergyRequestDto) {
         try {
@@ -55,7 +51,6 @@ public class UserController {
         }
     }
 
-    // 알러지 조회
     @GetMapping("/get/allergy")
     public ResponseEntity<?> getUserAllergy(@RequestParam int userId) {
         try {
@@ -66,8 +61,6 @@ public class UserController {
         }
     }
 
-
-    //알러지 전체 조회
     @GetMapping("/get/allergyList")
     public ResponseEntity<?> getAllergy(){
         try{

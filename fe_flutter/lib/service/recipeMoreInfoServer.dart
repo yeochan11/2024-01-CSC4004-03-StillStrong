@@ -2,8 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 Future<Map<String,dynamic>> fetchRecipeMoreInfo(String recipeName) async {
-   // String uri = 'https://jsonplaceholder.typicode.com/posts/1'; // 테스트 주소
-  String uri = 'http://localhost:8080/recommend/recipe/get/detail?recipeName=${recipeName}'; //TODO: API 테스트시 이 주소를 이용해주세요.
+  String uri = 'http://3.35.140.200:8080/recommend/recipe/get/detail?recipeName=${recipeName}';
   final response = await http.get(Uri.parse(uri));
   if (response.statusCode == 200) {
     final decodeData = utf8.decode(response.bodyBytes);
@@ -18,8 +17,7 @@ Future<void> postRecipeFeedback(bool satisfied) async {
   Map<String,dynamic> data = {};
   data['feedback'] = satisfied;
   print(data);
-  //String uri = 'https://jsonplaceholder.typicode.com/posts/';
-  String uri = 'http://localhost:8080/recommend/recipe/feedback';
+  String uri = 'http://3.35.140.200:8080/recommend/recipe/feedback';
   final response = await http.post(Uri.parse(uri),
     headers: <String, String>{
     'Content-Type': 'application/json',

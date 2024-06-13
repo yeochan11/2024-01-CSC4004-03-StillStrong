@@ -7,18 +7,18 @@ from Weight import RecommendModel
 import tensorflow as tf
 import atexit
 
-NeuralNetwork = tf.keras.models.load_model('python\\recommend_model_NeuralNetwork.h5')
+NeuralNetwork = tf.keras.models.load_model('recommend_model_NeuralNetwork.h5')
 NeuralNetwork.compile(
                 optimizer='adam',
                 loss=tf.keras.losses.MeanSquaredError(),
                 metrics=['accuracy']
             )
 
-pickle_path = "python\\ingredient_based_recommend_model.pkl"
+pickle_path = "ingredient_based_recommend_model.pkl"
 with open(pickle_path, 'rb') as file:
     ingredient_model = pickle.load(file)
 
-pickle_path = "python\\user_based_recommend_model.pkl"
+pickle_path = "user_based_recommend_model.pkl"
 with open(pickle_path, 'rb') as file:
     user_model = pickle.load(file)
 
@@ -88,7 +88,7 @@ def provide_feedback():
 def saveModel():
     print("model score : ", model.score() * 100)
     print("saving model.\n\n")
-    model.save("python\\recommend_model_NeuralNetwork.h5")
+    model.save("recommend_model_NeuralNetwork.h5")
 
 atexit.register(saveModel)
     

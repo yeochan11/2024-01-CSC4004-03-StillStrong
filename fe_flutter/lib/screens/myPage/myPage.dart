@@ -14,7 +14,6 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> {
   User? user;
 
-  // 유저 정보 가져오는 함수
   @override
   void initState() {
     super.initState();
@@ -57,7 +56,6 @@ class _MyPageState extends State<MyPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(height: 60,),
-            // 프로필 사진 표시
             ClipOval(
               child: Image.network(
                 user?.userImage?.isNotEmpty == true
@@ -354,7 +352,7 @@ class _MyPageState extends State<MyPage> {
                   child: TextButton(
                     onPressed: () {
                       logout();
-                      Provider.of<UserProvider>(context, listen: false).clearUser(); // provider 유저 정보 삭제
+                      Provider.of<UserProvider>(context, listen: false).clearUser();
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>
                               WelcomePage())
@@ -378,7 +376,6 @@ class _MyPageState extends State<MyPage> {
                 ),
               ],
             ),
-            //SizedBox(height: 20,)
           ],
         ),
       ),

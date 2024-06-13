@@ -49,7 +49,6 @@ class _MyPageEditState extends State<MyPageEdit> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(height: 60,),
-            //프로필 사진 표시
             Stack(
               children: [
                 ClipOval(
@@ -66,7 +65,7 @@ class _MyPageEditState extends State<MyPageEdit> {
                 Positioned(
                   bottom: 0,
                   right: 0,
-                  child: InkWell( // TODO: 프로필 사진 수정 추가하겠습니다.
+                  child: InkWell(
                     onTap: () {
                       print('Image Selected');
                     },
@@ -105,16 +104,13 @@ class _MyPageEditState extends State<MyPageEdit> {
                       ),
                     ),
                     TextFormField(
-                      //readOnly: true,
                       onChanged: (value) {
                         setState(() {
                           user.userNickname = value;
                         });
-                       // print(user.userNickname);
                       },
                       initialValue: user.userNickname,
                       decoration: InputDecoration(
-                        //labelText: '${user!.userNickname}',
                         labelStyle: TextStyle(
                           fontFamily: 'Pretendard',
                           fontSize: 14,
@@ -150,16 +146,13 @@ class _MyPageEditState extends State<MyPageEdit> {
                       ),
                     ),
                     TextFormField(
-                      //readOnly: true,
                       onChanged: (value) {
                         setState(() {
                           user.secretEmail = value;
                         });
-                        //print(user.secretEmail);
                       },
                       initialValue: user.secretEmail,
                       decoration: InputDecoration(
-                        //labelText: '${user!.secretEmail}',
                         labelStyle: TextStyle(
                           fontFamily: 'Pretendard',
                           fontSize: 14,
@@ -198,7 +191,7 @@ class _MyPageEditState extends State<MyPageEdit> {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        ToggleButtons( // 보관 장소 지정 버튼
+                        ToggleButtons(
                           disabledColor: Colors.white,
                           renderBorder: false,
                           borderWidth: 0,
@@ -222,8 +215,6 @@ class _MyPageEditState extends State<MyPageEdit> {
                                 _isSelectedGender[1] = true;
                                 user.userGender = false;
                               }
-                              //print(_isSelectedGender);
-                              //print(user.gender);
                             });
                           },
                           children: const [
@@ -256,7 +247,6 @@ class _MyPageEditState extends State<MyPageEdit> {
                           ),
                         ),
                         TextFormField(
-                          //readOnly: true,
                           onChanged: (value) {
                             setState(() {
                               user.userAge = int.parse(value);
@@ -336,11 +326,6 @@ class _MyPageEditState extends State<MyPageEdit> {
                       SnackBar(content: Text('Patch failed: $e'),),
                     );
                   }
-                  // print(user.userNickname);
-                  // print(user.secretEmail);
-                  // print(user.gender);
-                  // print(user.userAge);
-                  // print(user.alarm);
                   Navigator.pop(context);
                 },
                 style: TextButton.styleFrom(
