@@ -127,6 +127,14 @@
 ## 📷 시연 영상
 - 링크 : https://youtu.be/emTBabA_4Ss?si=bShfNS3mdu5jsvgg
 
+<br>
+
+## 📢 배포 URL
+https://ohgwanghoon.github.io/yorijori/ <br>
+- chrome 설정 -> 설정 -> 보안 -> 고급 -> 항상 보안 연결 사용
+
+<br>
+
 ## 📁 프로젝트 파일 구조
 ```
 ├── main
