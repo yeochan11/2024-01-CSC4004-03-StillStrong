@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CookieValue;
 import still88.backend.dto.ingredient.EditIngredientRequestDTO;
 import still88.backend.dto.ingredient.IngredientDetailResponseDTO;
+import still88.backend.dto.ingredient.IngredientNamesResponseDTO;
 import still88.backend.repository.*;
 import still88.backend.dto.ingredient.RegisterIngredientDTO;
 import still88.backend.entity.*;
 import still88.backend.repository.IngredientRepository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -28,14 +30,19 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     public void registerIngredient(int refrigeId, RegisterIngredientDTO request, String userId) {
         try {
+            User user = userRepository.findUserByUserId(Integer.parseInt(userId));
             RefrigeList refrigeList = refrigeListRepository.findByRefrigeId(refrigeId);
             String ingredientName = request.getIngredientName();
             Ingredient ingredient = ingredientRepository.findIngredientByIngredientName(ingredientName);
-            User user = userRepository.findUserByUserId(Integer.parseInt(userId));
             LocalDate createdDate = request.getCreatedDate();
+
             int ingredientNum = request.getIngredientNum();
             String ingredientPlace = request.getIngredientPlace();
-            LocalDate ingredientDeadline = createdDate.plusDays(14);
+            LocalDate ingredientDeadline;
+            if (request.getIngredientDeadline() == null) {
+                ingredientDeadline = createdDate.plusDays(14);
+            }
+            else ingredientDeadline = request.getIngredientDeadline();
             String ingredientMemo = request.getIngredientMemo();
 
             Refrige existingRefrige = refrigeRepository.findByRefrigeListAndIngredient_IngredientName(refrigeList, ingredientName);
@@ -66,27 +73,28 @@ public class IngredientServiceImpl implements IngredientService {
         }
     }
 
+    @Override
+    public IngredientNamesResponseDTO ingredientList() {
+        return IngredientNamesResponseDTO.builder().ingredientList(ingredientRepository.findAllNames()).build();
+    }
 
     @Override
     @Transactional
-    public void deleteIngredient(int refrigeId, int ingredientId, String userId) {
+    public void deleteIngredient(int refrigeId, int ingredientId) {
         try {
             RefrigeList refrigeList = refrigeListRepository.findByRefrigeId(refrigeId);
             Ingredient ingredient = ingredientRepository.findIngredientByIngredientId(ingredientId);
-            User user = userRepository.findUserByUserId(Integer.parseInt(userId));
-            refrigeRepository.deleteRefrigeByRefrigeListAndIngredientAndUser(refrigeList, ingredient, user);
+            refrigeRepository.deleteRefrigeByRefrigeListAndIngredient(refrigeList, ingredient);
         }catch (Exception e){
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public IngredientDetailResponseDTO ingredientDetail(int refrigeId, String ingredientName, String userId) {
+    public IngredientDetailResponseDTO ingredientDetail(int refrigeId, String ingredientName) {
         Ingredient ingredient = ingredientRepository.findIngredientByIngredientName(ingredientName);
         RefrigeList refrigeList = refrigeListRepository.findByRefrigeId(refrigeId);
-        User user = userRepository.findUserByUserId(Integer.parseInt(userId));
-
-        Refrige refrige = refrigeRepository.findRefrigeByRefrigeListAndIngredientAndUser(refrigeList, ingredient, user);
+        Refrige refrige = refrigeRepository.findRefrigeByRefrigeListAndIngredient(refrigeList, ingredient);
 
         String ingredientPlace = refrige.getIngredientPlace();
         LocalDate createdDate = refrige.getCreatedDate();
@@ -98,12 +106,11 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public void editIngredient(int refrigeId, int ingredientId, EditIngredientRequestDTO request, String userId) {
+    public void editIngredient(int refrigeId, int ingredientId, EditIngredientRequestDTO request) {
         RefrigeList refrigeList = refrigeListRepository.findByRefrigeId(refrigeId);
         Ingredient ingredient = ingredientRepository.findIngredientByIngredientId(ingredientId);
-        User user = userRepository.findUserByUserId(Integer.parseInt(userId));
 
-        Refrige refrige = refrigeRepository.findRefrigeByRefrigeListAndIngredientAndUser(refrigeList, ingredient, user);
+        Refrige refrige = refrigeRepository.findRefrigeByRefrigeListAndIngredient(refrigeList, ingredient);
 
         LocalDate createdDate = request.getCreatedDate();
         LocalDate ingredientDeadline = request.getIngredientDeadline();

@@ -4,13 +4,11 @@ import jakarta.persistence.Column;
 import lombok.*;
 
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class GetUserDetailResponseDto {
 
-    private String userId;
 
     private String userNickname;
 

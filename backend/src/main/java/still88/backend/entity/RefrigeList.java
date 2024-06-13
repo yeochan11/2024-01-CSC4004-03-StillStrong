@@ -20,15 +20,12 @@ public class RefrigeList {
     @Column(nullable = false)
     private String refrigeName;
 
-    // 연관 관계 매핑
     @OneToMany(mappedBy = "refrigeList")
     private List<Refrige> refriges = new ArrayList<>();
 
-    // 연관 관계 매핑
     @OneToMany(mappedBy = "refrigeList")
     private List<ShareRefrige> shareRefriges = new ArrayList<>();
 
-    // 연관 관계 매핑
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userId", nullable = false)
     private User user;
@@ -39,7 +36,6 @@ public class RefrigeList {
         this.user = user;
     }
 
-    // 수정 메서드
     public void updateRefrigeName(String refrigeName) {
         this.refrigeName = refrigeName;
     }

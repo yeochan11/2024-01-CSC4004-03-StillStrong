@@ -1,14 +1,15 @@
 package still88.backend.domain.login.service;
 
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import still88.backend.dto.IdPassword.*;
 import still88.backend.entity.IdPassword;
+import still88.backend.entity.RefrigeList;
 import still88.backend.entity.User;
 import still88.backend.repository.IdPasswordRepository;
+import still88.backend.repository.RefrigeListRepository;
 import still88.backend.repository.UserRepository;
 
 import java.io.UnsupportedEncodingException;
@@ -21,6 +22,7 @@ import java.security.NoSuchAlgorithmException;
 public class LoginServiceImpl implements LoginService{
     private final UserRepository userRepository;
     private final IdPasswordRepository idPasswordRepository;
+    private final RefrigeListRepository refrigeListRepository;
 
     @Override
     public LoginSucessResponseDTO login(String email, String password) {
@@ -43,7 +45,7 @@ public class LoginServiceImpl implements LoginService{
 
     @Override
     public JoinResponseDTO join(JoinInfoRequestDTO request) {
-        Boolean gender = request.getGender();
+        Boolean gender = request.getUserGender();
         int userAge = request.getUserAge();
         String userNickname = request.getUserNickname();
         String secretEmail = request.getSecretEmail();
@@ -62,8 +64,10 @@ public class LoginServiceImpl implements LoginService{
 
         userRepository.save(user);
         idPasswordRepository.save(idPassword);
+        User joinedUser = userRepository.findUserByUserNickname(userNickname);
+        refrigeListRepository.save(RefrigeList.builder().refrigeName(userNickname + "기본냉장고").user(joinedUser).build());
         return new JoinResponseDTO(user.getUserId(), user.getUserNickname());
-    }
+    }   
 
     @Override
     public LogoutResponseDTO logout(String userId) {

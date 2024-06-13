@@ -9,6 +9,7 @@ import still88.backend.entity.IdPassword;
 import still88.backend.entity.Recipe;
 import still88.backend.entity.User;
 import still88.backend.repository.IdPasswordRepository;
+import still88.backend.repository.IngredientRepository;
 import still88.backend.repository.RecipeRepository;
 import still88.backend.repository.UserRepository;
 
@@ -19,19 +20,21 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final IngredientRepository ingredientRepository;
     private final IdPasswordRepository idPasswordRepository;
     private final RecipeRepository recipeRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public GetUserDetailResponseDto getUserDetail(int userId) {
-        User user = userRepository.findById((long) userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+        User user = userRepository.findUserByUserId(userId);
+        if(user == null)
+            throw new IllegalArgumentException("User not found with id: " + userId);
 
-        IdPassword idPassword = idPasswordRepository.findById((long) userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+        IdPassword idPassword = idPasswordRepository.findIdPasswordByUser(user);
+        if (user == null)
+            throw new IllegalArgumentException("IdPassword not found with id, : " + user);
 
         return GetUserDetailResponseDto.builder()
-                .userId(String.valueOf(user.getUserId()))
                 .userNickname(user.getUserNickname())
                 .userGender(user.getUserGender())
                 .userAge(user.getUserAge())
@@ -42,11 +45,13 @@ public class UserServiceImpl implements UserService {
     }
 
     public GetUserDetailResponseDto updateUserDetail(int userId, UpdateUserDetailRequestDto updateUserDetailRequestDto) {
-        User user = userRepository.findById((long) userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+        User user = userRepository.findUserByUserId(userId);
+        if(user == null)
+            throw new IllegalArgumentException("User not found with id: " + userId);
 
-        IdPassword idPassword = idPasswordRepository.findById((long) userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+        IdPassword idPassword = idPasswordRepository.findIdPasswordByUser(user);
+        if (user == null)
+            throw new IllegalArgumentException("IdPassword not found with id, : " + user);
 
         user.updateInfo(updateUserDetailRequestDto.getUserNickname(),
                 updateUserDetailRequestDto.getUserAge(),
@@ -59,7 +64,6 @@ public class UserServiceImpl implements UserService {
         IdPassword updatedIdPassword = idPasswordRepository.save(idPassword);
 
         return GetUserDetailResponseDto.builder()
-                .userId(String.valueOf(updatedUser.getUserId()))
                 .userNickname(updatedUser.getUserNickname())
                 .userAge(updatedUser.getUserAge())
                 .userGender(updatedUser.getUserGender())
@@ -80,7 +84,7 @@ public class UserServiceImpl implements UserService {
             // Fetch recipe IDs for each category
             for (String category : favorites) {
                 List<Recipe> recipes = recipeRepository.findRecipeIdByRecipeCategory(category);
-                List<Integer> categoryRecipeIds = recipes.stream().map(Recipe::getRecipeId).collect(Collectors.toList()).reversed();
+                List<Integer> categoryRecipeIds = recipes.stream().map(Recipe::getRecipeId).collect(Collectors.toList());
                 recipeIds.addAll(categoryRecipeIds);
             }
 
@@ -114,6 +118,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public GetAllergyListResponseDTO getAllergyList() {
+        return GetAllergyListResponseDTO.builder()
+                .allergies(ingredientRepository.getAllAllergyInfo())
+                .build();
+    }
+
     public GetAllergyResponseDto getUserAllergry(int userId) {
         Optional<User> userO = userRepository.findById((long) userId);
         if (userO.isPresent()) {
@@ -127,11 +138,11 @@ public class UserServiceImpl implements UserService {
                     throw new RuntimeException("Failed to parse allergy JSON", e);
                 }
             } else {
-                // 알러지가 없는 경우 빈 리스트 반환
                 return new GetAllergyResponseDto(Collections.emptyList());
             }
         } else {
             throw new IllegalArgumentException("존재하지 않는 사용자입니다!");
         }
+
     }
 }

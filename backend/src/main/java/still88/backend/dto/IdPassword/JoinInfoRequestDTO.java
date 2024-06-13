@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class JoinInfoRequestDTO {
     private String userNickname;
-    private Boolean gender;
+    private Boolean userGender;
     private int userAge;
     private String secretEmail;
     private String secretPassword;

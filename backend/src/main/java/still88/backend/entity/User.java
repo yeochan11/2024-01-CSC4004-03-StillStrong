@@ -13,15 +13,13 @@ import java.util.List;
 @Entity
 public class User{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private int userId;
 
-    // 연관 관계 매핑
     @OneToMany(mappedBy = "user")
     private List<Refrige> refriges = new ArrayList<>();
 
-    // 연관 관계 매핑
     @OneToMany(mappedBy = "user")
     private List<RefrigeList> refrigeLists = new ArrayList<>();
 
@@ -69,8 +67,6 @@ public class User{
         this.userAllergy = userAllergy;
     }
 
-    // 생성자 + Builder로 일관성 유지
-
     @Builder
     public User(String userNickname, int userAge, Boolean userGender){
         this.userNickname = userNickname;
@@ -79,5 +75,6 @@ public class User{
         this.userImage = "";
         this.userAllergy = "";
         this.userFavorite = "";
+        this.alarm = true;
     }
 }

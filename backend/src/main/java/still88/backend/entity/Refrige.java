@@ -14,21 +14,18 @@ import java.util.List;
 public class Refrige {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 
-    // 연관 관계 매핑
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "refrigeId", nullable = false)
     private RefrigeList refrigeList;
 
-    // 연관 관계 매핑
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ingredientId", nullable = false)
     private Ingredient ingredient;
 
-    // 연관 관계 매핑
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", nullable = false)
     private User user;
@@ -57,7 +54,6 @@ public class Refrige {
         this.ingredientMemo = ingredientMemo;
     }
 
-    // 생성자 + Builder로 일관성 유지
     @Builder
     public Refrige(RefrigeList refrigeList, Ingredient ingredient, User user, LocalDate createdDate, int ingredientNum, String ingredientPlace, LocalDate ingredientDeadline, String ingredientMemo) {
         this.refrigeList = refrigeList;

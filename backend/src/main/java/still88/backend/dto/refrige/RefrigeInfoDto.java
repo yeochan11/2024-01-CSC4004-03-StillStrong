@@ -13,4 +13,5 @@ public class RefrigeInfoDto {
     private String refrigeName;
     private boolean share;
     private List<String> ingredientNames;
+    private List<Integer> ingredientDeadlines;
 }

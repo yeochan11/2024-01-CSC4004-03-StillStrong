@@ -14,11 +14,18 @@ import java.util.List;
 public interface RefrigeRepository extends JpaRepository<Refrige, Long> {
     void deleteRefrigeByRefrigeListAndIngredientAndUser(RefrigeList refrigeList, Ingredient ingredient, User user);
 
+    void deleteRefrigeByRefrigeListAndIngredient(RefrigeList refrigeList, Ingredient ingredient);
+
     Refrige findRefrigeByRefrigeListAndIngredientAndUser(RefrigeList refrigeList, Ingredient ingredient, User user);
+
+    Refrige findRefrigeByRefrigeListAndIngredient(RefrigeList refrigeList, Ingredient ingredient);
 
     @Query("SELECT r.ingredient.ingredientId FROM Refrige r WHERE r.refrigeList.refrigeId = :refrigeId")
     List<Integer> findIngredientIdsByRefrigeId(int refrigeId);
 
     Refrige findByRefrigeListAndIngredient_IngredientName(RefrigeList refrigeList, String ingredientName);
+
+    @Query("SELECT r FROM Refrige r WHERE r.refrigeList.refrigeId = :refrigeId")
+    List<Refrige> findByRefrigeList_RefrigeId(int refrigeId);
 }
 
