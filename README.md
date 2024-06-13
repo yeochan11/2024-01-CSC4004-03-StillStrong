@@ -1,9 +1,6 @@
 # 2024-01-CSC4004-03-StillStrong
 2024년 1학기 공개SW프로젝트 03분반 8조 아직88하조
 
-# 2024-01-CSC4004-03-StillStrong
-2024년 1학기 공개SW프로젝트 03분반 8조 아직88하조
-
 ## 냉장고를 털고 싶을 땐? 요리조리
 > 냉장고 속 음식이 소리 없이 유통기한을 넘기고 있나요?<br>
 >
@@ -105,7 +102,6 @@
 |------------------|------------------|---------------| 
 | <img width="200" alt="냉장고 조회" src="https://github.com/CSID-DGU/2024-01-CSC4004-03-StillStrong/assets/84195580/3adc8695-f440-4827-9fad-beddf022cbaa">| <img width="200" alt="요리조리냉장고" src="https://github.com/CSID-DGU/2024-01-CSC4004-03-StillStrong/assets/84195580/98af61d2-483a-4f25-8ca7-574699d93e17"> | <img width="200" alt="냉장고 목록" src="https://github.com/CSID-DGU/2024-01-CSC4004-03-StillStrong/assets/84195580/894b5412-6ee9-4d31-a7e3-0f2c6e1439a8"> |
 
-
 ### [재료 등록, 수정, 조회]
 - 새로운 재료를 냉장고에 등록할 수 있고, 재료명, 유통기한, 수량 등을 입력하여 관리할 수 있습니다.
 - 이미 등록된 재료의 정보인 재료명, 유통기한, 수량 등을 업데이트할 수 있습니다. 
@@ -115,25 +111,42 @@
 | <img width="200" alt="image" src="https://github.com/CSID-DGU/2024-01-CSC4004-03-StillStrong/assets/84195580/dd0e77f5-ff9d-4871-869a-a9dfcea7bd18"> | <img width="200" alt="image" src="https://github.com/CSID-DGU/2024-01-CSC4004-03-StillStrong/assets/84195580/dbfc5a82-9577-4bb9-9473-c4fd2b4a568d"> | <img width="200" alt="image" src="https://github.com/CSID-DGU/2024-01-CSC4004-03-StillStrong/assets/84195580/04b21580-7bc1-40ba-9347-7c78d68740c0"> |
 
 ### [마이 페이지]
-- 
+- 닉네임, 이메일, 성별, 나이 등 자신의 프로필 정보를 조회할 수 있습니다.
+- 프로필 정보를 수정할 수 있고, 알러지 정보를 입력 및 수정할 수 있습니다.
 
-<br><br>
+| 마이 페이지 | 회원 정보 수정 | 알러지 정보 수정 | 
+|------------------|------------------|------------------|
+|<img width="200" alt="image" src="https://github.com/CSID-DGU/2024-01-CSC4004-03-StillStrong/assets/84195580/4ef36775-656f-4864-9a62-cecbc21b4abf"> | <img width="200" alt="image" src="https://github.com/CSID-DGU/2024-01-CSC4004-03-StillStrong/assets/84195580/7ae3c293-eae8-4d18-a6a1-42c45f8ecb85"> | <img width="200" alt="image" src="https://github.com/CSID-DGU/2024-01-CSC4004-03-StillStrong/assets/84195580/3a60dfd1-3d6f-4d4c-8fb4-d5618e8e6ac1"> |
+
+
 
 ### [냉장고 공유하기]
-- 
+- 사용자가 자신의 냉장고를 다른 사용자와 공유할 수 있습니다.
+- 공유할 사용자를 검색하고, 공유할 냉장고를 선택하여 냉장고 공유 요청을 보냅니다.
+- 공유 요청을 받은 사용자는 요청을 수락하거나 거절할 수 있습니다.
+- 가족이나 동거인 등 다른 사람과 함께 냉장고를 관리할 수 있습니다.
 
-<br><br>
+| 냉장고 공유하기 | 사용자 검색 | 공유할 냉장고 선택 | 
+|------------------|------------------|------------------|
+| <img width="200" alt="image" src="https://github.com/CSID-DGU/2024-01-CSC4004-03-StillStrong/assets/84195580/aadbf6be-47de-4e7e-9049-d27bedeb4658"> | <img width="200" alt="image" src="https://github.com/CSID-DGU/2024-01-CSC4004-03-StillStrong/assets/84195580/e3c2f71b-d7ea-4f1d-a87f-a85e1e46ba96"> | <img width="200" alt="image" src="https://github.com/CSID-DGU/2024-01-CSC4004-03-StillStrong/assets/84195580/96ebc6fa-a5dc-42db-b814-826276bec98a"> |
+
+| 공유 요청한 사용자 | 공유 요청 받은 사용자 | 공유 수락 | 
+|------------------|------------------|------------------|
+| <img width="200" alt="image" src="https://github.com/CSID-DGU/2024-01-CSC4004-03-StillStrong/assets/84195580/f84b2ea4-97fd-4491-b046-74fa86074e6f"> | <img width="200" alt="image" src="https://github.com/CSID-DGU/2024-01-CSC4004-03-StillStrong/assets/84195580/2099dcd3-736d-441f-b09c-25592889524d"> | <img width="200" alt="image" src="https://github.com/CSID-DGU/2024-01-CSC4004-03-StillStrong/assets/84195580/ada7a738-4023-458e-8937-1e9bee8780d4"> |
+
+
 
 ## 📷 시연 영상
 - 링크 : https://youtu.be/emTBabA_4Ss?si=bShfNS3mdu5jsvgg
 
-<br>
+<br><br>
 
 ## 📢 배포 URL
-https://ohgwanghoon.github.io/yorijori/ <br>
 - chrome 설정 -> 설정 -> 보안 -> 고급 -> 항상 보안 연결 사용
+- https://3.35.140.200:8443/ 접속하여 고급 -> 안전하지 않음으로 이동 -> hi 확인 후 배포 URL로 접속
+- 배포 URL : https://ohgwanghoon.github.io/yorijori/ 
 
-<br>
+<br><br>
 
 ## 📁 프로젝트 파일 구조
 ```
@@ -196,5 +209,8 @@ https://ohgwanghoon.github.io/yorijori/ <br>
 
 ## 💭 프로젝트 후기
 
+이번 프로젝트를 통해 팀원들과 함께 성장하고, 실제 사용자에게 도움이 되는 서비스를 개발할 수 있어서 정말 뿌듯합니다. 더 완성도 있고 탄탄한 서비스를 만들어낼 수 있도록 계속해서 발전해 나가고 싶습니다. 앞으로도 이러한 경험을 밑거름으로 더욱 성장해 나가겠습니다! 수고하셨습니다👏 <br>
 
+교수님의 지도와 조언 덕분에 프로젝트를 성공적으로 마무리할 수 있었습니다. 많이 배우고 성장할 수 있는 기회를 주셔서 감사합니다! <br>
 
+이상으로 공개SW프로젝트 아직88하조의 **요리조리**였습니다. 👀🍳
