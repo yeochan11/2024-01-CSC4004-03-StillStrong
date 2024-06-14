@@ -6,7 +6,7 @@
 >
 > 오늘 저녁, 어떤 요리를 할지 고민 중이신가요?<br>
 >
-> 요리보고 조리보고 🤔 **요리조리에서 추천**받아보세요!<br>
+> 요리보고 조리보고 🤔 **요리조리**에서 **추천**받아보세요!<br>
 
 <img width="1000" alt="스크린샷 2024-06-13 오전 4 12 06" src="https://github.com/CSID-DGU/2024-01-CSC4004-03-StillStrong/assets/84195580/cdeeacf2-a40a-4b78-a5a8-9c310d1cc536">
 
@@ -58,15 +58,15 @@
 - AWS_EC2 브랜치 : 프로덕션 배포용 브랜치
 
 ### 브랜치 전략
-1. develop 브랜치
+1. **develop** 브랜치
    - 각 개발 영역(frontend, backend, ML)에서 개발을 진행하기 위해 frontend, backend, ML 브랜치로 나누어 작업
-   - 새로운 기능 추가 시 각 **develop 브랜치(frontend, backend, ML)**에서 feature 브랜치를 생성하여 개발
-   - 기능 추가 완료 시 feature 브랜치를 해당 **develop 브랜치(frontend, backend, ML)**로 merge
-2. main 브랜치
+   - 새로운 기능 추가 시 각 develop 브랜치(frontend, backend, ML)에서 feature 브랜치를 생성하여 개발
+   - 기능 추가 완료 시 feature 브랜치를 해당 develop 브랜치(frontend, backend, ML)로 merge
+2. **main** 브랜치
    - 모든 기능이 통합된 최종 개발 내용 브랜치
    - 각 develop 브랜치에서 안정화된 코드가 main 브랜치로 병합
    - 배포 전 main 브랜치에서 테스트를 거침.
-3. AWS_EC2 브랜치
+3. **AWS_EC2** 브랜치
    - 프로덕션 배포용 브랜치
    - main 브랜치에서 테스트를 완료한 후, AWS_EC2 브랜치로 merge하여 실제 서비스에 배포
 <br><br>
