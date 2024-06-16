@@ -141,7 +141,7 @@
 ### [레시피추천모델]
 - 기존 추천 모델의 단점인 cold-start와 long-tail을 해결했습니다.
 - 사용자 기반 필터링과 아이템 기반 필터링을 모두 고려합니다.
-[모델설명링크](https://harmonious-ricotta-79d.notion.site/6b9af4b83576480c911beb947794fec7)
+- [모델_설명_이동하기](https://harmonious-ricotta-79d.notion.site/6b9af4b83576480c911beb947794fec7)
 
 
 ## 📷 시연 영상
