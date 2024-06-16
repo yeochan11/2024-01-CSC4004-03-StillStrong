@@ -39,18 +39,18 @@ class _SharedListPageState extends State<SharedListPage> {
         body: Center(
             child: sharedList == null
                 ? Text('목록이 없습니다.',
-                    style: TextStyle(
-                      fontFamily: 'Pretendard',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
+              style: TextStyle(
+                fontFamily: 'Pretendard',
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            )
                 : Column(
-                    children: [
-                      SizedBox(height: 20,),
-                      _widgetForSharedId(sharedList!),
-                    ],
-                  )
+              children: [
+                SizedBox(height: 20,),
+                _widgetForSharedId(sharedList!),
+              ],
+            )
         )
     );
   }
@@ -196,7 +196,7 @@ class _SharedListPageState extends State<SharedListPage> {
             RichText(
               text: TextSpan(
                   children: [
-                    TextSpan(text: '${data.requestUserNickname}',
+                    TextSpan(text: '${data.createUserNickname}',
                         style: TextStyle(
                           fontFamily: 'Pretendard',
                           fontSize: 14,
@@ -233,12 +233,12 @@ class _SharedListPageState extends State<SharedListPage> {
                   height: 25,
                   child: TextButton(
                     onPressed: () {
-                        patchRequest(data, true).then((_) {
-                          setState(() {
-                            sharedList!.acceptedRequests.add(sharedList!.receivedRequests[0]);
-                            sharedList!.receivedRequests.removeAt(0);
-                          });
+                      patchRequest(data, true).then((_) {
+                        setState(() {
+                          sharedList!.acceptedRequests.add(sharedList!.receivedRequests[0]);
+                          sharedList!.receivedRequests.removeAt(0);
                         });
+                      });
                     },
                     style: TextButton.styleFrom(
                       backgroundColor: const Color(0xffF6A90A),
@@ -263,11 +263,11 @@ class _SharedListPageState extends State<SharedListPage> {
                   height: 25,
                   child: TextButton(
                     onPressed: () {
-                        patchRequest(data, false).then((_) {
-                          setState(() {
-                            sharedList!.receivedRequests.removeAt(0);
-                          });
+                      patchRequest(data, false).then((_) {
+                        setState(() {
+                          sharedList!.receivedRequests.removeAt(0);
                         });
+                      });
                     },
                     style: TextButton.styleFrom(
                       backgroundColor: const Color(0xffF6A90A),
@@ -311,7 +311,7 @@ class _SharedListPageState extends State<SharedListPage> {
             RichText(
               text: TextSpan(
                   children: [
-                    TextSpan(text: '${data.requestUserNickname}',
+                    TextSpan(text: '${data.createUserNickname}',
                         style: TextStyle(
                           fontFamily: 'Pretendard',
                           fontSize: 14,
