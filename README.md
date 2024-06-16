@@ -138,6 +138,11 @@
 | <img width="200" alt="image" src="https://github.com/CSID-DGU/2024-01-CSC4004-03-StillStrong/assets/84195580/f84b2ea4-97fd-4491-b046-74fa86074e6f"> | <img width="200" alt="image" src="https://github.com/CSID-DGU/2024-01-CSC4004-03-StillStrong/assets/84195580/2099dcd3-736d-441f-b09c-25592889524d"> | <img width="200" alt="image" src="https://github.com/CSID-DGU/2024-01-CSC4004-03-StillStrong/assets/84195580/ada7a738-4023-458e-8937-1e9bee8780d4"> |
 
 
+### [레시피추천모델]
+- 기존 추천 모델의 단점인 cold-start와 long-tail을 해결했습니다.
+- 사용자 기반 필터링과 아이템 기반 필터링을 모두 고려합니다.
+[모델설명링크](https://harmonious-ricotta-79d.notion.site/6b9af4b83576480c911beb947794fec7)
+
 
 ## 📷 시연 영상
 - 링크 : https://youtu.be/emTBabA_4Ss?si=bShfNS3mdu5jsvgg
