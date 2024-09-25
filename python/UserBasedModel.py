@@ -13,9 +13,13 @@ class UBRM:
         self.user = 'root'
         self.password = ''
         self.db = 'still88'
+        self.conn = self.__connect_to_db()
 
     def __convert_boolean(self, value):
         return 1 if value == b'\x01' else 0
+
+    def close_db(self):
+        self.conn.close()
     
     def __read_userInfo(self):
         conn = pymysql.connect(host=self.host, user=self.user
